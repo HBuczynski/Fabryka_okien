@@ -43,14 +43,14 @@ class Generator:
             segment_names = self.generate_segments()
             for segment_name in segment_names:
                 print(" ADD SEGMENT: " + segment_name)
-                self.db.add_segment(model_name, segment_name, self.generateCenaB(), self.generateCenaC(),
+                self.db.add_segment_by_id(model_id, segment_name, self.generateCenaB(), self.generateCenaC(),
                                     self.generateCenaD())
                 segment_id = self.db.get_segment_id(model_name, segment_name)
 
                 parameters = self.generate_parameters()
                 for parameter in parameters:
                     print("  ADD PARAM: " + parameter[0])
-                    self.db.add_param(model_name, segment_name, parameter[0], parameter[1])
+                    self.db.add_param_by_id(segment_id, parameter[0], parameter[1])
                     parameter_id = self.db.get_parametr_id(model_name, segment_name, parameter[0])
 
                     values = parameter[2]
