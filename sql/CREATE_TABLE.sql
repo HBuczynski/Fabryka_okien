@@ -1,3 +1,5 @@
+use Fabryka_okien;
+
 DROP TABLE IF EXISTS Dostawa;
 DROP TABLE IF EXISTS Montaz;
 DROP TABLE IF EXISTS Staty_miesiac;
@@ -10,7 +12,6 @@ DROP TABLE IF EXISTS Faktura;
 DROP TABLE IF EXISTS Klient;
 DROP TABLE IF EXISTS Segment;
 DROP TABLE IF EXISTS Szyba;
-
 DROP TABLE IF EXISTS Model;
 
 
@@ -79,7 +80,7 @@ pesel VARCHAR(11),
 nip VARCHAR(11),
 nazwa VARCHAR(30),
 czas_zakonczenia DATE,
-status ENUM('Zlozone', 'Anulowane', 'W trakcie realizacji', 'Gotowe', 'Zakonczone', 'Zwrot'),
+status ENUM('Zlozone', 'Anulowane', 'W trakcie realizacji', 'Gotowe', 'Zakonczone', 'Zwrot') DEFAULT 'Zlozone',
 FOREIGN KEY (klient_id) REFERENCES Klient (klient_id)
 ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -143,7 +144,7 @@ cena_jednostkowa      NUMERIC(16,2),
 faktura_id            INTEGER NOT NULL,
 segment_id            INTEGER NOT NULL,
 szyba_id              INTEGER NOT NULL,
-status                ENUM('Zlozone', 'W trakcie realizacji', 'Wysłane/odebrane', 'Gotowe'),
+status                ENUM('Zlozone', 'W trakcie realizacji', 'Wyslane/odebrane', 'Gotowe') DEFAULT 'Zlozone',
 CONSTRAINT PK_Pozycja PRIMARY KEY (pozycja_id, faktura_id),
 CONSTRAINT FK_Pozycja_faktura FOREIGN KEY (faktura_id) REFERENCES Faktura (faktura_id)
 ON DELETE CASCADE ON UPDATE CASCADE,
