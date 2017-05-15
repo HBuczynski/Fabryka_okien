@@ -5,8 +5,12 @@ import Database
 NAMES = ["Beata", "Anna", "Magda", "Zosia", "Karolina", "Grazyna", "Alicja", "Kasia", "Monika"]
 PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Źólty", "Brązowy", "Biały", "Szary", "Niebieski"]],
           ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
-          #...
-          ]
+          ["Okucie", ["Standardowe", "Antywlamaniowe"]],
+          ["Uchylne", ["Tak", "Nie"]],
+          ["Otwierane", ["Prawe", "Lewe", "Nieotwieralne"]],
+          ["Kolor uszczelki", ["Czarna", "Braz", "Biala", "Zlota"]],
+          ["Szprosy", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
+         ]
 
 # Liczba generowanych danych
 N_MODELS = 3
