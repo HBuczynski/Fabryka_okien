@@ -1,0 +1,39 @@
+insert into Model (nazwa) values('Bozenka');
+insert into Model (nazwa) values('Grazka');
+
+insert into Segment (nazwa, cena_b, cena_c, cena_d, model_id) values ('1100',1.2,2.0,112, 1);
+insert into Segment (nazwa, cena_b, cena_c, cena_d, model_id) values ('1102',1.2,2.0,112, 2);
+
+insert into Parametr_segmentu (nazwa,segment_id,opis) values('Uchylne', 1, 'Czy uchylne czy nie?');
+
+insert into Parametr_segmentu (nazwa,segment_id,opis) values('Kolor_ramy', 1, 'Kolor ramy jednolity.');
+
+insert into Wartosc_parametru (wartosc,parametr_id) values('TAK',1);
+insert into Wartosc_parametru (wartosc,parametr_id) values('NIE',1);
+insert into Wartosc_parametru (wartosc,parametr_id) values('Zielony',2);
+insert into Wartosc_parametru (wartosc,parametr_id) values('Czerwony',2);
+insert into Wartosc_parametru (wartosc,parametr_id) values('Bialy',2);
+insert into Wartosc_parametru (wartosc,parametr_id) values('Czarny',2);
+
+insert into Szyba (rodzaj,cena_a) values ('3-komorowa',3.4);
+insert into Szyba (rodzaj,cena_a) values ('2-komorowa',2.4);
+insert into Szyba (rodzaj,cena_a) values ('1-komorowa',1.4);
+
+insert into Klient (selektor, adres_faktury, imie, nazwisko, pesel) values('Osoba prywatna', 'Leszczynowa 119 37-741 Krasiczyn', 'Hubert', 'Buczynski', '94091553210');
+
+insert into Klient (selektor, adres_faktury, nazwa, nip) values('Firma', 'Kasztanowa 119 37-741 Krasiczyn', 'Hubertus Buczynskus Sp z o.o.', '52345000015');
+
+insert into Faktura (data_dodania,cena_suma,klient_id,czas_zakonczenia,status)
+VALUES ('2017-05-13',0,1,'2017-05-20','Zlozone');
+insert into Faktura (data_dodania,cena_suma,klient_id,czas_zakonczenia,status)
+VALUES ('2017-05-13',0,2,'2017-05-20','Zlozone');
+
+insert into Pozycja (wymiar_x,wymiar_y,ilosc,cena_jednostkowa,faktura_id,segment_id,szyba_id,status) VALUES (900,90,2,0,1,1,1,'Zlozone');
+
+insert into Pozycja (wymiar_x,wymiar_y,ilosc,cena_jednostkowa,faktura_id,segment_id,szyba_id,status) VALUES (900,90,2,0,1,1,2,'Zlozone');
+
+insert into Dostawa (adres_dostawy,cena_dostawy,faktura_id,czas_dostawy) VALUES ('Krucza 25 34-174 Korycin',100,1,7);
+
+insert into Montaz (faktura_id,cena_montazu,data_montazu) VALUES (1,100,'2017-05-30');
+
+
