@@ -2,7 +2,6 @@ from datetime import date, timedelta
 import random
 import Database
 
-NAMES = ["Beata", "Anna", "Magda", "Zosia", "Karolina", "Grazyna", "Alicja", "Kasia", "Monika"]
 PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy segmentu.", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
           ["Typ drewna", "Material, z ktorego wykonane sa drewniane elementy segmentu.", ["Buk", "Sosna", "Dab", "Jesion", "Swierk", "Modrzew"]],
           ["Okucie", "Typ okucia wykorzystywany w segmencie.", ["Standardowe", "Antywlamaniowe"]],
@@ -21,6 +20,9 @@ N_MAXPARAMS = 2
 class Generator:
     def __init__(self, database: Database.Database):
         self.db = database
+
+        self.NAMES = self.load_names()
+
 
     def generate(self):
         # Generowanie oferty (modele, segmenty, parametry, wartosci)
@@ -68,7 +70,7 @@ class Generator:
         # TODO
 
     def generate_names(self):
-        return [NAMES[i] for i in random.sample(range(len(NAMES)), N_MODELS)]
+        return [self.NAMES[i] for i in random.sample(range(len(self.NAMES)), N_MODELS)]
 
     def generate_segments(self):
         return ["Segment " + chr(i + 64) for i in range(1, random.randint(2, N_MAXSEGMENTS))]
@@ -105,5 +107,20 @@ class Generator:
         A = random.uniform(20.0, 500.0)
         return float("{0:.1f}".format(A))
 
+    def load_names(self):
+        names = []
+        with open("./sql/imiona.txt") as file:
+            for line in file:
+                line = line.strip()
+                names.append(line)
+        return names
+
+    def load_surnames(self):
+        names = []
+        with open("./sql/nazwiska.txt") as file:
+            for line in file:
+                line = line.strip()
+                names.append(line)
+        return names
 
 
