@@ -11,6 +11,7 @@ PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy seg
           ["Kolor uszczelki","Wybot koloru uszczelki segmentu", ["Czarna", "Braz", "Biala", "Zlota"]],
           ["Szprosy", "Wybor rozkladu szprosow", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
           ]
+ADDRESSES = ["Krucza", "Lesna", "Dluga", "Szeroka", "Polna", "Jana Sobieskiego", "Kwiatowa", "Koszykowa", "Noakowskiego", "Aleja Komisji Edukacji Narodowej", "Grojecka", "Pulawska"]
 
 # Liczba generowanych danych
 N_MODELS = 3
@@ -74,6 +75,15 @@ class Generator:
 
     def generate_parameters(self):
         return [PARAMS[i] for i in random.sample(range(len(PARAMS)), random.randint(0, N_MAXPARAMS))]
+
+    def generate_person_name(self):
+        return "Anna Kowalska"
+
+    def generate_company_name(self):
+        return "Pepsi"
+
+    def generate_address(self):
+        return random.choice(ADDRESSES) + " " + str(random.randint(1, 200))
 
     def generateCenaA(self):
         random.seed()
