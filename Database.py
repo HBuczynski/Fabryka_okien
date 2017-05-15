@@ -45,24 +45,32 @@ class Database:
                  "VALUES (%s)")
         self.cursor.execute(query, (nazwa_modelu,))
 
-    def add_segment(self, nazwa_modelu, nazwa_segmentu, cena_b, cena_c, cena_d):
+    def add_segment_by_id(self, model_id, nazwa_segmentu, cena_b, cena_c, cena_d):
         query = ("INSERT INTO Segment "
                  "(nazwa, cena_b, cena_c, cena_d, model_id) "
                  "VALUES (%s,%s,%s,%s,%s)")
-        self.cursor.execute(query, (nazwa_segmentu, cena_b, cena_c, cena_d, self.get_model_id(nazwa_modelu)))
+        self.cursor.execute(query, (nazwa_segmentu, cena_b, cena_c, cena_d, model_id))
 
-    def add_param(self, nazwa_modelu, nazwa_segmentu, nazwa_parametru, opis_parametru):
+    def add_segment(self, nazwa_modelu, nazwa_segmentu, cena_b, cena_c, cena_d):
+        self.add_segment_by_id(self.get_model_id(nazwa_modelu), nazwa_segmentu, cena_b, cena_c, cena_d)
+
+    def add_param_by_id(self, segment_id, nazwa_parametru, opis_parametru):
         query = ("INSERT INTO Parametr_segmentu "
                  "(nazwa, segment_id, opis) "
                  "VALUES (%s,%s,%s)")
-        self.cursor.execute(query, (nazwa_parametru, self.get_segment_id(nazwa_modelu, nazwa_segmentu), opis_parametru))
+        self.cursor.execute(query, (nazwa_parametru, segment_id, opis_parametru))
 
-    def add_param_value(self, nazwa_modelu, nazwa_segmentu, nazwa_parametru, wartosc_parametru):
+    def add_param(self, nazwa_modelu, nazwa_segmentu, nazwa_parametru, opis_parametru):
+        self.add_param_by_id(self.get_segment_id(nazwa_modelu, nazwa_segmentu), nazwa_parametru, opis_parametru)
+
+    def add_param_value_by_id(self, parametr_id, wartosc_parametru):
         query = ("INSERT INTO Wartosc_parametru "
                  "(wartosc, parametr_id) "
                  "VALUES (%s,%s)")
-        self.cursor.execute(query,
-                            (wartosc_parametru, self.get_parametr_id(nazwa_modelu, nazwa_segmentu, nazwa_parametru)))
+        self.cursor.execute(query, (wartosc_parametru, parametr_id))
+
+    def add_param_value(self, nazwa_modelu, nazwa_segmentu, nazwa_parametru, wartosc_parametru):
+        self.add_param_value_by_id(self.get_parametr_id(nazwa_modelu, nazwa_segmentu, nazwa_parametru), wartosc_parametru)
 
     def add_windowpane(self, rodzaj_szyby, cena_a):
         query = ("INSERT INTO Szyba "
