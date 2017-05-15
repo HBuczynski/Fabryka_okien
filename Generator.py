@@ -5,16 +5,12 @@ import Database
 NAMES = ["Beata", "Anna", "Magda", "Zosia", "Karolina", "Grazyna", "Alicja", "Kasia", "Monika"]
 PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy segmentu.", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
           ["Typ drewna", "Material, z ktorego wykonane sa drewniane elementy segmentu.", ["Buk", "Sosna", "Dab", "Jesion", "Swierk", "Modrzew"]],
-          #...
+          ["Okucie", "Typ okucia wykorzystywany w segmencie.", ["Standardowe", "Antywlamaniowe"]],
+          ["Uchylne", "Wybor czy okno moze sie uchylac, czy nie.", ["Tak", "Nie"]],
+          ["Otwierane","Wybor czy okno moze sie otwierac i w ktora strone.", ["Prawe", "Lewe", "Nieotwieralne"]],
+          ["Kolor uszczelki","Wybot koloru uszczelki segmentu", ["Czarna", "Braz", "Biala", "Zlota"]],
+          ["Szprosy", "Wybor rozkladu szprosow", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
           ]
-# PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
-#           ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
-#           ["Okucie", ["Standardowe", "Antywlamaniowe"]],
-#           ["Uchylne", ["Tak", "Nie"]],
-#           ["Otwierane", ["Prawe", "Lewe", "Nieotwieralne"]],
-#           ["Kolor uszczelki", ["Czarna", "Braz", "Biala", "Zlota"]],
-#           ["Szprosy", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
-#          ]
 
 # Liczba generowanych danych
 N_MODELS = 3
