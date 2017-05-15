@@ -3,7 +3,7 @@ import random
 import Database
 
 NAMES = ["Beata", "Anna", "Magda", "Zosia", "Karolina", "Grazyna", "Alicja", "Kasia", "Monika"]
-PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Źólty", "Brązowy", "Biały", "Szary", "Niebieski"]],
+PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
           ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
           ["Okucie", ["Standardowe", "Antywlamaniowe"]],
           ["Uchylne", ["Tak", "Nie"]],
