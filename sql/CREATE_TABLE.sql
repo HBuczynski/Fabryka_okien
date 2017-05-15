@@ -1,5 +1,3 @@
-use Fabryka_okien;
-
 DROP TABLE IF EXISTS Dostawa;
 DROP TABLE IF EXISTS Montaz;
 DROP TABLE IF EXISTS Staty_miesiac;
