@@ -44,7 +44,6 @@ CREATE TABLE Wartosc_parametru (
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
 wartosc VARCHAR(20) NOT NULL,
 parametr_id INTEGER NOT NULL,
-opis VARCHAR(100),
 CONSTRAINT FK_Wartosc FOREIGN KEY (parametr_id) REFERENCES Parametr_segmentu (parametr_id)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
