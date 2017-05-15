@@ -7,6 +7,14 @@ PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy seg
           ["Typ drewna", "Material, z ktorego wykonane sa drewniane elementy segmentu.", ["Buk", "Sosna", "Dab", "Jesion", "Swierk", "Modrzew"]],
           #...
           ]
+PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
+          ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
+          ["Okucie", ["Standardowe", "Antywlamaniowe"]],
+          ["Uchylne", ["Tak", "Nie"]],
+          ["Otwierane", ["Prawe", "Lewe", "Nieotwieralne"]],
+          ["Kolor uszczelki", ["Czarna", "Braz", "Biala", "Zlota"]],
+          ["Szprosy", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
+         ]
 
 # Liczba generowanych danych
 N_MODELS = 3
