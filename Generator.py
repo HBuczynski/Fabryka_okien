@@ -34,16 +34,24 @@ class Generator:
         return ["Segment " + chr(i + 64) for i in range(1, random.randint(2, N_MAXSEGMENTS))]
 
     def generateCenaA(self):
-        return 0
+	random.seed()
+	A = random.uniform(0.1,2.0)
+	return float("{0:.1f}".format(A))
 
     def generateCenaB(self):
-        return 0
+        random.seed()
+	A = random.uniform(1.0,4.0)
+	return float("{0:.1f}".format(A))
 
     def generateCenaC(self):
-        return 0
+        random.seed()
+	A = random.uniform(0.1,5.0)
+	return float("{0:.1f}".format(A))
 
     def generateCenaD(self):
-        return 0
+        random.seed()
+	A = random.uniform(20.0,500.0)
+	return float("{0:.1f}".format(A))
 
 
 
