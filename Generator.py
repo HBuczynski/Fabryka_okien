@@ -65,24 +65,24 @@ class Generator:
         return [PARAMS[i] for i in random.sample(range(len(PARAMS)), random.randint(0, N_MAXPARAMS))]
 
     def generateCenaA(self):
-	random.seed()
-	A = random.uniform(0.1,2.0)
-	return float("{0:.1f}".format(A))
+        random.seed()
+        A = random.uniform(0.1, 2.0)
+        return float("{0:.1f}".format(A))
 
     def generateCenaB(self):
         random.seed()
-	A = random.uniform(1.0,4.0)
-	return float("{0:.1f}".format(A))
+        A = random.uniform(1.0, 4.0)
+        return float("{0:.1f}".format(A))
 
     def generateCenaC(self):
         random.seed()
-	A = random.uniform(0.1,5.0)
-	return float("{0:.1f}".format(A))
+        A = random.uniform(0.1, 5.0)
+        return float("{0:.1f}".format(A))
 
     def generateCenaD(self):
         random.seed()
-	A = random.uniform(20.0,500.0)
-	return float("{0:.1f}".format(A))
+        A = random.uniform(20.0, 500.0)
+        return float("{0:.1f}".format(A))
 
 
 
