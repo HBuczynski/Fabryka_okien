@@ -7,14 +7,14 @@ PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy seg
           ["Typ drewna", "Material, z ktorego wykonane sa drewniane elementy segmentu.", ["Buk", "Sosna", "Dab", "Jesion", "Swierk", "Modrzew"]],
           #...
           ]
-PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
-          ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
-          ["Okucie", ["Standardowe", "Antywlamaniowe"]],
-          ["Uchylne", ["Tak", "Nie"]],
-          ["Otwierane", ["Prawe", "Lewe", "Nieotwieralne"]],
-          ["Kolor uszczelki", ["Czarna", "Braz", "Biala", "Zlota"]],
-          ["Szprosy", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
-         ]
+# PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
+#           ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
+#           ["Okucie", ["Standardowe", "Antywlamaniowe"]],
+#           ["Uchylne", ["Tak", "Nie"]],
+#           ["Otwierane", ["Prawe", "Lewe", "Nieotwieralne"]],
+#           ["Kolor uszczelki", ["Czarna", "Braz", "Biala", "Zlota"]],
+#           ["Szprosy", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
+#          ]
 
 # Liczba generowanych danych
 N_MODELS = 3
@@ -46,17 +46,21 @@ class Generator:
 
             segment_names = self.generate_segments()
             for segment_name in segment_names:
-                print("\tADD SEGMENT: " + segment_name)
+                print(" ADD SEGMENT: " + segment_name)
                 self.db.add_segment(model_name, segment_name, self.generateCenaB(), self.generateCenaC(),
                                     self.generateCenaD())
                 segment_id = self.db.get_segment_id(model_name, segment_name)
 
                 parameters = self.generate_parameters()
                 for parameter in parameters:
-                    print("\t\tADD PARAM: " + parameter[0])
+                    print("  ADD PARAM: " + parameter[0])
                     self.db.add_param(model_name, segment_name, parameter[0], parameter[1])
-                    for value in parameter[2]:
-                        print("\t\t\tADD VALUE: " + value)
+                    parameter_id = self.db.get_parametr_id(model_name, segment_name, parameter[0])
+
+                    values = parameter[2]
+                    for value in values:
+                        print("   ADD VALUE: " + value)
+                        self.db.add_param_value_by_id(parameter_id, value)
 
     def generate_clients(self):
         pass
