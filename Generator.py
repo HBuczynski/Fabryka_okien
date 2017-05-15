@@ -3,8 +3,8 @@ import random
 import Database
 
 NAMES = ["Beata", "Anna", "Magda", "Zosia", "Karolina", "Grazyna", "Alicja", "Kasia", "Monika"]
-PARAMS = [["Kolor segmentu", ["Czerwony", "Zielony", "Źólty", "Brązowy", "Biały", "Szary", "Niebieski"]],
-          ["Typ drewna", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
+PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy segmentu.", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
+          ["Typ drewna", "Material, z ktorego wykonane sa drewniane elementy segmentu.", ["Buk", "Sosna", "Dab", "Jesion", "Swierk", "Modrzew"]],
           #...
           ]
 
@@ -32,13 +32,13 @@ class Generator:
         model_names = self.generate_names()
 
         for model_name in model_names:
-            print("ADD_MODEL: " + model_name)
+            print("ADD MODEL: " + model_name)
             self.db.add_model(model_name)
             model_id = self.db.get_model_id(model_name)
 
             segment_names = self.generate_segments()
             for segment_name in segment_names:
-                print("\tADD_SEGMENT: " + segment_name)
+                print("\tADD SEGMENT: " + segment_name)
                 self.db.add_segment(model_name, segment_name, self.generateCenaB(), self.generateCenaC(),
                                     self.generateCenaD())
                 segment_id = self.db.get_segment_id(model_name, segment_name)
@@ -46,6 +46,9 @@ class Generator:
                 parameters = self.generate_parameters()
                 for parameter in parameters:
                     print("\t\tADD PARAM: " + parameter[0])
+                    self.db.add_param(model_name, segment_name, parameter[0], parameter[1])
+                    for value in parameter[2]:
+                        print("\t\t\tADD VALUE: " + value)
 
     def generate_clients(self):
         pass
