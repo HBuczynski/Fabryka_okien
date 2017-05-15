@@ -19,6 +19,7 @@ db.add_windowpane("1-komorowa", 1.14)
 db.add_client_person("Janusz", "Mel", "Powstancow MELu 1/6", "94121221212")
 db.add_client_company("MEL", "Melowa 12/3", "12345678900")
 db.add_bill(1, 123000, date.today(), date.today()+timedelta(days=10), "Zlozone")
+db.add_bill_entry(1, 1, 1, 100, 200, 3, 0, 'Zlozone')
 db.add_delivery(1, "Testowa 1/2", 120.50, 15)
 db.add_installation(1, 400.00, date.today()+timedelta(days=20))
 
