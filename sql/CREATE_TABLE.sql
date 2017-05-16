@@ -57,12 +57,12 @@ cena_a NUMERIC(5,1) DEFAULT 1
 CREATE TABLE Klient (
 klient_id INTEGER PRIMARY KEY AUTO_INCREMENT,
 selektor ENUM('Osoba prywatna', 'Firma'),
-adres_faktury VARCHAR(50) NOT NULL,
+adres_faktury VARCHAR(100) NOT NULL,
 imie VARCHAR(20),
 nazwisko VARCHAR(20),
 pesel VARCHAR(11) UNIQUE,
 nip VARCHAR(11) UNIQUE,
-nazwa VARCHAR(30)
+nazwa VARCHAR(100)
 );
 
 CREATE TABLE Faktura (
@@ -70,12 +70,12 @@ faktura_id INTEGER PRIMARY KEY AUTO_INCREMENT,
 data_dodania DATE NOT NULL,
 cena_suma NUMERIC(16,2) NOT NULL DEFAULT 0,
 klient_id INTEGER,
-adres_faktury VARCHAR(50) NOT NULL,
+adres_faktury VARCHAR(100) NOT NULL,
 imie VARCHAR(20),
 nazwisko VARCHAR(20),
 pesel VARCHAR(11),
 nip VARCHAR(11),
-nazwa VARCHAR(30),
+nazwa VARCHAR(100),
 czas_zakonczenia DATE,
 status ENUM('Zlozone', 'Anulowane', 'W trakcie realizacji', 'Gotowe', 'Zakonczone', 'Zwrot') DEFAULT 'Zlozone',
 FOREIGN KEY (klient_id) REFERENCES Klient (klient_id)
@@ -83,7 +83,7 @@ ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE Dostawa (
-adres_dostawy VARCHAR(50) NOT NULL,
+adres_dostawy VARCHAR(100) NOT NULL,
 cena_dostawy NUMERIC(7,2),
 faktura_id INTEGER PRIMARY KEY,
 czas_dostawy INTEGER DEFAULT 7,
