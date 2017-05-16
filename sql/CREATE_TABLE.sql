@@ -1,3 +1,5 @@
+SET NAMES 'UTF8' COLLATE 'utf8_polish_ci';
+
 DROP TABLE IF EXISTS Dostawa;
 DROP TABLE IF EXISTS Montaz;
 DROP TABLE IF EXISTS Staty_miesiac;
@@ -15,12 +17,12 @@ DROP TABLE IF EXISTS Model;
 
 CREATE TABLE Model (
 model_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-nazwa VARCHAR(20) NOT NULL UNIQUE
+nazwa NVARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE Segment (
 segment_id INTEGER NOT NULL AUTO_INCREMENT,
-nazwa VARCHAR(20) NOT NULL,
+nazwa NVARCHAR(20) NOT NULL,
 cena_b NUMERIC(5,1) DEFAULT 1,
 cena_c NUMERIC(5,1) DEFAULT 1,
 cena_d NUMERIC(5,1) DEFAULT 1,
@@ -33,16 +35,16 @@ FOREIGN KEY (model_id) REFERENCES Model (model_id) ON UPDATE CASCADE ON DELETE C
 
 CREATE TABLE Parametr_segmentu (
 parametr_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-nazwa VARCHAR(20) NOT NULL,
+nazwa NVARCHAR(30) NOT NULL,
 segment_id INTEGER NOT NULL,
-opis VARCHAR(100),
+opis NVARCHAR(100),
 CONSTRAINT FK_Parametr FOREIGN KEY (segment_id) REFERENCES Segment (segment_id)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Wartosc_parametru (
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
-wartosc VARCHAR(20) NOT NULL,
+wartosc NVARCHAR(20) NOT NULL,
 parametr_id INTEGER NOT NULL,
 CONSTRAINT FK_Wartosc FOREIGN KEY (parametr_id) REFERENCES Parametr_segmentu (parametr_id)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -50,19 +52,19 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE Szyba (
 szyba_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-rodzaj VARCHAR(20) NOT NULL,
+rodzaj NVARCHAR(20) NOT NULL,
 cena_a NUMERIC(7,7) DEFAULT 0.0001
 );
 
 CREATE TABLE Klient (
 klient_id INTEGER PRIMARY KEY AUTO_INCREMENT,
 selektor ENUM('Osoba prywatna', 'Firma'),
-adres_faktury VARCHAR(100) NOT NULL,
-imie VARCHAR(20),
-nazwisko VARCHAR(20),
+adres_faktury NVARCHAR(100) NOT NULL,
+imie NVARCHAR(20),
+nazwisko NVARCHAR(20),
 pesel VARCHAR(11) UNIQUE,
 nip VARCHAR(11) UNIQUE,
-nazwa VARCHAR(100)
+nazwa NVARCHAR(100)
 );
 
 CREATE TABLE Faktura (
@@ -70,12 +72,12 @@ faktura_id INTEGER PRIMARY KEY AUTO_INCREMENT,
 data_dodania DATE NOT NULL,
 cena_suma NUMERIC(16,2) NOT NULL DEFAULT 0,
 klient_id INTEGER,
-adres_faktury VARCHAR(100) NOT NULL,
-imie VARCHAR(20),
-nazwisko VARCHAR(20),
+adres_faktury NVARCHAR(100) NOT NULL,
+imie NVARCHAR(20),
+nazwisko NVARCHAR(20),
 pesel VARCHAR(11),
 nip VARCHAR(11),
-nazwa VARCHAR(100),
+nazwa NVARCHAR(100),
 czas_zakonczenia DATE,
 status ENUM('Zlozone', 'Anulowane', 'W trakcie realizacji', 'Gotowe', 'Zrealizowane', 'Zwrot') DEFAULT 'Zlozone',
 FOREIGN KEY (klient_id) REFERENCES Klient (klient_id)
@@ -83,7 +85,7 @@ ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE Dostawa (
-adres_dostawy VARCHAR(100) NOT NULL,
+adres_dostawy NVARCHAR(100) NOT NULL,
 cena_dostawy NUMERIC(7,2),
 faktura_id INTEGER PRIMARY KEY,
 czas_dostawy INTEGER DEFAULT 7,

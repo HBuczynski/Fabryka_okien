@@ -5,10 +5,10 @@ import Database
 # Liczba generowanych danych
 N_MODELS = 40
 N_MAXSEGMENTS = 20
-N_MAXPARAMS = 2
+N_MAXPARAMS = 6
 N_PERSONS = 50
 N_COMPANIES = 50
-N_BILLS = 10
+N_BILLS = 500
 N_MAXBILLENTRIES = 20
 
 PRINT_DEBUG = False
@@ -22,13 +22,13 @@ class Generator:
         self.SURNAMES = self.load_surnames()
         self.ADDRESSES = self.load_addresses()
         self.COMPANIES = self.load_companies()
-        self.PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy segmentu.", ["Czerwony", "Zielony", "Zolty", "Brazowy", "Bialy", "Szary", "Niebieski"]],
-                      ["Typ drewna", "Material, z ktorego wykonane sa drewniane elementy segmentu.", ["Buk", "Sosna", "Dab", "Jesion", "Swierk", "Modrzew"]],
-                      ["Okucie", "Typ okucia wykorzystywany w segmencie.", ["Standardowe", "Antywlamaniowe"]],
-                      ["Uchylne", "Wybor czy okno moze sie uchylac, czy nie.", ["Tak", "Nie"]],
-                      ["Otwierane","Wybor czy okno moze sie otwierac i w ktora strone.", ["Prawe", "Lewe", "Nieotwieralne"]],
-                      ["Kolor uszczelki","Wybot koloru uszczelki segmentu", ["Czarna", "Braz", "Biala", "Zlota"]],
-                      ["Szprosy", "Wybor rozkladu szprosow", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]]
+        self.PARAMS = [["Kolor segmentu", "Kolor farby, jaką pokryte są malowane elementy segmentu", ["Czerwony", "Zielony", "Zółty", "Brązowy", "Biały", "Szary", "Niebieski"]],
+                      ["Typ drewna", "Materiał, z którego wykonane są drewniane elementy segmentu", ["Buk", "Sosna", "Dąb", "Jesion", "Świerk", "Modrzew"]],
+                      ["Okucie", "Typ okucia wykorzystywany w segmencie", ["Standardowe", "Antywłamaniowe"]],
+                      ["Uchylne", "Wybór czy okno może się uchylać, czy nie", ["Tak", "Nie"]],
+                      ["Otwierane","Wybór czy okno może się otwierać i w ktora stronę", ["Prawe", "Lewe", "Nieotwieralne"]],
+                      ["Kolor uszczelki","Wybór koloru uszczelki segmentu", ["Czarna", "Brązowa", "Biała", "Złota"]],
+                      ["Szprosy", "Wybór rozkładu szprosów", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]]
 
     def generate(self):
         print("Generating random data...")
