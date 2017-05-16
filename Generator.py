@@ -42,6 +42,9 @@ class Generator:
         print("===================== GENERATING ORDERS  =====================")
         self.generate_orders()
 
+        # Zapisanie danych do bazy
+        self.db.commit()
+
     def generate_stock(self):
         # Wybierz N_MODELS unikalnych nazw z bazy nazw modeli
         model_names = self.generate_names()
