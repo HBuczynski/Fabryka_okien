@@ -53,7 +53,7 @@ DELIMITER ;
 
 DROP TRIGGER IF EXISTS Usuniety_segm;
 DELIMITER //
-CREATE TRIGGER Usuniety_segm AFTER DELETE ON Pozycja
+CREATE TRIGGER Usuniety_segm BEFORE DELETE ON Pozycja
 FOR EACH ROW
        BEGIN
 	DECLARE A NUMERIC;
@@ -84,7 +84,7 @@ DELIMITER ;
 
 DROP TRIGGER IF EXISTS Cena_sum_mont;
 DELIMITER //
-CREATE TRIGGER Cena_sum_mont AFTER INSERT ON Montaz
+CREATE TRIGGER Cena_sum_mont BEFORE INSERT ON Montaz
 FOR EACH ROW
        BEGIN
 	UPDATE Faktura SET cena_suma = cena_suma + NEW.cena_montazu WHERE faktura_id=NEW.faktura_id;
@@ -96,7 +96,7 @@ DELIMITER ;
 
 DROP TRIGGER IF EXISTS Cena_sum_dost;
 DELIMITER //
-CREATE TRIGGER Cena_sum_dost AFTER INSERT ON Dostawa
+CREATE TRIGGER Cena_sum_dost BEFORE INSERT ON Dostawa
 FOR EACH ROW
        BEGIN
 	UPDATE Faktura SET cena_suma = cena_suma + NEW.cena_dostawy WHERE faktura_id=NEW.faktura_id;
@@ -130,7 +130,7 @@ DELIMITER //
 CREATE TRIGGER Staty_klienta 
 AFTER UPDATE ON Faktura FOR EACH ROW
 BEGIN
-IF NEW.status = 'Zakonczone' AND OLD.status<>NEW.status THEN
+IF NEW.status = 'Zrealizowane' AND OLD.status<>NEW.status THEN
 -- Statystyka ogólna:
 UPDATE Staty_klienta SET suma := suma + NEW.cena_suma WHERE rok=0 AND klient_id=NEW.klient_id;
 IF (SELECT COUNT(*) FROM Staty_klienta WHERE klient_id=NEW.klient_id)=0 THEN
@@ -157,7 +157,7 @@ DELIMITER //
 CREATE TRIGGER Staty_miesiac
 AFTER UPDATE ON Faktura FOR EACH ROW
 BEGIN
-IF NEW.status = 'Zakonczone' AND OLD.status<>NEW.status THEN
+IF NEW.status = 'Zrealizowane' AND OLD.status<>NEW.status THEN
 -- Statystyka ogólna:
 UPDATE Staty_miesiac SET suma := suma + NEW.cena_suma WHERE rok=0;
 IF (SELECT COUNT(*) FROM Staty_miesiac)=0 THEN
@@ -176,7 +176,61 @@ END IF;
 END IF;
 END;
 //
-DELIMITER ; 
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS Staty_klienta_insert;
+
+DELIMITER //
+CREATE TRIGGER Staty_klienta_insert
+AFTER INSERT ON Faktura FOR EACH ROW
+BEGIN
+IF NEW.status = 'Zrealizowane' THEN
+-- Statystyka ogólna:
+UPDATE Staty_klienta SET suma := suma + NEW.cena_suma WHERE rok=0 AND klient_id=NEW.klient_id;
+IF (SELECT COUNT(*) FROM Staty_klienta WHERE klient_id=NEW.klient_id)=0 THEN
+INSERT INTO Staty_klienta (klient_id,rok,miesiac,suma) VALUES (NEW.klient_id,0,0,NEW.cena_suma);
+END IF;
+-- Statystyka roczna:
+UPDATE Staty_klienta SET suma := suma + NEW.cena_suma WHERE miesiac=0 AND rok=YEAR(NEW.czas_zakonczenia) AND klient_id=NEW.klient_id;
+IF(SELECT COUNT(*) FROM Staty_klienta WHERE rok=YEAR(NEW.czas_zakonczenia))=0 THEN
+INSERT INTO Staty_klienta (klient_id,rok,miesiac,suma) VALUES (NEW.klient_id,YEAR(NEW.czas_zakonczenia),0,NEW.cena_suma);
+END IF;
+-- Statystyka miesieczna:
+UPDATE Staty_klienta SET suma := suma + NEW.cena_suma WHERE miesiac=MONTH(NEW.czas_zakonczenia) AND rok=YEAR(NEW.czas_zakonczenia) AND klient_id=NEW.klient_id;
+IF (SELECT COUNT(*) FROM Staty_klienta WHERE rok=YEAR(NEW.czas_zakonczenia) AND miesiac=MONTH(NEW.czas_zakonczenia))=0 THEN
+INSERT INTO Staty_klienta (klient_id,rok,miesiac,suma) VALUES (NEW.klient_id,YEAR(NEW.czas_zakonczenia),MONTH(NEW.czas_zakonczenia),NEW.cena_suma);
+END IF;
+END IF;
+END;
+//
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS Staty_miesiac_insert;
+
+DELIMITER //
+CREATE TRIGGER Staty_miesiac_insert
+AFTER INSERT ON Faktura FOR EACH ROW
+BEGIN
+IF NEW.status = 'Zrealizowane' THEN
+-- Statystyka ogólna:
+UPDATE Staty_miesiac SET suma := suma + NEW.cena_suma WHERE rok=0;
+IF (SELECT COUNT(*) FROM Staty_miesiac)=0 THEN
+INSERT INTO Staty_miesiac (rok,miesiac,suma) VALUES (0,0,NEW.cena_suma);
+END IF;
+-- Statystyka roczna:
+UPDATE Staty_miesiac SET suma := suma + NEW.cena_suma WHERE miesiac=0 AND rok=YEAR(NEW.czas_zakonczenia);
+IF(SELECT COUNT(*) FROM Staty_miesiac WHERE rok=YEAR(NEW.czas_zakonczenia))=0 THEN
+INSERT INTO Staty_miesiac (rok,miesiac,suma) VALUES (YEAR(NEW.czas_zakonczenia),0,NEW.cena_suma);
+END IF;
+-- Statystyka miesieczna:
+UPDATE Staty_miesiac SET suma := suma + NEW.cena_suma WHERE miesiac=MONTH(NEW.czas_zakonczenia) AND rok=YEAR(NEW.czas_zakonczenia);
+IF (SELECT COUNT(*) FROM Staty_miesiac WHERE rok=YEAR(NEW.czas_zakonczenia) AND miesiac=MONTH(NEW.czas_zakonczenia))=0 THEN
+INSERT INTO Staty_miesiac (rok,miesiac,suma) VALUES (YEAR(NEW.czas_zakonczenia),MONTH(NEW.czas_zakonczenia),NEW.cena_suma);
+END IF;
+END IF;
+END;
+//
+DELIMITER ;
 
 DROP TRIGGER IF EXISTS Param_poz;
 

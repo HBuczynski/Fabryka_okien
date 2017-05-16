@@ -35,7 +35,7 @@ class Generator:
         # Generowanie oferty (modele, segmenty, parametry, wartosci)
         print("===================== GENERATING STOCK   =====================")
         self.generate_stock()
-        # Generowanie klientow
+        # Generowanie klientow`
         print("===================== GENERATING CLIENTS =====================")
         self.generate_clients()
         # Generowanie zamowien
@@ -106,8 +106,8 @@ class Generator:
             date_done = date_added+timedelta(days=random.randint(5, 30))
             if PRINT_DEBUG:
                 print("ADD BILL: (klient_id: %d)" % (klient_id))
-            self.db.add_bill(klient_id, 0, date_added, date_done, "Zlozone")
-            bill_id = self.db.get_bill_id(klient_id, 0, date_added, date_done, "Zlozone")
+            self.db.add_bill(klient_id, date_added, date_done, "Zrealizowane")
+            bill_id = self.db.get_bill_id(klient_id, 0, date_added, date_done, "Zrealizowane")
 
             for entry in range(random.randint(1, N_MAXBILLENTRIES)):
                 segment_id = self.generate_segment_id()
@@ -116,7 +116,7 @@ class Generator:
                 dimX = self.generate_dimension()
                 dimY = self.generate_dimension()
                 count = random.randint(1, 10)
-                status = "Zlozone"
+                status = "Zrealizowane"
                 szyba_id = random.randint(1, self.windowspanes_number)
                 self.db.add_bill_entry(bill_id, segment_id, szyba_id, dimX, dimY, count, status)
                 entry_id = self.db.get_bill_entry_id(bill_id, segment_id, szyba_id, dimX, dimY, count, status)

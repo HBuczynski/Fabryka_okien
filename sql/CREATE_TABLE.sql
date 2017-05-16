@@ -77,7 +77,7 @@ pesel VARCHAR(11),
 nip VARCHAR(11),
 nazwa VARCHAR(100),
 czas_zakonczenia DATE,
-status ENUM('Zlozone', 'Anulowane', 'W trakcie realizacji', 'Gotowe', 'Zakonczone', 'Zwrot') DEFAULT 'Zlozone',
+status ENUM('Zlozone', 'Anulowane', 'W trakcie realizacji', 'Gotowe', 'Zrealizowane', 'Zwrot') DEFAULT 'Zlozone',
 FOREIGN KEY (klient_id) REFERENCES Klient (klient_id)
 ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -141,7 +141,7 @@ cena_jednostkowa      NUMERIC(16,2),
 faktura_id            INTEGER NOT NULL,
 segment_id            INTEGER NOT NULL,
 szyba_id              INTEGER NOT NULL,
-status                ENUM('Zlozone', 'W trakcie realizacji', 'Wyslane/odebrane', 'Gotowe') DEFAULT 'Zlozone',
+status                ENUM('Zlozone', 'W trakcie realizacji', 'Wyslane/odebrane', 'Zrealizowane') DEFAULT 'Zlozone',
 CONSTRAINT PK_Pozycja PRIMARY KEY (pozycja_id, faktura_id),
 CONSTRAINT FK_Pozycja_faktura FOREIGN KEY (faktura_id) REFERENCES Faktura (faktura_id)
 ON DELETE CASCADE ON UPDATE CASCADE,
