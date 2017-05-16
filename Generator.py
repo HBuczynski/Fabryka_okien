@@ -3,11 +3,13 @@ import random
 import Database
 
 # Liczba generowanych danych
-N_MODELS = 3
-N_MAXSEGMENTS = 5
+N_MODELS = 40
+N_MAXSEGMENTS = 20
 N_MAXPARAMS = 2
 N_PERSONS = 50
 N_COMPANIES = 50
+N_BILLS = 10
+N_MAXBILLENTRIES = 5
 
 class Generator:
     def __init__(self, database: Database.Database):
@@ -25,7 +27,6 @@ class Generator:
                       ["Otwierane","Wybor czy okno moze sie otwierac i w ktora strone.", ["Prawe", "Lewe", "Nieotwieralne"]],
                       ["Kolor uszczelki","Wybot koloru uszczelki segmentu", ["Czarna", "Braz", "Biala", "Zlota"]],
                       ["Szprosy", "Wybor rozkladu szprosow", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]]
-
 
     def generate(self):
         # Generowanie oferty (modele, segmenty, parametry, wartosci)
@@ -67,6 +68,10 @@ class Generator:
                         print("   ADD VALUE: " + value)
                         self.db.add_param_value_by_id(parameter_id, value)
 
+        self.db.add_windowpane("1-komorowa", 1.14)
+        self.db.add_windowpane("2-komorowa", 2.14)
+        self.db.add_windowpane("3-komorowa", 3.14)
+
     def generate_clients(self):
         names = self.generate_person_names()
         surnames = self.generate_person_surnames()
@@ -83,10 +88,23 @@ class Generator:
             print("ADD COMPANY: ('%s', '%s', '%s')" % (names[i], addresses[i], nips[i]))
             self.db.add_client_company(names[i], addresses[i], nips[i])
 
-
     def generate_orders(self):
-        pass
-        # TODO
+        for bill in range(N_BILLS):
+            klient_id = self.generate_klient_id()
+            date_added = date.today()+timedelta(days=random.randint(-10000, 10000))
+            date_done = date_added+timedelta(days=random.randint(5, 30))
+            print("ADD BILL: (klient_id: %d)" % (klient_id))
+            self.db.add_bill(klient_id, 0, date_added, date_done, "Zlozone")
+            bill_id = self.db.get_bill_id(klient_id, 0, date_added, date_done, "Zlozone")
+
+            for entry in range(random.randint(1, N_MAXBILLENTRIES)):
+                segment_id = self.generate_segment_id()
+                print(" ADD ENTRY: (segment_id: %d)" % (segment_id))
+                self.db.add_bill_entry(bill_id, segment_id, 1,
+                                       self.generate_dimension(), self.generate_dimension(),
+                                       random.randint(1, 10), 0, "Zlozone") # TODO: not done yet
+
+                # TODO: add random params to the entry
 
     def generate_names(self):
         return [self.NAMES[i] for i in random.sample(range(len(self.NAMES)), N_MODELS)]
@@ -114,6 +132,15 @@ class Generator:
 
     def generate_address(self):
         return random.choice(self.ADDRESSES) + " " + str(random.randint(1, 200))
+
+    def generate_klient_id(self):
+        return self.db.get_random_klient_id()
+
+    def generate_segment_id(self):
+        return self.db.get_random_segment_id()
+
+    def generate_dimension(self):
+        return random.randrange(300, 3000, 10)
 
     def generateCenaA(self):
         random.seed()

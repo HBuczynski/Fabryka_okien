@@ -1,5 +1,6 @@
 import mysql.connector
 from os import system
+import random
 import db_settings as DB
 
 class Database:
@@ -37,6 +38,12 @@ class Database:
                  "INNER JOIN Segment s ON p.segment_id=s.segment_id "
                  "WHERE p.nazwa=%s AND s.nazwa=%s AND s.model_id=(SELECT model_id FROM Model WHERE nazwa=%s)")
         self.cursor.execute(query, (nazwa_parametru, nazwa_segmentu, nazwa_modelu))
+        return self.cursor.fetchone()[0]
+
+    def get_bill_id(self, klient_id, cena_suma, data_dodania, czas_zakonczenia, status):
+        query = ("SELECT faktura_id FROM Faktura "
+                 "WHERE klient_id=%s AND cena_suma=%s AND data_dodania=%s AND czas_zakonczenia=%s AND status=%s")
+        self.cursor.execute(query, (klient_id, cena_suma, data_dodania, czas_zakonczenia, status))
         return self.cursor.fetchone()[0]
 
     def add_model(self, nazwa_modelu):
@@ -114,3 +121,15 @@ class Database:
                  "(faktura_id, cena_montazu, data_montazu) "
                  "VALUES (%s,%s,%s)")
         self.cursor.execute(query, (faktura_id, cena_montazu, data_montazu))
+
+    def get_random_klient_id(self):
+        query = ("SELECT klient_id FROM Klient")
+        self.cursor.execute(query)
+        result = self.cursor.fetchall()
+        return random.choice(result)[0]
+
+    def get_random_segment_id(self):
+        query = ("SELECT segment_id FROM Segment")
+        self.cursor.execute(query)
+        result = self.cursor.fetchall()
+        return random.choice(result)[0]
