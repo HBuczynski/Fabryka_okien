@@ -46,6 +46,26 @@ class Database:
         self.cursor.execute(query, (klient_id, cena_suma, data_dodania, czas_zakonczenia, status))
         return self.cursor.fetchone()[0]
 
+    def get_bill_entry_id(self, faktura_id, segment_id, szyba_id, wymiar_x, wymiar_y, ilosc, status):
+        query = ("SELECT pozycja_id FROM Pozycja "
+                 "WHERE faktura_id=%s AND segment_id=%s AND szyba_id=%s AND wymiar_x=%s AND wymiar_y=%s AND ilosc=%s AND status=%s")
+        self.cursor.execute(query, (faktura_id, segment_id, szyba_id, wymiar_x, wymiar_y, ilosc, status))
+        return self.cursor.fetchone()[0]
+
+    def get_params_for_segment_id(self, segment_id):
+        query = ("SELECT parametr_id FROM Parametr_segmentu "
+                 "WHERE segment_id=%s")
+        self.cursor.execute(query, (segment_id,))
+        result = self.cursor.fetchall()
+        return [it[0] for it in result]
+
+    def get_values_ids_for_param_id(self, parametr_id):
+        query = ("SELECT id FROM Wartosc_parametru "
+                 "WHERE parametr_id=%s")
+        self.cursor.execute(query, (parametr_id,))
+        result = self.cursor.fetchall()
+        return [it[0] for it in result]
+
     def add_model(self, nazwa_modelu):
         query = ("INSERT INTO Model "
                  "(nazwa) "
@@ -103,12 +123,11 @@ class Database:
                  "VALUES (%s,%s,%s,%s,%s)")
         self.cursor.execute(query, (data_dodania, cena_suma, klient_id, czas_zakonczenia, status))
 
-    def add_bill_entry(self, faktura_id, segment_id, szyba_id, wymiar_x, wymiar_y, ilosc, cena_jednostkowa, status):
+    def add_bill_entry(self, faktura_id, segment_id, szyba_id, wymiar_x, wymiar_y, ilosc, status):
         query = ("INSERT INTO Pozycja "
                  "(wymiar_x, wymiar_y, ilosc, cena_jednostkowa, faktura_id, segment_id, szyba_id, status) "
                  "VALUES (%s,%s,%s,%s,%s,%s,%s,%s)")
-        self.cursor.execute(query, (wymiar_x, wymiar_y, ilosc, cena_jednostkowa, faktura_id, segment_id, szyba_id,
-                                    status))
+        self.cursor.execute(query, (wymiar_x, wymiar_y, ilosc, 0, faktura_id, segment_id, szyba_id, status))
 
     def add_delivery(self, faktura_id, adres_dostawy, cena_dostawy, czas_dostawy):
         query = ("INSERT INTO Dostawa "
@@ -121,6 +140,12 @@ class Database:
                  "(faktura_id, cena_montazu, data_montazu) "
                  "VALUES (%s,%s,%s)")
         self.cursor.execute(query, (faktura_id, cena_montazu, data_montazu))
+
+    def add_bill_entry_param_value(self, faktura_id, wartosc_id, pozycja_id):
+        query = ("INSERT INTO Parametr_pozycji "
+                 "(faktura_id, wartosc_id, pozycja_id) "
+                 "VALUES (%s,%s,%s)")
+        self.cursor.execute(query, (faktura_id, wartosc_id, pozycja_id))
 
     def get_random_klient_id(self):
         query = ("SELECT klient_id FROM Klient")

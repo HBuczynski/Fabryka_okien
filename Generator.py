@@ -11,6 +11,8 @@ N_COMPANIES = 50
 N_BILLS = 10
 N_MAXBILLENTRIES = 5
 
+PRINT_DEBUG = False
+
 class Generator:
     def __init__(self, database: Database.Database):
         self.db = database
@@ -29,6 +31,7 @@ class Generator:
                       ["Szprosy", "Wybor rozkladu szprosow", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]]
 
     def generate(self):
+        print("Generating random data...")
         # Generowanie oferty (modele, segmenty, parametry, wartosci)
         print("===================== GENERATING STOCK   =====================")
         self.generate_stock()
@@ -40,32 +43,34 @@ class Generator:
         self.generate_orders()
 
     def generate_stock(self):
-        print("Generating random data...")
-
         # Wybierz N_MODELS unikalnych nazw z bazy nazw modeli
         model_names = self.generate_names()
 
         for model_name in model_names:
-            print("ADD MODEL: " + model_name)
+            if PRINT_DEBUG:
+                print("ADD MODEL: " + model_name)
             self.db.add_model(model_name)
             model_id = self.db.get_model_id(model_name)
 
             segment_names = self.generate_segments()
             for segment_name in segment_names:
-                print(" ADD SEGMENT: " + segment_name)
+                if PRINT_DEBUG:
+                    print(" ADD SEGMENT: " + segment_name)
                 self.db.add_segment_by_id(model_id, segment_name, self.generateCenaB(), self.generateCenaC(),
                                     self.generateCenaD())
                 segment_id = self.db.get_segment_id(model_name, segment_name)
 
                 parameters = self.generate_parameters()
                 for parameter in parameters:
-                    print("  ADD PARAM: " + parameter[0])
+                    if PRINT_DEBUG:
+                        print("  ADD PARAM: " + parameter[0])
                     self.db.add_param_by_id(segment_id, parameter[0], parameter[1])
                     parameter_id = self.db.get_parametr_id(model_name, segment_name, parameter[0])
 
                     values = parameter[2]
                     for value in values:
-                        print("   ADD VALUE: " + value)
+                        if PRINT_DEBUG:
+                            print("   ADD VALUE: " + value)
                         self.db.add_param_value_by_id(parameter_id, value)
 
         self.db.add_windowpane("1-komorowa", 1.14)
@@ -78,14 +83,16 @@ class Generator:
         addresses = [self.generate_address() for it in range(N_PERSONS)]
         pesels = self.generate_pesels()
         for i in range(N_PERSONS):
-            print("ADD PERSON: ('%s', '%s', '%s', '%s')" % (names[i], surnames[i], addresses[i], pesels[i]))
+            if PRINT_DEBUG:
+                print("ADD PERSON: ('%s', '%s', '%s', '%s')" % (names[i], surnames[i], addresses[i], pesels[i]))
             self.db.add_client_person(names[i], surnames[i], addresses[i], pesels[i])
 
         names = self.generate_company_names()
         addresses = [self.generate_address() for it in range(N_COMPANIES)]
         nips = self.generate_nips()
         for i in range(N_COMPANIES):
-            print("ADD COMPANY: ('%s', '%s', '%s')" % (names[i], addresses[i], nips[i]))
+            if PRINT_DEBUG:
+                print("ADD COMPANY: ('%s', '%s', '%s')" % (names[i], addresses[i], nips[i]))
             self.db.add_client_company(names[i], addresses[i], nips[i])
 
     def generate_orders(self):
@@ -93,18 +100,29 @@ class Generator:
             klient_id = self.generate_klient_id()
             date_added = date.today()+timedelta(days=random.randint(-10000, 10000))
             date_done = date_added+timedelta(days=random.randint(5, 30))
-            print("ADD BILL: (klient_id: %d)" % (klient_id))
+            if PRINT_DEBUG:
+                print("ADD BILL: (klient_id: %d)" % (klient_id))
             self.db.add_bill(klient_id, 0, date_added, date_done, "Zlozone")
             bill_id = self.db.get_bill_id(klient_id, 0, date_added, date_done, "Zlozone")
 
             for entry in range(random.randint(1, N_MAXBILLENTRIES)):
                 segment_id = self.generate_segment_id()
-                print(" ADD ENTRY: (segment_id: %d)" % (segment_id))
-                self.db.add_bill_entry(bill_id, segment_id, 1,
-                                       self.generate_dimension(), self.generate_dimension(),
-                                       random.randint(1, 10), 0, "Zlozone") # TODO: not done yet
+                if PRINT_DEBUG:
+                    print(" ADD ENTRY: (segment_id: %d)" % (segment_id))
+                dimX = self.generate_dimension()
+                dimY = self.generate_dimension()
+                count = random.randint(1, 10)
+                status = "Zlozone"
+                self.db.add_bill_entry(bill_id, segment_id, 1, dimX, dimY, count, status)
+                entry_id = self.db.get_bill_entry_id(bill_id, segment_id, 1, dimX, dimY, count, status)
 
-                # TODO: add random params to the entry
+                params = self.db.get_params_for_segment_id(segment_id)
+                for param_id in params:
+                    values = self.db.get_values_ids_for_param_id(param_id)
+                    value_id = random.choice(values)
+                    if PRINT_DEBUG:
+                        print("  FOR PARAM: %s ADD VALUE: %s" % (param_id, value_id))
+                    self.db.add_bill_entry_param_value(bill_id, value_id, entry_id)
 
     def generate_names(self):
         return [self.NAMES[i] for i in random.sample(range(len(self.NAMES)), N_MODELS)]
