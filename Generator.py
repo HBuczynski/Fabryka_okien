@@ -10,26 +10,34 @@ PARAMS = [["Kolor segmentu", "Kolor farby, jaka pokryte sa malowane elementy seg
           ["Kolor uszczelki","Wybot koloru uszczelki segmentu", ["Czarna", "Braz", "Biala", "Zlota"]],
           ["Szprosy", "Wybor rozkladu szprosow", ["1 na 1", "2 na 2", "3 na 2", "3 na 3", "Brak"]]
           ]
-ADDRESSES = ["Krucza", "Lesna", "Dluga", "Szeroka", "Polna", "Jana Sobieskiego", "Kwiatowa", "Koszykowa", "Noakowskiego", "Aleja Komisji Edukacji Narodowej", "Grojecka", "Pulawska"]
 
 # Liczba generowanych danych
 N_MODELS = 3
 N_MAXSEGMENTS = 5
 N_MAXPARAMS = 2
+N_PERSONS = 50
+N_COMPANIES = 50
 
 class Generator:
     def __init__(self, database: Database.Database):
         self.db = database
 
+        # Zaladowanie danych slownikowych
         self.NAMES = self.load_names()
+        self.SURNAMES = self.load_surnames()
+        self.ADDRESSES = self.load_addresses()
+        self.COMPANIES = self.load_companies()
 
 
     def generate(self):
         # Generowanie oferty (modele, segmenty, parametry, wartosci)
+        print("===================== GENERATING STOCK   =====================")
         self.generate_stock()
         # Generowanie klientow
+        print("===================== GENERATING CLIENTS =====================")
         self.generate_clients()
         # Generowanie zamowien
+        print("===================== GENERATING ORDERS  =====================")
         self.generate_orders()
 
     def generate_stock(self):
@@ -62,8 +70,21 @@ class Generator:
                         self.db.add_param_value_by_id(parameter_id, value)
 
     def generate_clients(self):
-        pass
-        # TODO
+        names = self.generate_person_names()
+        surnames = self.generate_person_surnames()
+        addresses = [self.generate_address() for it in range(N_PERSONS)]
+        pesels = self.generate_pesels()
+        for i in range(N_PERSONS):
+            print("ADD PERSON: ('%s', '%s', '%s', '%s')" % (names[i], surnames[i], addresses[i], pesels[i]))
+            self.db.add_client_person(names[i], surnames[i], addresses[i], pesels[i])
+
+        names = self.generate_company_names()
+        addresses = [self.generate_address() for it in range(N_COMPANIES)]
+        nips = self.generate_nips()
+        for i in range(N_COMPANIES):
+            print("ADD COMPANY: ('%s', '%s', '%s')" % (names[i], addresses[i], nips[i]))
+            self.db.add_client_company(names[i], addresses[i], nips[i])
+
 
     def generate_orders(self):
         pass
@@ -78,14 +99,23 @@ class Generator:
     def generate_parameters(self):
         return [PARAMS[i] for i in random.sample(range(len(PARAMS)), random.randint(0, N_MAXPARAMS))]
 
-    def generate_person_name(self):
-        return "Anna Kowalska"
+    def generate_person_names(self):
+        return [self.NAMES[i] for i in random.sample(range(len(self.NAMES)), N_PERSONS)]
 
-    def generate_company_name(self):
-        return "Pepsi"
+    def generate_person_surnames(self):
+        return [self.SURNAMES[i] for i in random.sample(range(len(self.SURNAMES)), N_PERSONS)]
+
+    def generate_company_names(self):
+        return [self.COMPANIES[i] for i in random.sample(range(len(self.COMPANIES)), N_COMPANIES)]
+
+    def generate_pesels(self):
+        return [str(50000000000 + i) for i in random.sample(range(50000000000), N_PERSONS)]
+
+    def generate_nips(self):
+        return [str(1000000000 + i) for i in random.sample(range(9000000000), N_COMPANIES)]
 
     def generate_address(self):
-        return random.choice(ADDRESSES) + " " + str(random.randint(1, 200))
+        return random.choice(self.ADDRESSES) + " " + str(random.randint(1, 200))
 
     def generateCenaA(self):
         random.seed()
@@ -107,20 +137,23 @@ class Generator:
         A = random.uniform(20.0, 500.0)
         return float("{0:.1f}".format(A))
 
-    def load_names(self):
-        names = []
-        with open("./sql/imiona.txt") as file:
+    def load_file(self, file):
+        contents = []
+        with open(file) as file:
             for line in file:
                 line = line.strip()
-                names.append(line)
-        return names
+                contents.append(line)
+        return contents
+
+    def load_names(self):
+        return self.load_file("./sql/imiona.txt")
 
     def load_surnames(self):
-        names = []
-        with open("./sql/nazwiska.txt") as file:
-            for line in file:
-                line = line.strip()
-                names.append(line)
-        return names
+        return self.load_file("./sql/nazwiska.txt")
 
+    def load_addresses(self):
+        return self.load_file("./sql/ulice.txt")
+
+    def load_companies(self):
+        return self.load_file("./sql/firmy.txt")
 
