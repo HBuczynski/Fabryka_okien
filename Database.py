@@ -40,10 +40,10 @@ class Database:
         self.cursor.execute(query, (nazwa_parametru, nazwa_segmentu, nazwa_modelu))
         return self.cursor.fetchone()[0]
 
-    def get_bill_id(self, klient_id, cena_suma, data_dodania, czas_zakonczenia, status):
+    def get_bill_id(self, klient_id, data_dodania, czas_zakonczenia, status):
         query = ("SELECT faktura_id FROM Faktura "
-                 "WHERE klient_id=%s AND cena_suma=%s AND data_dodania=%s AND czas_zakonczenia=%s AND status=%s")
-        self.cursor.execute(query, (klient_id, cena_suma, data_dodania, czas_zakonczenia, status))
+                 "WHERE klient_id=%s AND data_dodania=%s AND czas_zakonczenia=%s AND status=%s")
+        self.cursor.execute(query, (klient_id, data_dodania, czas_zakonczenia, status))
         return self.cursor.fetchone()[0]
 
     def get_bill_entry_id(self, faktura_id, segment_id, szyba_id, wymiar_x, wymiar_y, ilosc, status):

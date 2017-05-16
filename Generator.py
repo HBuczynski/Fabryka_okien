@@ -8,7 +8,7 @@ N_MAXSEGMENTS = 20
 N_MAXPARAMS = 2
 N_PERSONS = 50
 N_COMPANIES = 50
-N_BILLS = 100
+N_BILLS = 10
 N_MAXBILLENTRIES = 20
 
 PRINT_DEBUG = False
@@ -77,9 +77,9 @@ class Generator:
                         self.db.add_param_value_by_id(parameter_id, value)
 
         self.windowspanes_number = 3
-        self.db.add_windowpane("1-komorowa", 1.14)
-        self.db.add_windowpane("2-komorowa", 2.14)
-        self.db.add_windowpane("3-komorowa", 3.14)
+        self.db.add_windowpane("1-komorowa", self.generateCenaA())
+        self.db.add_windowpane("2-komorowa", self.generateCenaA())
+        self.db.add_windowpane("3-komorowa", self.generateCenaA())
 
     def generate_clients(self):
         names = self.generate_person_names()
@@ -106,8 +106,10 @@ class Generator:
             date_done = date_added+timedelta(days=random.randint(5, 30))
             if PRINT_DEBUG:
                 print("ADD BILL: (klient_id: %d)" % (klient_id))
-            self.db.add_bill(klient_id, date_added, date_done, "Zrealizowane")
-            bill_id = self.db.get_bill_id(klient_id, 0, date_added, date_done, "Zrealizowane")
+
+            bill_status = "Zlozone"
+            self.db.add_bill(klient_id, date_added, date_done, bill_status)
+            bill_id = self.db.get_bill_id(klient_id, date_added, date_done, bill_status)
 
             for entry in range(random.randint(1, N_MAXBILLENTRIES)):
                 segment_id = self.generate_segment_id()
@@ -128,6 +130,14 @@ class Generator:
                     if PRINT_DEBUG:
                         print("  FOR PARAM: %s ADD VALUE: %s" % (param_id, value_id))
                     self.db.add_bill_entry_param_value(bill_id, value_id, entry_id)
+
+            if random.randint(0, 1) == 0:
+                self.db.add_delivery(bill_id, self.generate_address(), random.randint(100, 6000)/10,
+                                     random.randint(5, 20))
+            if random.randint(0, 2) == 0:
+                self.db.add_installation(bill_id, random.randint(100, 6000)/10,
+                                         date_done+timedelta(days=random.randint(5, 20)))
+
 
     def generate_names(self):
         return [self.NAMES[i] for i in random.sample(range(len(self.NAMES)), N_MODELS)]
@@ -167,23 +177,23 @@ class Generator:
 
     def generateCenaA(self):
         random.seed()
-        A = random.uniform(0.1, 2.0)
-        return float("{0:.1f}".format(A))
+        A = random.uniform(0.00001, 0.0001)
+        return float("{0:.5f}".format(A))
 
     def generateCenaB(self):
         random.seed()
-        A = random.uniform(1.0, 4.0)
-        return float("{0:.1f}".format(A))
+        A = random.uniform(0.01, 0.8)
+        return float("{0:.5f}".format(A))
 
     def generateCenaC(self):
         random.seed()
-        A = random.uniform(0.1, 5.0)
-        return float("{0:.1f}".format(A))
+        A = random.uniform(0.01, 0.5)
+        return float("{0:.5f}".format(A))
 
     def generateCenaD(self):
         random.seed()
-        A = random.uniform(20.0, 500.0)
-        return float("{0:.1f}".format(A))
+        A = random.uniform(2.0, 500.0)
+        return float("{0:.5f}".format(A))
 
     def load_file(self, file):
         contents = []
