@@ -8,8 +8,8 @@ N_MAXSEGMENTS = 20
 N_MAXPARAMS = 2
 N_PERSONS = 50
 N_COMPANIES = 50
-N_BILLS = 10
-N_MAXBILLENTRIES = 5
+N_BILLS = 100
+N_MAXBILLENTRIES = 20
 
 PRINT_DEBUG = False
 
@@ -76,6 +76,7 @@ class Generator:
                             print("   ADD VALUE: " + value)
                         self.db.add_param_value_by_id(parameter_id, value)
 
+        self.windowspanes_number = 3
         self.db.add_windowpane("1-komorowa", 1.14)
         self.db.add_windowpane("2-komorowa", 2.14)
         self.db.add_windowpane("3-komorowa", 3.14)
@@ -116,8 +117,9 @@ class Generator:
                 dimY = self.generate_dimension()
                 count = random.randint(1, 10)
                 status = "Zlozone"
-                self.db.add_bill_entry(bill_id, segment_id, 1, dimX, dimY, count, status)
-                entry_id = self.db.get_bill_entry_id(bill_id, segment_id, 1, dimX, dimY, count, status)
+                szyba_id = random.randint(1, self.windowspanes_number)
+                self.db.add_bill_entry(bill_id, segment_id, szyba_id, dimX, dimY, count, status)
+                entry_id = self.db.get_bill_entry_id(bill_id, segment_id, szyba_id, dimX, dimY, count, status)
 
                 params = self.db.get_params_for_segment_id(segment_id)
                 for param_id in params:
