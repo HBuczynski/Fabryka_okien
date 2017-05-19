@@ -1,3 +1,5 @@
 .idea/
-__pycache__/
+generator/__pycache__/
 generator/db_settings.py
+app/__pycache__/
+app/ui/__pycache__/
