@@ -13,9 +13,8 @@ from app.ui.mainwindow import Ui_MainWindow
 from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    db = Database
     def __init__(self):
-
+        self.db = Database.Database()
         QMainWindow.__init__(self)
         # Set up the user interface from Designer.
         self.setupUi(self)
