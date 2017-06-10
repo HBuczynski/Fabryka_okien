@@ -9,16 +9,13 @@ from reportlab.pdfbase._fontdata_widths_symbol import widths
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 
 from PyQt5.QtWidgets import *
-<<<<<<< HEAD
 from generator import Database
 from app.ui.mainwindow import Ui_MainWindow
-=======
 
-from ui.mainwindow import Ui_MainWindow
-from orderDialog import OrderDialog
-from clientDialog import ClientDialog
+from app.ui.mainwindow import Ui_MainWindow
+from app.orderDialog import OrderDialog
+from app.clientDialog import ClientDialog
 
->>>>>>> 02c6eb9d6f0c7bc972038627269fdf327587c9c0
 from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -56,10 +53,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def clickedOrderSearchButton(self):
         print("Lupa")
 
-<<<<<<< HEAD
     def clickedClientSearchButton(self):
         result = self.db.get_clients()
-        self.table_widget_insert(result)
+        self.table_widget_insert(result,self.clientTableView)
         searchAccordingTo = str(self.orderSearchComboBox.currentText())
         searchLine = self.orderSerachLineEdit.text()
         dateFrom = str(self.ordersFromDateEdit.date())
@@ -96,15 +92,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     #Appending data to tables:
-    def table_widget_insert(self,query_result):
+    def table_widget_insert(self,query_result,table_widget):
         pc = len(query_result)
         ic = len(query_result[0])
         i = 0
         j = 0
-        self.clientTableWidget.setRowCount(pc)
+        table_widget.setRowCount(pc)
         while i < pc:
             while j < ic:
-                self.clientTableWidget.setItem(i, j, QTableWidgetItem(str(query_result[i][j])))
+                table_widget.setItem(i, j, QTableWidgetItem(str(query_result[i][j])))
                 j += 1
             j = 0
             i += 1
