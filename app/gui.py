@@ -2,6 +2,7 @@
 Pliki *.ui "kompiluje" się poleceniem:
 $ pyuic5 -o mainwindow.py mainwindow.ui
 """
+from PyQt5.QtWidgets import QMainWindow
 
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 
@@ -13,9 +14,14 @@ from ui.mainwindow import Ui_MainWindow
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-
         # Set up the user interface from Designer.
         self.setupUi(self)
+        # Setting up additional options (apart from generated, ex: PushButton  action):
+        self.pushButton_DodajFakture.clicked.connect(self.pushButton_DodajFakture)
+
+    #Definitions of PushButtons action functions:
+    def pushButton_DodajFakture(self):
+        print("Ddddd")
 
         # TODO: To nie działa
         # self.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
