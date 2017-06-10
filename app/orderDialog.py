@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import *
 
 from ui.invoiceDialog import Ui_invoiceDialog
+from orderClientSearch import OrderClientSearch
 from PyQt5.QtCore import *
 
 class OrderDialog(QDialog, Ui_invoiceDialog):
@@ -16,6 +17,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         self.setupUi(self)
         self.mode = "new"
 
+        #Setting up additional dialogs
+        self.searchClientDialog = OrderClientSearch()
         # Setting up additional options (apart from generated, ex: PushButton  action):
         self.selectClientButton.clicked.connect(self.clickedSelectClientButton)
         self.newPositionButton.clicked.connect(self.clickedNewPositionButton)
@@ -28,7 +31,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         print("sciagamy parametry z bazy")
 
     def clickedSelectClientButton(self):
-        print("sciagamy parametry z bazy")
+        self.searchClientDialog.setDataFromDatabase()
+        self.searchClientDialog.show()
 
     def clickedNewPositionButton(self):
         print("sciagamy parametry z bazy")
@@ -40,7 +44,12 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         print("sciagamy parametry z bazy")
 
     def clickedInvoiceOkButton(self):
-        print("sciagamy parametry z bazy")
+
+        if self.getDataFromLabels() :
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Uzupełnij wszystkie pola !!")
+            msg.exec()
 
     def clickedInvoiceCancelButton(self):
         self.cleanObjectsInDialog()
@@ -71,7 +80,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         self.endDate = self.invoiceEndDateLineEdit.text()
         self.totalCost = self.invoiceTotalCostLineEdit.text()
 
-        fieldsAreEmpty = self.invoiceId == "" or self.status == "" or self.addDate == "" or self.endDate == "" or self.totalCost == ""
+        fieldsAreEmpty = (self.invoiceId == "") or (self.status == "") or (self.addDate == "") or (self.endDate == "") or (self.totalCost == "")
 
+        print(fieldsAreEmpty)
         return fieldsAreEmpty
 
