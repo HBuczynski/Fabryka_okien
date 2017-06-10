@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="usesScrollButtons">
          <bool>true</bool>
@@ -130,27 +130,32 @@
               </column>
               <column>
                <property name="text">
-                <string>Nazwa klienta</string>
+                <string>Imię</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Data złożenia</string>
+                <string>Nazwisko</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Data zakończenia</string>
+                <string>Nazwa Firmy</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Kwota</string>
+                <string>PESEL</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Status</string>
+                <string>NIP</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Adres</string>
                </property>
               </column>
              </widget>
