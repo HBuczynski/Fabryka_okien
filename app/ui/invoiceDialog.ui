@@ -122,9 +122,6 @@
          </widget>
         </item>
        </layout>
-       <zorder>selectClientButton</zorder>
-       <zorder>clientNameLabel</zorder>
-       <zorder>clientAddressLabel</zorder>
        <zorder>clientNameLabel</zorder>
        <zorder>clientAddressLabel</zorder>
        <zorder></zorder>
