@@ -46,7 +46,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         searchAccordingTo = str(self.orderSearchComboBox.currentText())
         searchLine = self.orderSerachLineEdit.text()
-
+        dateFrom = str(self.ordersFromDateEdit.date())
+        print(dateFrom)
+        
         if searchAccordingTo == 'ID klienta':
             print(searchLine)
         elif searchAccordingTo == 'Imię':
