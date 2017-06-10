@@ -1,6 +1,6 @@
 """
 Pliki *.ui "kompiluje" się poleceniem:
-$ pyuic5 -o mainwindow.py mainwindow.ui
+    $ pyuic5 -o mainwindow.py mainwindow.ui
 """
 #from PyQt5.QtWidgets import QMainWindow
 
@@ -18,48 +18,43 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Set up the user interface from Designer.
         self.setupUi(self)
         # Setting up additional options (apart from generated, ex: PushButton  action):
-        self.clientSearchButton.clicked.connect(self.clickedSearchClientButton);
+
         # Actions for orders:
-        #self.addInvoiceButton.clicked.connect(self.clickedInvoiceButton)
-        #self.editInvoiceButton.clicked.connect(self.clickedEditInvoiceButton)
-        #self.searchInvoiceButton.clicked.connect(self.clickedInvoiceButton)
-        #self.selectInvoiceButton.clicked.connect(self.clickedSelectInvoiceButton)
+        self.orderAddButton.clicked.connect(self.clickedOrderAddButton)
+        self.orderEditButton.clicked.connect(self.clickedOrderEditButton)
+        self.orderSearchButton.clicked.connect(self.clickedOrderSearchButton)
 
         # Actions for clients
-        def clickedSearchClientButton(self):
 
-            query = ("SELECT * FROM Faktury")
-            self.cursor.execute(query)
-            result = self.cursor.fetchall()
-            print(result)
-        #self.addClientButton.clicked.connect(self.clickedAddClientButton)
-        #self.editClientButton.clicked.connect(self.clickedEditClientButton)
-        #self.searchClientButton.clicked.connect(self.clickedSearchClientButton)
+
+        self.clientSearchButton.clicked.connect(self.clickedSearchClientButton);
+        self.clientAddButton.clicked.connect(self.clickedClientAddButton)
+        self.clientEditButton.clicked.connect(self.clickedClientEditButton)
+        self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
 
     #Definitions of PushButtons action functions:
+    def clickedOrderAddButton(self):
+        print("add order")
 
-
-        # TODO: To nie działa
-        # self.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        # self.resizeTableWidget()
-        # self.pushButton.clicked.connect(self.resizeTableWidget)
-
-    def clickedEditInvoiceButton(self):
+    def clickedOrderEditButton(self):
         print("Edcyja")
 
-    def clickedSearchInvoiceButton(self):
+    def clickedOrderSearchButton(self):
         print("Lupa")
 
-    def clickedSelectInvoiceButton(self):
-        print("Pokaz Zamowienia")
+    def clickedSearchClientButton(self):
+        query = ("SELECT * FROM Faktury")
+        self.cursor.execute(query)
+        result = self.cursor.fetchall()
+        print(result)
 
-    def clickedAddClientButton(self):
+    def clickedClientAddButton(self):
         print("add client")
 
-    def clickedEditClientButton(self):
+    def clickedClientEditButton(self):
         print("edit client")
 
-    def clickedSearchClientButton(self):
+    def clickedClientSearchButton(self):
         print("Search button")
 
     def resizeTableWidget(self):

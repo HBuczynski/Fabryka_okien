@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1241</width>
-    <height>867</height>
+    <width>1178</width>
+    <height>605</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <property name="usesScrollButtons">
          <bool>true</bool>
@@ -35,14 +35,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_1">
               <item>
-               <widget class="QPushButton" name="pushButton_DodajFakture">
+               <widget class="QPushButton" name="orderAddButton">
                 <property name="text">
                  <string>Nowe zamówienie</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="orderEditButton">
                 <property name="text">
                  <string>Edycja  zamówienia</string>
                 </property>
@@ -73,7 +73,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="clientLineEdit">
+               <widget class="QLineEdit" name="orderSerachLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -89,7 +89,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_3">
+               <widget class="QComboBox" name="orderSearchComboBox">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -129,7 +129,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="clientSearchButton">
+               <widget class="QPushButton" name="orderSearchButton">
                 <property name="text">
                  <string>LUPA</string>
                 </property>
@@ -154,15 +154,15 @@
               <item>
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>Pokaż zamówienia:</string>
+                 <string>Pokaż:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="orderStatusComboBox">
                 <item>
                  <property name="text">
-                  <string>wszystkie</string>
+                  <string>wszystko</string>
                  </property>
                 </item>
                 <item>
@@ -216,7 +216,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit"/>
+               <widget class="QDateEdit" name="ordersFromDateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -226,12 +226,12 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit_2"/>
+               <widget class="QDateEdit" name="ordersToDateEdit"/>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="clientTable">
+             <widget class="QTableWidget" name="orderTable">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -304,14 +304,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QPushButton" name="pushButton_DodajFakture">
+               <widget class="QPushButton" name="clientAddButton">
                 <property name="text">
                  <string>Nowy klient</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="clientEditButton">
                 <property name="text">
                  <string>Edytuj klienta</string>
                 </property>
@@ -342,7 +342,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="clientSearchLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -358,7 +358,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="clientSearchButton">
                 <property name="text">
                  <string>Szukaj</string>
                 </property>
@@ -383,15 +383,15 @@
               <item>
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>Pokaż zamówienia:</string>
+                 <string>Pokaż:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="clientOrdersStatusComboBox">
                 <item>
                  <property name="text">
-                  <string>wszystkie</string>
+                  <string>wszystko</string>
                  </property>
                 </item>
                 <item>
@@ -445,7 +445,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit"/>
+               <widget class="QDateEdit" name="clientFromDateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -455,12 +455,12 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit_2"/>
+               <widget class="QDateEdit" name="clientToDateEdit"/>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="tableWidget_3">
+             <widget class="QTableWidget" name="clientTableWidget">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -524,36 +524,14 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <item>
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>Dostępne modele:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QListView" name="listView"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>Segmenty dostępne w ramach wybranego modelu:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QTreeView" name="treeView"/>
-              </item>
-             </layout>
-            </item>
-           </layout>
+           <widget class="QLabel" name="offerTreeViewLabel">
+            <property name="text">
+             <string>Dostępne modele:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QTreeView" name="offerTreeView"/>
           </item>
          </layout>
         </widget>
@@ -562,202 +540,287 @@
           <string>Raporty</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_7">
-              <item alignment="Qt::AlignTop">
-               <widget class="QTableWidget" name="tableWidget_2">
-                <column>
-                 <property name="text">
-                  <string>Rok</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Miesiąc</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Suma</string>
-                 </property>
-                </column>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QTableWidget" name="tableWidget_4">
-                <column>
-                 <property name="text">
-                  <string>Nowa kolumna</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>ID klienta</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Rok</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Suma</string>
-                 </property>
-                </column>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
           <item row="0" column="0">
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <property name="sizeConstraint">
-             <enum>QLayout::SetMinimumSize</enum>
-            </property>
+           <layout class="QVBoxLayout" name="montReportLayout">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetMinimumSize</enum>
-                </property>
-                <item alignment="Qt::AlignTop">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>Okres od:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                 <widget class="QDateEdit" name="dateEdit_4"/>
-                </item>
-                <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>do:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                 <widget class="QDateEdit" name="dateEdit_3"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Generuj_miesieczny">
+             <widget class="QLabel" name="label_6">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="text">
-               <string>Generuj raport miesięczny</string>
+               <string>Raporty miesięczne</string>
               </property>
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="monthReportDateSearchLayout">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_8">
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_9">
-                  <property name="sizeConstraint">
-                   <enum>QLayout::SetMinimumSize</enum>
-                  </property>
-                  <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                   <widget class="QLabel" name="label_9">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>Okres od:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                   <widget class="QDateEdit" name="dateEdit_6"/>
-                  </item>
-                  <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                   <widget class="QLabel" name="label_10">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>do:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item alignment="Qt::AlignLeft|Qt::AlignTop">
-                   <widget class="QDateEdit" name="dateEdit_5"/>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                  <property name="sizeConstraint">
-                   <enum>QLayout::SetMinimumSize</enum>
-                  </property>
-                  <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-                   <widget class="QLabel" name="label_12">
-                    <property name="text">
-                     <string>Wyszukiwanie po:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item alignment="Qt::AlignTop">
-                   <widget class="QComboBox" name="comboBox_2">
-                    <item>
-                     <property name="text">
-                      <string>ID Klienta</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Imię i nazwisko</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>Nazwa firmy</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>PESEL</string>
-                     </property>
-                    </item>
-                    <item>
-                     <property name="text">
-                      <string>NIP</string>
-                     </property>
-                    </item>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_2">
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QLabel" name="monthReportStartLabel">
+                <property name="text">
+                 <string>Okres od:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="monthReportStartDateEdit"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="monthReportEndLabel">
+                <property name="text">
+                 <string>do:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="monthReportEndDateEdit"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="monthReportShowButton">
+                <property name="text">
+                 <string>Pokaż raporty</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QPushButton" name="Generuj_raport_klienta">
-              <property name="text">
-               <string>Generuj raport klienta</string>
+             <widget class="QTableWidget" name="monthReportTable">
+              <property name="sortingEnabled">
+               <bool>true</bool>
               </property>
+              <attribute name="horizontalHeaderCascadingSectionResizes">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderDefaultSectionSize">
+               <number>150</number>
+              </attribute>
+              <attribute name="horizontalHeaderMinimumSectionSize">
+               <number>50</number>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderCascadingSectionResizes">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderDefaultSectionSize">
+               <number>40</number>
+              </attribute>
+              <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Rok</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Miesiąc</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Suma</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="clientReportLayout">
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Raporty klienta</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="clientReportSearchLayout">
+              <item>
+               <widget class="QLabel" name="clientReportSearchLabel">
+                <property name="text">
+                 <string>Szukaj</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="clientReportSearchComboBox">
+                <item>
+                 <property name="text">
+                  <string>ID Klienta</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Imię i nazwisko</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Nazwa firmy</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>PESEL</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>NIP</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="clientReportSearchLineEdit">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="clientReportDateSearchLayout">
+              <item>
+               <widget class="QLabel" name="clientReportStartLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Okres od:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="clientReportStartDateEdit"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="clientReportEndLabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>do:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="clientReportEndDateEdit"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="clientReportShowButton">
+                <property name="text">
+                 <string>Pokaż raporty</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="clientReportTable">
+              <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderCascadingSectionResizes">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>ID klienta</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Nazwa klienta</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Miesiąc</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Rok</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Suma</string>
+               </property>
+              </column>
              </widget>
             </item>
            </layout>
