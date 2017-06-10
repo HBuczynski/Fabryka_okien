@@ -35,14 +35,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_1">
               <item>
-               <widget class="QPushButton" name="pushButton_DodajFakture">
+               <widget class="QPushButton" name="orderAddButton">
                 <property name="text">
                  <string>Nowe zamówienie</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="orderEditButton">
                 <property name="text">
                  <string>Edycja  zamówienia</string>
                 </property>
@@ -73,7 +73,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="clientLineEdit">
+               <widget class="QLineEdit" name="orderSerachLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -89,7 +89,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_3">
+               <widget class="QComboBox" name="orderSearchComboBox">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -129,7 +129,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="clientSearchButton">
+               <widget class="QPushButton" name="orderSearchButton">
                 <property name="text">
                  <string>LUPA</string>
                 </property>
@@ -159,7 +159,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="orderStatusComboBox">
                 <item>
                  <property name="text">
                   <string>wszystko</string>
@@ -216,7 +216,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit"/>
+               <widget class="QDateEdit" name="ordersFromDateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -226,12 +226,12 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit_2"/>
+               <widget class="QDateEdit" name="ordersToDateEdit"/>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="clientTable">
+             <widget class="QTableWidget" name="orderTable">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -304,14 +304,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QPushButton" name="pushButton_DodajFakture">
+               <widget class="QPushButton" name="clientAddButton">
                 <property name="text">
                  <string>Nowy klient</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="clientEditButton">
                 <property name="text">
                  <string>Edytuj klienta</string>
                 </property>
@@ -342,7 +342,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="clientSearchLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -358,7 +358,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="clientSearchButton">
                 <property name="text">
                  <string>Szukaj</string>
                 </property>
@@ -388,7 +388,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="clientOrdersStatusComboBox">
                 <item>
                  <property name="text">
                   <string>wszystko</string>
@@ -445,7 +445,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit"/>
+               <widget class="QDateEdit" name="clientFromDateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -455,12 +455,12 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit_2"/>
+               <widget class="QDateEdit" name="clientToDateEdit"/>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="tableWidget_3">
+             <widget class="QTableWidget" name="clientTableWidget">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
