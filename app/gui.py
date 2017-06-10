@@ -48,10 +48,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("Lupa")
 
         searchAccordingTo = str(self.orderSearchComboBox.currentText())
+        listStatus = str(self.orderStateComboBox.currentText())
         searchLine = self.orderSerachLineEdit.text()
-        dateFrom = str(self.ordersFromDateEdit.date())
-        print(dateFrom)
-        
+
+        dateFrom = self.ordersFromDateEdit.date().toPyDate()
+        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        dateTo = self.ordersToDateEdit.date().toPyDate()
+        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+
+        #TO DO: polaczenie z baza danych
         if searchAccordingTo == 'ID klienta':
             print(searchLine)
         elif searchAccordingTo == 'Imię':
