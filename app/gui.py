@@ -9,6 +9,7 @@ TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 from PyQt5.QtWidgets import *
 
 from ui.mainwindow import Ui_MainWindow
+from orderDialog import OrderDialog
 from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -16,7 +17,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self)
         # Set up the user interface from Designer.
         self.setupUi(self)
-        # Setting up additional options (apart from generated, ex: PushButton  action):
+
+        #Initialize dialogs
+        self.dialogOrder = OrderDialog()
 
         # Actions for orders:
         self.orderAddButton.clicked.connect(self.clickedOrderAddButton)
@@ -30,13 +33,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     #Definitions of PushButtons action functions:
     def clickedOrderAddButton(self):
+        self.dialogOrder.show()
         print("add order")
 
     def clickedOrderEditButton(self):
+        self.dialogOrder.loadParameters()
+        self.dialogOrder.show()
         print("Edcyja")
 
     def clickedOrderSearchButton(self):
         print("Lupa")
+
+        searchAccordingTo = str(self.orderSearchComboBox.currentText())
+        searchLine = self.orderSerachLineEdit.text()
+
+        if searchAccordingTo == 'ID klienta':
+            print(searchLine)
+        elif searchAccordingTo == 'Imię':
+            print(searchLine)
+        elif searchAccordingTo == 'Nazwisko':
+            print(searchLine)
+        elif searchAccordingTo == 'Nazwa Firmy':
+            print(searchLine)
+        elif searchAccordingTo == 'Pesel':
+            print(searchLine)
+        elif searchAccordingTo == 'NIP':
+            print(searchLine)
 
     def clickedClientAddButton(self):
         print("add client")
