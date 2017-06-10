@@ -60,8 +60,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #DONE: print("Edycja")
 
     def clickedOrderSearchButton(self):
-        result = self.db.get_clients()
-        self.table_widget_insert(result, self.clientTableView)
+        searchAccordingTo = str(self.orderSearchComboBox.currentText())
+        invoiceStatus = str(self.orderStateComboBox.currentText())
+        searchLine = str(self.orderSerachLineEdit.text())
+        dateFrom = self.ordersFromDateEdit.date().toPyDate()
+        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        dateTo = self.ordersToDateEdit.date().toPyDate()
+        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+
+        
+        result = self.db.get_invoices()
+        self.table_widget_insert(result, self.orderTableView)
         print("Lupa")
 
     def clickedClientSearchButton(self):

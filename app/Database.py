@@ -21,17 +21,23 @@ class Database:
         self.cnx.close()
 
     def get_clients(self,selector, search_line):
-        if selector == "Imię i nazwisko":
+        if selector == "Imię i nazwisko" and search_line != '':
             search_line_imie = ''.join(map(str,search_line.split(" ")[0]))
             search_line_nazwisko = ''.join(map(str,search_line.split(" ")[1]))
             query = ("SELECT klient_id, adres_faktury, imie, nazwisko, nip, pesel, nazwa FROM Klient"
                      " WHERE imie=%s  AND nazwisko=%s")
             self.cursor.execute(query, (search_line_imie, search_line_nazwisko))
+        elif search_line == '':
+            query = ("SELECT klient_id, adres_faktury, imie, nazwisko, nip, pesel, nazwa FROM Klient ")
+            self.cursor.execute(query)
         else:
             query = ("SELECT klient_id, adres_faktury, imie, nazwisko, nip, pesel, nazwa FROM Klient "
                      "WHERE %s='%s'" % (selector, search_line))
             self.cursor.execute(query)
         return self.cursor.fetchall()
+
+    def get_invoices(self):
+        print("TODO")
 
     def get_model_id(self, nazwa_modelu):
         query = ("SELECT model_id FROM Model "
