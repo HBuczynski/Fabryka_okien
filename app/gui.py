@@ -4,6 +4,7 @@ Pliki *.ui "kompiluje" się poleceniem:
 """
 #from PyQt5.QtWidgets import QMainWindow
 #from generator.main import db
+from reportlab.pdfbase._fontdata_widths_symbol import widths
 
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 
@@ -27,10 +28,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Actions for clients
 
-        self.clientSearchButton.clicked.connect(self.clickedSearchClientButton)
+        self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
         self.clientAddButton.clicked.connect(self.clickedClientAddButton)
         self.clientEditButton.clicked.connect(self.clickedClientEditButton)
-        self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
 
     #Definitions of PushButtons action functions:
     def clickedOrderAddButton(self):
@@ -42,12 +42,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def clickedOrderSearchButton(self):
         print("Lupa")
 
-    def clickedSearchClientButton(self):
-        query = ("SELECT segment_id FROM Segment ")
-        self.db.cursor.execute(query)
-        result = self.db.cursor.fetchone()
+    def clickedClientSearchButton(self):
+        result = self.db.get_clients()
         print(result)
-
+        self.table_widget_insert(result)
 
     def clickedClientAddButton(self):
         print("add client")
@@ -55,12 +53,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def clickedClientEditButton(self):
         print("edit client")
 
-    def clickedClientSearchButton(self):
-        print("Search button")
-
     def resizeTableWidget(self):
         tablewidth = self.verticalLayout_1.contentsRect().width()
         print(tablewidth)
         print(sum(TABLE_WIDGET_COLUMNS_WIDTH))
         for i, width in enumerate(TABLE_WIDGET_COLUMNS_WIDTH):
             self.tableWidget.setColumnWidth(i, width*tablewidth)
+
+
+    #Appending data to tables:
+    def table_widget_insert(self,query_result):
+        pc = len(query_result)
+        ic = len(query_result[0])
+        i = 0
+        j = 0
+        self.clientTableWidget.setRowCount(pc)
+        while i < pc:
+            while j < ic:
+                self.clientTableWidget.setItem(i, j, QTableWidgetItem(str(query_result[i][j])))
+                j += 1
+            j = 0
+            i += 1

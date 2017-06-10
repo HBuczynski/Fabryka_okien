@@ -6,11 +6,11 @@ from datetime import date, timedelta
 # Polaczenie z baza danych
 db = Database.Database()
 # Ponowne utworzenie bazy
-#db.recreate()
+db.recreate()
 
 # Wygenerowanie danych testowych
-#gen = Generator.Generator(db)
-#gen.generate()
+gen = Generator.Generator(db)
+gen.generate()
 
 
 #db.add_bill(1, date.today(), date.today()+timedelta(days=10), "Zlozone")
@@ -20,7 +20,7 @@ db = Database.Database()
 #query = ("UPDATE Pozycja SET status='Zrealizowane'")
 #db.cursor.execute(query)
 
-#db.commit()
+db.commit()
 
 # Zakonczenie polaczenia z baza
 db.close()

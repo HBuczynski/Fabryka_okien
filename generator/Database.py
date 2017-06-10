@@ -20,6 +20,11 @@ class Database:
     def close(self):
         self.cnx.close()
 
+    def get_clients(self):
+        query = ("SELECT * FROM Klient")
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
     def get_model_id(self, nazwa_modelu):
         query = ("SELECT model_id FROM Model "
                  "WHERE nazwa=%s")
