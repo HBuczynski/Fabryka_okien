@@ -20,9 +20,17 @@ class Database:
     def close(self):
         self.cnx.close()
 
-    def get_clients(self):
-        query = ("SELECT * FROM Klient")
-        self.cursor.execute(query)
+    def get_clients(self,selector, search_line):
+        if selector == "Imię i nazwisko":
+            search_line_imie = ''.join(map(str,search_line.split(" ")[0]))
+            search_line_nazwisko = ''.join(map(str,search_line.split(" ")[1]))
+            query = ("SELECT klient_id, adres_faktury, imie, nazwisko, nip, pesel, nazwa FROM Klient"
+                     " WHERE imie=%s  AND nazwisko=%s")
+            self.cursor.execute(query, (search_line_imie, search_line_nazwisko))
+        else:
+            query = ("SELECT klient_id, adres_faktury, imie, nazwisko, nip, pesel, nazwa FROM Klient "
+                     "WHERE %s='%s'" % (selector, search_line))
+            self.cursor.execute(query)
         return self.cursor.fetchall()
 
     def get_model_id(self, nazwa_modelu):

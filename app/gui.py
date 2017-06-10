@@ -50,43 +50,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.dialogOrder.mode = "new"
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.show()
-        print("add order")
+        #DONE: print("add order")
 
     def clickedOrderEditButton(self):
         self.dialogOrder.mode = "edit"
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.loadParametersFromDatabase()
         self.dialogOrder.show()
-        print("Edcyja")
+        #DONE: print("Edycja")
 
     def clickedOrderSearchButton(self):
+        result = self.db.get_clients()
+        self.table_widget_insert(result, self.clientTableView)
         print("Lupa")
 
     def clickedClientSearchButton(self):
-        result = self.db.get_clients()
-        self.table_widget_insert(result,self.clientTableView)
-        searchAccordingTo = str(self.orderSearchComboBox.currentText())
-        listStatus = str(self.orderStateComboBox.currentText())
-        searchLine = self.orderSerachLineEdit.text()
-
-        dateFrom = self.ordersFromDateEdit.date().toPyDate()
-        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
-        dateTo = self.ordersToDateEdit.date().toPyDate()
-        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+        searchAccordingTo = str(self.clientStatusComboBox.currentText())
+        #listStatus = str(self.clientStateComboBox.currentText())
+        searchLine = str(self.clientSearchLineEdit.text())
+        # dateFrom = self.ordersFromDateEdit.date().toPyDate()
+        # dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        # dateTo = self.ordersToDateEdit.date().toPyDate()
+        # dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
 
         #TO DO: polaczenie z baza danych i wyswietlenie w tabeli
-        if searchAccordingTo == 'ID klienta':
-            print(searchLine)
-        elif searchAccordingTo == 'Imię':
-            print(searchLine)
-        elif searchAccordingTo == 'Nazwisko':
-            print(searchLine)
-        elif searchAccordingTo == 'Nazwa Firmy':
-            print(searchLine)
-        elif searchAccordingTo == 'Pesel':
-            print(searchLine)
-        elif searchAccordingTo == 'NIP':
-            print(searchLine)
+        if searchAccordingTo == "ID Klienta":
+            result = self.db.get_clients("klient_id", searchLine)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "Imię i nazwisko":
+            result = self.db.get_clients("Imię i nazwisko", searchLine)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "Nazwa firmy":
+            result = self.db.get_clients("nazwa", searchLine)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "PESEL":
+            result = self.db.get_clients("pesel", searchLine)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "NIP":
+            result = self.db.get_clients("nip", searchLine)
+            self.table_widget_insert(result, self.clientTableView)
 
 
 
@@ -130,14 +132,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #Appending data to tables:
     def table_widget_insert(self,query_result,table_widget):
         pc = len(query_result)
-        ic = len(query_result[0])
-        i = 0
-        j = 0
-        table_widget.setRowCount(pc)
-        while i < pc:
-            while j < ic:
-                table_widget.setItem(i, j, QTableWidgetItem(str(query_result[i][j])))
-                j += 1
+        if pc != 0:
+            ic = len(query_result[0])
+            i = 0
             j = 0
-            i += 1
-
+            table_widget.setRowCount(pc)
+            while i < pc:
+                while j < ic:
+                    table_widget.setItem(i, j, QTableWidgetItem(str(query_result[i][j])))
+                    j += 1
+                j = 0
+                i += 1
+        else:
+            table_widget.setRowCount(0)

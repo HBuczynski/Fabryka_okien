@@ -383,7 +383,7 @@
               <item>
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>Pokaż:</string>
+                 <string>Po</string>
                 </property>
                </widget>
               </item>
@@ -391,32 +391,27 @@
                <widget class="QComboBox" name="clientStatusComboBox">
                 <item>
                  <property name="text">
-                  <string>wszystko</string>
+                  <string>ID Klienta</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>zakończone</string>
+                  <string>Imię i nazwisko</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>anulowane</string>
+                  <string>Nazwa firmy</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>w trakcie realizacji</string>
+                  <string>NIP</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>gotowe</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>złożone</string>
+                  <string>PESEL</string>
                  </property>
                 </item>
                </widget>
@@ -436,26 +431,6 @@
                  </size>
                 </property>
                </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>Okres od:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDateEdit" name="clientFromDateEdit"/>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>do:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDateEdit" name="clientToDateEdit"/>
               </item>
              </layout>
             </item>
@@ -489,27 +464,32 @@
               </column>
               <column>
                <property name="text">
-                <string>Nazwa klienta</string>
+                <string>Adres faktury</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Data złożenia</string>
+                <string>Imię</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Data zakończenia</string>
+                <string>Nazwisko</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Kwota</string>
+                <string>NIP</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Status</string>
+                <string>PESEL</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Nazwa firmy</string>
                </property>
               </column>
              </widget>
