@@ -34,7 +34,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.clientEditButton.clicked.connect(self.clickedClientEditButton)
         self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
 
-        
+        # Actions for reports
+        self.monthReportShowButton.clicked.connect(self.clickedMonthReportButton)
+        self.clientReportShowButton.clicked.connect(self.clickedClientShowButton)
 
     #Definitions of PushButtons action functions:
     def clickedOrderAddButton(self):
@@ -62,7 +64,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         dateTo = self.ordersToDateEdit.date().toPyDate()
         dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
 
-        #TO DO: polaczenie z baza danych
+        #TO DO: polaczenie z baza danych i wyswietlenie w tabeli
         if searchAccordingTo == 'ID klienta':
             print(searchLine)
         elif searchAccordingTo == 'Imię':
@@ -76,6 +78,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif searchAccordingTo == 'NIP':
             print(searchLine)
 
+
+
     def clickedClientAddButton(self):
         self.dialogClient.show()
         print("add client")
@@ -87,6 +91,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def clickedClientSearchButton(self):
         print("Search button")
+
+    def clickedMonthReportButton(self):
+        dateFrom = self.monthReportStartDateEdit.date().toPyDate()
+        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        dateTo = self.monthReportEndDateEdit.date().toPyDate()
+        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+
+        #TO DO: add data to table
+
+    def clickedClientShowButton(self):
+        dateFrom = self.clientReportStartDateEdit.date().toPyDate()
+        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        dateTo = self.clientReportEndDateEdit.date().toPyDate()
+        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+
+        searchAccordingTo = str(self.clientReportSearchComboBox.currentText())
+        searchLine = self.clientReportSearchLineEdit.text()
+
+        #TO DO: get data from database
 
     def resizeTableWidget(self):
         tablewidth = self.verticalLayout_1.contentsRect().width()
