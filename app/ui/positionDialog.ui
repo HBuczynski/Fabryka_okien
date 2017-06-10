@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>positionDialog</class>
+ <widget class="QDialog" name="positionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>334</width>
+    <height>422</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QWidget" name="modelSelector" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="modelSelectLabel">
+        <property name="text">
+         <string>Model:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="modelSelectComboBox"/>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QWidget" name="segmentSelector" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="segmentSelectLabel">
+        <property name="text">
+         <string>Segment:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="segmentSelectComboBox"/>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+     <zorder>segmentSelectLabel</zorder>
+     <zorder>segmentSelectComboBox</zorder>
+     <zorder>segmentSelectLabel</zorder>
+     <zorder>segmentSelectComboBox</zorder>
+     <zorder>horizontalSpacer_2</zorder>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QWidget" name="parametersSelector" native="true">
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="segmentQuantityLabel">
+        <property name="text">
+         <string>Ilość:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="segmentQuantitySpinBox"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="segmentHeightSpinBox"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QDoubleSpinBox" name="segmentWidthSpinBox"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="segmentHeightLabel">
+        <property name="text">
+         <string>Wysokość:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="segmentWidthLabel">
+        <property name="text">
+         <string>Szerokość:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="segmentPaneComboBox"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="segmentPaneLabel">
+        <property name="text">
+         <string>Rodzaj szyby:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="segmentStatusComboBox"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="segmentStatusLabel">
+        <property name="text">
+         <string>Status:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <layout class="QHBoxLayout" name="positionDialogButtonsLayout">
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="positionDialogOkButton">
+       <property name="text">
+        <string>Ok</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="positionDialogCancelButton">
+       <property name="text">
+        <string>Anuluj</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
