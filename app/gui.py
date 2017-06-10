@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import *
 
 from ui.mainwindow import Ui_MainWindow
 from orderDialog import OrderDialog
+from clientDialog import ClientDialog
+
 from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -20,6 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         #Initialize dialogs
         self.dialogOrder = OrderDialog()
+        self.dialogClient = ClientDialog()
 
         # Actions for orders:
         self.orderAddButton.clicked.connect(self.clickedOrderAddButton)
@@ -63,9 +66,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print(searchLine)
 
     def clickedClientAddButton(self):
+        self.dialogClient.show()
         print("add client")
 
     def clickedClientEditButton(self):
+        self.dialogClient.loadParameters()
+        self.dialogClient.show()
         print("edit client")
 
     def clickedClientSearchButton(self):
