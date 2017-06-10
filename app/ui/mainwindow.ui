@@ -73,7 +73,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="clientLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -89,7 +89,47 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_8">
+               <widget class="QComboBox" name="comboBox_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>ID klienta</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Imię</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Nazwisko</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Nazwa Firmy</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>PESEL</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>NIP</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="clientSearchButton">
                 <property name="text">
                  <string>LUPA</string>
                 </property>
@@ -191,7 +231,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="tableWidget">
+             <widget class="QTableWidget" name="clientTable">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -416,22 +456,6 @@
               </item>
               <item>
                <widget class="QDateEdit" name="dateEdit_2"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_2">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>-&gt;</string>
-                </property>
-               </widget>
               </item>
              </layout>
             </item>
