@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import *
 
 from ui.invoiceDialog import Ui_invoiceDialog
 from orderClientSearch import OrderClientSearch
+from orderPositionDialog import PositionDialog
+
 from PyQt5.QtCore import *
 
 class OrderDialog(QDialog, Ui_invoiceDialog):
@@ -19,6 +21,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
 
         #Setting up additional dialogs
         self.searchClientDialog = OrderClientSearch()
+        self.positionDialog = PositionDialog()
+
         # Setting up additional options (apart from generated, ex: PushButton  action):
         self.selectClientButton.clicked.connect(self.clickedSelectClientButton)
         self.newPositionButton.clicked.connect(self.clickedNewPositionButton)
@@ -35,10 +39,12 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         self.searchClientDialog.show()
 
     def clickedNewPositionButton(self):
-        print("sciagamy parametry z bazy")
+        self.positionDialog.mode = "new"
+        self.positionDialog.show()
 
     def clickedEditPositionButton(self):
-        print("sciagamy parametry z bazy")
+        self.positionDialog.mode = "edit"
+        self.positionDialog.show()
 
     def clickedDeletePositionButton(self):
         print("sciagamy parametry z bazy")
