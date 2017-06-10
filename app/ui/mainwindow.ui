@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1133</width>
+    <width>1268</width>
     <height>837</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="usesScrollButtons">
          <bool>true</bool>
@@ -89,7 +89,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_8">
+               <widget class="QPushButton" name="searchClientButton">
                 <property name="text">
                  <string>Szukaj</string>
                 </property>
@@ -169,14 +169,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_1">
               <item>
-               <widget class="QPushButton" name="pushButton_DodajFakture">
+               <widget class="QPushButton" name="addInvoiceButton">
                 <property name="text">
                  <string>Nowe zamówienie</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="editInvoiceButton">
                 <property name="text">
                  <string>Edycja  zamówienia</string>
                 </property>
@@ -207,7 +207,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="lineEdit_WyszukajZamowienie">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -223,7 +223,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="searchInvoiceButton">
                 <property name="text">
                  <string>LUPA</string>
                 </property>
@@ -253,7 +253,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="comboBox_PokazZamowienie">
                 <item>
                  <property name="text">
                   <string>wszystkie</string>
@@ -323,7 +323,7 @@
                <widget class="QDateEdit" name="dateEdit_2"/>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="selectInvoiceButton">
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
