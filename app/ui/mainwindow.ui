@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1178</width>
+    <width>1223</width>
     <height>605</height>
    </rect>
   </property>
@@ -159,7 +159,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="orderStatusComboBox">
+               <widget class="QComboBox" name="orderStateComboBox">
                 <item>
                  <property name="text">
                   <string>wszystko</string>
@@ -231,7 +231,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="orderTable">
+             <widget class="QTableWidget" name="orderTableView">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -388,7 +388,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="clientOrdersStatusComboBox">
+               <widget class="QComboBox" name="clientStatusComboBox">
                 <item>
                  <property name="text">
                   <string>wszystko</string>
@@ -460,7 +460,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="clientTableWidget">
+             <widget class="QTableWidget" name="clientTableView">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
