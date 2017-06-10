@@ -99,8 +99,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             result = self.db.get_clients("nip", searchLine)
             self.table_widget_insert(result, self.clientTableView)
 
-
-
     def clickedClientAddButton(self):
         self.dialogClient.clear_parameters()
         self.dialogClient.show()

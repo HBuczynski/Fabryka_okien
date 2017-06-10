@@ -1,6 +1,6 @@
 """
 Pliki *.ui "kompiluje" się poleceniem:
-    $ pyuic5 -o clientDialog.py clientDialog.ui
+    $ pyuic5 -o clientEditDialog.py clientEditDialog.ui
 """
 from PyQt5.QtWidgets import QDialog
 
