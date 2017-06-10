@@ -19,15 +19,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Setting up additional options (apart from generated, ex: PushButton  action):
 
         # Actions for orders:
-        self.addInvoiceButton.clicked.connect(self.clickedInvoiceButton)
-        self.editInvoiceButton.clicked.connect(self.clickedEditInvoiceButton)
-        self.searchInvoiceButton.clicked.connect(self.clickedInvoiceButton)
-        self.selectInvoiceButton.clicked.connect(self.clickedSelectInvoiceButton)
+        #self.addInvoiceButton.clicked.connect(self.clickedInvoiceButton)
+        #self.editInvoiceButton.clicked.connect(self.clickedEditInvoiceButton)
+        #self.searchInvoiceButton.clicked.connect(self.clickedInvoiceButton)
+        #self.selectInvoiceButton.clicked.connect(self.clickedSelectInvoiceButton)
 
         # Actions for clients
-        self.addClientButton.clicked.connect(self.clickedAddClientButton)
-        self.editClientButton.clicked.connect(self.clickedEditClientButton)
-        self.searchClientButton.clicked.connect(self.clickedSearchClientButton)
+        #self.addClientButton.clicked.connect(self.clickedAddClientButton)
+        #self.editClientButton.clicked.connect(self.clickedEditClientButton)
+        #self.searchClientButton.clicked.connect(self.clickedSearchClientButton)
 
     #Definitions of PushButtons action functions:
     def clickedInvoiceButton(self):
