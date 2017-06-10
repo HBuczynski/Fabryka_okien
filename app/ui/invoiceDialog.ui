@@ -103,21 +103,21 @@
         <item>
          <widget class="QLabel" name="clientNameLabel">
           <property name="text">
-           <string>nameLabel</string>
+           <string>Imię i Nazwisko</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="clientCodeLabel">
           <property name="text">
-           <string>codeLabel</string>
+           <string>Numer identyfikujacy</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="clientAddressLabel">
           <property name="text">
-           <string>adressLabel</string>
+           <string>Adres</string>
           </property>
          </widget>
         </item>

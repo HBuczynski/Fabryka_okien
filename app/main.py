@@ -2,7 +2,7 @@ import sys
 
 #from datetime import date, timedelta
 #from generator import Database
-from app.gui import *
+from gui import *
 
 if __name__ == "__main__":
     #Connecting to database:
