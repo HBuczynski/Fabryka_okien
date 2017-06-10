@@ -1,37 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>clientDialog</class>
- <widget class="QDialog" name="clientDialog">
+ <class>clientEditDialog</class>
+ <widget class="QDialog" name="clientEditDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
-    <height>321</height>
+    <width>253</width>
+    <height>273</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="sizeConstraint">
-    <enum>QLayout::SetMinimumSize</enum>
-   </property>
-   <item>
-    <widget class="QComboBox" name="clientTypeComboBox">
-     <item>
-      <property name="text">
-       <string>Osoba prywatna</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Firma</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
     <widget class="QWidget" name="companyWidget" native="true">
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
@@ -67,7 +50,7 @@
      </layout>
     </widget>
    </item>
-   <item>
+   <item row="2" column="0">
     <widget class="QWidget" name="prvPersonWidget" native="true">
      <layout class="QFormLayout" name="formLayout_3">
       <item row="0" column="0">
@@ -113,7 +96,7 @@
      </layout>
     </widget>
    </item>
-   <item>
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="clientDialogButtonsLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -129,14 +112,14 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="clientOkButton">
+      <widget class="QPushButton" name="clientEditOkButton">
        <property name="text">
         <string>OK</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="clientCancelButton">
+      <widget class="QPushButton" name="clientEditCancelButton">
        <property name="text">
         <string>Anuluj</string>
        </property>

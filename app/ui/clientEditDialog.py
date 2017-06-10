@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'clientDialog.ui'
+# Form implementation generated from reading ui file 'clientEditDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.8.2
 #
@@ -8,19 +8,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_clientDialog(object):
-    def setupUi(self, clientDialog):
-        clientDialog.setObjectName("clientDialog")
-        clientDialog.resize(363, 321)
-        self.verticalLayout = QtWidgets.QVBoxLayout(clientDialog)
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.clientTypeComboBox = QtWidgets.QComboBox(clientDialog)
-        self.clientTypeComboBox.setObjectName("clientTypeComboBox")
-        self.clientTypeComboBox.addItem("")
-        self.clientTypeComboBox.addItem("")
-        self.verticalLayout.addWidget(self.clientTypeComboBox)
-        self.companyWidget = QtWidgets.QWidget(clientDialog)
+class Ui_clientEditDialog(object):
+    def setupUi(self, clientEditDialog):
+        clientEditDialog.setObjectName("clientEditDialog")
+        clientEditDialog.resize(253, 273)
+        self.gridLayout = QtWidgets.QGridLayout(clientEditDialog)
+        self.gridLayout.setObjectName("gridLayout")
+        self.companyWidget = QtWidgets.QWidget(clientEditDialog)
         self.companyWidget.setObjectName("companyWidget")
         self.formLayout = QtWidgets.QFormLayout(self.companyWidget)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
@@ -43,8 +37,8 @@ class Ui_clientDialog(object):
         self.cmpAddressLineEdit = QtWidgets.QLineEdit(self.companyWidget)
         self.cmpAddressLineEdit.setObjectName("cmpAddressLineEdit")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.cmpAddressLineEdit)
-        self.verticalLayout.addWidget(self.companyWidget)
-        self.prvPersonWidget = QtWidgets.QWidget(clientDialog)
+        self.gridLayout.addWidget(self.companyWidget, 1, 0, 1, 1)
+        self.prvPersonWidget = QtWidgets.QWidget(clientEditDialog)
         self.prvPersonWidget.setObjectName("prvPersonWidget")
         self.formLayout_3 = QtWidgets.QFormLayout(self.prvPersonWidget)
         self.formLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -73,34 +67,32 @@ class Ui_clientDialog(object):
         self.prvAdressLabel = QtWidgets.QLabel(self.prvPersonWidget)
         self.prvAdressLabel.setObjectName("prvAdressLabel")
         self.formLayout_3.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.prvAdressLabel)
-        self.verticalLayout.addWidget(self.prvPersonWidget)
+        self.gridLayout.addWidget(self.prvPersonWidget, 2, 0, 1, 1)
         self.clientDialogButtonsLayout = QtWidgets.QHBoxLayout()
         self.clientDialogButtonsLayout.setObjectName("clientDialogButtonsLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.clientDialogButtonsLayout.addItem(spacerItem)
-        self.clientOkButton = QtWidgets.QPushButton(clientDialog)
-        self.clientOkButton.setObjectName("clientOkButton")
-        self.clientDialogButtonsLayout.addWidget(self.clientOkButton)
-        self.clientCancelButton = QtWidgets.QPushButton(clientDialog)
-        self.clientCancelButton.setObjectName("clientCancelButton")
-        self.clientDialogButtonsLayout.addWidget(self.clientCancelButton)
-        self.verticalLayout.addLayout(self.clientDialogButtonsLayout)
+        self.clientEditOkButton = QtWidgets.QPushButton(clientEditDialog)
+        self.clientEditOkButton.setObjectName("clientEditOkButton")
+        self.clientDialogButtonsLayout.addWidget(self.clientEditOkButton)
+        self.clientEditCancelButton = QtWidgets.QPushButton(clientEditDialog)
+        self.clientEditCancelButton.setObjectName("clientEditCancelButton")
+        self.clientDialogButtonsLayout.addWidget(self.clientEditCancelButton)
+        self.gridLayout.addLayout(self.clientDialogButtonsLayout, 3, 0, 1, 1)
 
-        self.retranslateUi(clientDialog)
-        QtCore.QMetaObject.connectSlotsByName(clientDialog)
+        self.retranslateUi(clientEditDialog)
+        QtCore.QMetaObject.connectSlotsByName(clientEditDialog)
 
-    def retranslateUi(self, clientDialog):
+    def retranslateUi(self, clientEditDialog):
         _translate = QtCore.QCoreApplication.translate
-        clientDialog.setWindowTitle(_translate("clientDialog", "Dialog"))
-        self.clientTypeComboBox.setItemText(0, _translate("clientDialog", "Osoba prywatna"))
-        self.clientTypeComboBox.setItemText(1, _translate("clientDialog", "Firma"))
-        self.cmpNameLabel.setText(_translate("clientDialog", "Nazwa:"))
-        self.cmpNIPLabel.setText(_translate("clientDialog", "NIP:"))
-        self.cmpAddressLabel.setText(_translate("clientDialog", "Adres:"))
-        self.prvNameLabel.setText(_translate("clientDialog", "Imię:"))
-        self.prvSurnameLabel.setText(_translate("clientDialog", "Nazwisko:"))
-        self.prvPESELLabel.setText(_translate("clientDialog", "PESEL:"))
-        self.prvAdressLabel.setText(_translate("clientDialog", "Adres:"))
-        self.clientOkButton.setText(_translate("clientDialog", "OK"))
-        self.clientCancelButton.setText(_translate("clientDialog", "Anuluj"))
+        clientEditDialog.setWindowTitle(_translate("clientEditDialog", "Dialog"))
+        self.cmpNameLabel.setText(_translate("clientEditDialog", "Nazwa:"))
+        self.cmpNIPLabel.setText(_translate("clientEditDialog", "NIP:"))
+        self.cmpAddressLabel.setText(_translate("clientEditDialog", "Adres:"))
+        self.prvNameLabel.setText(_translate("clientEditDialog", "Imię:"))
+        self.prvSurnameLabel.setText(_translate("clientEditDialog", "Nazwisko:"))
+        self.prvPESELLabel.setText(_translate("clientEditDialog", "PESEL:"))
+        self.prvAdressLabel.setText(_translate("clientEditDialog", "Adres:"))
+        self.clientEditOkButton.setText(_translate("clientEditDialog", "OK"))
+        self.clientEditCancelButton.setText(_translate("clientEditDialog", "Anuluj"))
 
