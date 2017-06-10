@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="usesScrollButtons">
          <bool>true</bool>
@@ -207,7 +207,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_WyszukajZamowienie">
+               <widget class="QLineEdit" name="searchInvoiceLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -310,7 +310,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit"/>
+               <widget class="QDateEdit" name="searchInvoiceFromDate"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -320,7 +320,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="dateEdit_2"/>
+               <widget class="QDateEdit" name="searchInvoiceToDate"/>
               </item>
               <item>
                <widget class="QPushButton" name="selectInvoiceButton">
