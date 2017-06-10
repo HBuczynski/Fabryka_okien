@@ -79,8 +79,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif searchAccordingTo == 'NIP':
             print(searchLine)
 
-
-
     def clickedClientAddButton(self):
         self.dialogClient.clear_parameters()
         self.dialogClient.show()

@@ -1,6 +1,6 @@
 """
 Pliki *.ui "kompiluje" się poleceniem:
-    $ pyuic5 -o invoiceDialog.py invoiceDialog.ui
+    $ pyuic5 -o positionDialog.py positionDialog.ui
 """
 from PyQt5.QtWidgets import QDialog
 
@@ -15,5 +15,4 @@ class PositionDialog(QDialog, Ui_positionDialog):
         QDialog.__init__(self)
         # Set up the user interface from Designer.
         self.setupUi(self)
-
         self.mode = "new"
