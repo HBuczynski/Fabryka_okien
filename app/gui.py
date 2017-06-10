@@ -3,7 +3,7 @@ Pliki *.ui "kompiluje" się poleceniem:
     $ pyuic5 -o mainwindow.py mainwindow.ui
 """
 #from PyQt5.QtWidgets import QMainWindow
-
+#from generator.main import db
 
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 
@@ -13,7 +13,9 @@ from app.ui.mainwindow import Ui_MainWindow
 from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+    db = Database
     def __init__(self):
+
         QMainWindow.__init__(self)
         # Set up the user interface from Designer.
         self.setupUi(self)
@@ -26,8 +28,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Actions for clients
 
-
-        self.clientSearchButton.clicked.connect(self.clickedSearchClientButton);
+        self.clientSearchButton.clicked.connect(self.clickedSearchClientButton)
         self.clientAddButton.clicked.connect(self.clickedClientAddButton)
         self.clientEditButton.clicked.connect(self.clickedClientEditButton)
         self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
@@ -43,10 +44,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("Lupa")
 
     def clickedSearchClientButton(self):
-        query = ("SELECT * FROM Faktury")
-        self.cursor.execute(query)
-        result = self.cursor.fetchall()
+        query = ("SELECT segment_id FROM Segment ")
+        self.db.cursor.execute(query)
+        result = self.db.cursor.fetchone()
         print(result)
+
 
     def clickedClientAddButton(self):
         print("add client")
