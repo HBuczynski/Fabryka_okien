@@ -21,7 +21,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         self.editPositionButton.clicked.connect(self.clickedEditPositionButton)
         self.deletePositionButton.clicked.connect(self.clickedDeletePositionButton)
 
-    def loadParameters(self):
+    def loadParametersFromDatabase(self):
         print("sciagamy parametry z bazy")
 
     def clickedSelectClientButton(self):
@@ -39,9 +39,17 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
     def setClientParameters(self):
         print("set labels")
 
+    def getClientsParameters(self):
+        print("get parameters")
+
     def getDataFromLabels(self):
         self.invoiceId = self.invoiceNumberLineEdit.text()
         self.status = self.invoiceStatusComboBox.currentText()
         self.addDate = self.invoiceAddDateLineEdit.text()
         self.endDate = self.invoiceEndDateLineEdit.text()
         self.totalCost = self.invoiceTotalCostLineEdit.text()
+
+        fieldsAreEmpty = self.invoiceId == "" or self.status == "" or self.addDate == "" or self.endDate == "" or self.totalCost == ""
+
+        return fieldsAreEmpty
+
