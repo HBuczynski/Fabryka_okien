@@ -34,12 +34,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.clientEditButton.clicked.connect(self.clickedClientEditButton)
         self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
 
+        
+
     #Definitions of PushButtons action functions:
     def clickedOrderAddButton(self):
+        self.dialogOrder.mode = "new"
+        self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.show()
         print("add order")
 
     def clickedOrderEditButton(self):
+        self.dialogOrder.mode = "edit"
+        self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.loadParameters()
         self.dialogOrder.show()
         print("Edcyja")
