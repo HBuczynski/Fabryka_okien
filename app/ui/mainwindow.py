@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
         self.orderSearchComboBox.setMinimumSize(QtCore.QSize(120, 0))
         self.orderSearchComboBox.setObjectName("orderSearchComboBox")
         self.orderSearchComboBox.addItem("")
-        self.orderSearchComboBox.addItem("")
+        sef.orderSearchComboBox.addItem("")
         self.orderSearchComboBox.addItem("")
         self.orderSearchComboBox.addItem("")
         self.orderSearchComboBox.addItem("")
