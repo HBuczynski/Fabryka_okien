@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import *
 from ui.mainwindow import Ui_MainWindow
 from orderDialog import OrderDialog
 from clientDialog import ClientDialog
+from dialogEditClient import ClientEditDialog
 
 from PyQt5.QtCore import *
 
@@ -20,16 +21,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Set up the user interface from Designer.
         self.setupUi(self)
 
-        #Initialize dialogs
+        # Initialize dialogs
         self.dialogOrder = OrderDialog()
         self.dialogClient = ClientDialog()
+        self.dialogEditClient = ClientEditDialog()
 
         # Actions for orders:
         self.orderAddButton.clicked.connect(self.clickedOrderAddButton)
         self.orderEditButton.clicked.connect(self.clickedOrderEditButton)
         self.orderSearchButton.clicked.connect(self.clickedOrderSearchButton)
 
-        # Actions for clients
+        # Actions for clients tab
         self.clientAddButton.clicked.connect(self.clickedClientAddButton)
         self.clientEditButton.clicked.connect(self.clickedClientEditButton)
         self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
@@ -38,7 +40,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.monthReportShowButton.clicked.connect(self.clickedMonthReportButton)
         self.clientReportShowButton.clicked.connect(self.clickedClientShowButton)
 
-    #Definitions of PushButtons action functions:
     def clickedOrderAddButton(self):
         self.dialogOrder.mode = "new"
         self.dialogOrder.cleanObjectsInDialog()
@@ -48,7 +49,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def clickedOrderEditButton(self):
         self.dialogOrder.mode = "edit"
         self.dialogOrder.cleanObjectsInDialog()
-        self.dialogOrder.loadParameters()
+        self.dialogOrder.loadParametersFromDatabase()
         self.dialogOrder.show()
         print("Edcyja")
 
@@ -81,12 +82,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def clickedClientAddButton(self):
+        self.dialogClient.clear_parameters()
         self.dialogClient.show()
         print("add client")
 
     def clickedClientEditButton(self):
-        self.dialogClient.loadParameters()
-        self.dialogClient.show()
+        self.dialogEditClient.load_parameters()
+        self.dialogEditClient.show()
         print("edit client")
 
     def clickedClientSearchButton(self):
