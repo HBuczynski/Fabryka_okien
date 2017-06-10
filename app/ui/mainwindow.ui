@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="usesScrollButtons">
          <bool>true</bool>
@@ -35,14 +35,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_1">
               <item>
-               <widget class="QPushButton" name="orderAddButton">
+               <widget class="QPushButton" name="pushButton_DodajFakture">
                 <property name="text">
                  <string>Nowe zamówienie</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="orderEditButton">
+               <widget class="QPushButton" name="pushButton_3">
                 <property name="text">
                  <string>Edycja  zamówienia</string>
                 </property>
@@ -73,7 +73,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="orderSerachLineEdit">
+               <widget class="QLineEdit" name="clientLineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -89,7 +89,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="orderSearchComboBox">
+               <widget class="QComboBox" name="comboBox_3">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -129,7 +129,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="orderSearchButton">
+               <widget class="QPushButton" name="clientSearchButton">
                 <property name="text">
                  <string>LUPA</string>
                 </property>
@@ -159,7 +159,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="orderStatusComboBox">
+               <widget class="QComboBox" name="comboBox">
                 <item>
                  <property name="text">
                   <string>wszystkie</string>
@@ -216,7 +216,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="ordersFromDateEdit"/>
+               <widget class="QDateEdit" name="dateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -226,12 +226,12 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="ordersToDateEdit"/>
+               <widget class="QDateEdit" name="dateEdit_2"/>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="orderTable">
+             <widget class="QTableWidget" name="clientTable">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -304,14 +304,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QPushButton" name="clientAddButton">
+               <widget class="QPushButton" name="pushButton_DodajFakture">
                 <property name="text">
                  <string>Nowy klient</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="clientEditButton">
+               <widget class="QPushButton" name="pushButton_3">
                 <property name="text">
                  <string>Edytuj klienta</string>
                 </property>
@@ -342,7 +342,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="clientSearchLineEdit">
+               <widget class="QLineEdit" name="lineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -358,7 +358,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="clientSearchButton">
+               <widget class="QPushButton" name="pushButton">
                 <property name="text">
                  <string>Szukaj</string>
                 </property>
@@ -388,7 +388,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="clientOrdersStatusComboBox">
+               <widget class="QComboBox" name="comboBox">
                 <item>
                  <property name="text">
                   <string>wszystkie</string>
@@ -445,7 +445,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="clientFromDateEdit"/>
+               <widget class="QDateEdit" name="dateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -455,12 +455,12 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="clientToDateEdit"/>
+               <widget class="QDateEdit" name="dateEdit_2"/>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QTableWidget" name="clientTableWidget">
+             <widget class="QTableWidget" name="tableWidget_3">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
