@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1268</width>
+    <width>1133</width>
     <height>837</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="usesScrollButtons">
          <bool>true</bool>
@@ -89,7 +89,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="searchClientButton">
+               <widget class="QPushButton" name="pushButton_8">
                 <property name="text">
                  <string>Szukaj</string>
                 </property>
@@ -130,27 +130,32 @@
               </column>
               <column>
                <property name="text">
-                <string>Nazwa klienta</string>
+                <string>Imię</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Data złożenia</string>
+                <string>Nazwisko</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Data zakończenia</string>
+                <string>Nazwa Firmy</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Kwota</string>
+                <string>PESEL</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>Status</string>
+                <string>NIP</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Adres</string>
                </property>
               </column>
              </widget>
@@ -169,14 +174,14 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_1">
               <item>
-               <widget class="QPushButton" name="addInvoiceButton">
+               <widget class="QPushButton" name="pushButton_DodajFakture">
                 <property name="text">
                  <string>Nowe zamówienie</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="editInvoiceButton">
+               <widget class="QPushButton" name="pushButton_3">
                 <property name="text">
                  <string>Edycja  zamówienia</string>
                 </property>
@@ -207,7 +212,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="searchInvoiceLineEdit">
+               <widget class="QLineEdit" name="lineEdit">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -223,7 +228,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="searchInvoiceButton">
+               <widget class="QPushButton" name="pushButton">
                 <property name="text">
                  <string>LUPA</string>
                 </property>
@@ -253,7 +258,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_PokazZamowienie">
+               <widget class="QComboBox" name="comboBox">
                 <item>
                  <property name="text">
                   <string>wszystkie</string>
@@ -310,7 +315,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="searchInvoiceFromDate"/>
+               <widget class="QDateEdit" name="dateEdit"/>
               </item>
               <item>
                <widget class="QLabel" name="label_4">
@@ -320,10 +325,10 @@
                </widget>
               </item>
               <item>
-               <widget class="QDateEdit" name="searchInvoiceToDate"/>
+               <widget class="QDateEdit" name="dateEdit_2"/>
               </item>
               <item>
-               <widget class="QPushButton" name="selectInvoiceButton">
+               <widget class="QPushButton" name="pushButton_2">
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
