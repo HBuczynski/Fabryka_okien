@@ -1,7 +1,7 @@
 import mysql.connector
 from os import system
 import random
-import db_settings as DB
+from generator import db_settings as DB
 
 class Database:
     def __init__(self):

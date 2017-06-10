@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 import random
-import Database
+from generator import Database
 
 # Liczba generowanych danych
 N_MODELS = 40
