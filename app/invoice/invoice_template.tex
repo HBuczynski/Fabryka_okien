@@ -1,0 +1,131 @@
+\documentclass[10pt, oneside, final]{report}
+\usepackage{geometry}
+\geometry{a4paper, left=10mm, right=10mm, top=10mm, bottom=20mm}
+\usepackage[utf8]{inputenc}
+\usepackage{t1enc}
+\usepackage[MeX]{polski}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{ltablex}
+
+% ustawianie pozycji elementow na stronie
+\usepackage[absolute, overlay]{textpos}
+\setlength{\TPHorizModule}{\textwidth}\setlength{\TPVertModule}{\textheight}
+\textblockorigin{10mm}{10mm}
+
+% Czcionka
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Wysokosc pól sprzedawca, nabywca
+\newcommand{\heightA}{0.14}
+
+% Numerowanie stron
+\usepackage{lastpage}
+\usepackage{fancyhdr} % to change header and footers
+\usepackage{blindtext} % to quickly get a full document
+\pagestyle{fancy} % Turn on the style
+\fancyhf{} % Start with clearing everything in the header and footer
+% Set the right side of the footer to be the page number
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[R]{\thepage \ / \pageref{LastPage}}
+
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+
+\newcounter{invoicecnt}
+\setcounter{invoicecnt}{1}
+\newcommand{\invoiceline}[6]{\arabic{invoicecnt} & #1 & #2 & #3 & #4\% & #5 & #6\stepcounter{invoicecnt}\\}
+\input{invoice_data.tex}
+
+\begin{document}
+% Logo
+%\hspace*{-1.8em}
+\includegraphics[width=16em]{logo.png}\\
+
+% Tytuł faktury
+\begin{textblock}{0.4}(0.5,0.01)
+	\large
+	\textbf{FAKTURA VAT nr \invoiceNumber}\vspace{0.1em}\\
+	\normalsize
+	Data wystawienia: \dateInvoice\\
+	Data sprzedaży: \dateSold\\
+	Sposób zapłaty: przelew\vspace{0.2em}\\
+	\textbf{Termin płatności: \datePayment}
+\end{textblock}
+
+% Dane sprzedawcy
+\begin{textblock}{0.4}(0.0,\heightA)
+	Sprzedawca:\vspace{0.2em}\\
+	\textbf{ElkaOkna Sp. z o.o.}\\
+	ul. Nowowiejska 15/19\\
+	00-665 Warszawa\\
+	NIP: 525-000-58-34\\
+	tel: 22 234 74 97
+\end{textblock}
+
+% Dane nabywcy
+\begin{textblock}{0.4}(0.5,\heightA)
+	Nabywca:\vspace{0.2em}\\
+	\textbf{\lineA}\\
+	\lineB\\
+	\lineC\\
+	\lineD\\
+	\lineE
+\end{textblock}
+
+% Lista zakupów
+\vspace{0.11\textheight}
+\setlength\extrarowheight{3pt}
+\setlength{\tabcolsep}{3pt}
+\setlength\aboverulesep{0pt}
+\setlength\belowrulesep{0pt}
+\keepXColumns
+{
+\rowcolors{2}{white}{gray!15}
+\begin{tabularx}{\linewidth}{lXrrrrr}
+	\rowcolor{white}
+	\multicolumn{7}{l}{\textbf{Lista zamówionych produktów i usług:}}\\
+	\toprule
+	\rowcolor{gray!35}
+	& &	& Wartość & Stawka & Wartość & Wartość\\
+	\rowcolor{gray!35}
+	Lp. & Nazwa produktu / usługi & Ilość & NETTO & VAT & VAT & BRUTTO\\
+	\midrule[1pt]
+	\endhead
+	\invoiceLines
+	\if\delivery1
+	\midrule
+	\rowcolor{blue!5}
+	\arabic{invoicecnt} & Dostawa & & \deliveryNetto & 8\% & \deliveryVat & \deliveryBrutto\stepcounter{invoicecnt}\\
+	\fi
+	
+	\if\assembly1
+	\midrule
+	\rowcolor{blue!5}
+	\arabic{invoicecnt} & Montaż & & 2 & 8\% & 0,16 & 2,16\stepcounter{invoicecnt}\\
+	\fi
+	
+	\bottomrule
+	\rowcolor{white}
+	\multicolumn{2}{r}{\textbf{Razem}:} & \sumCounts & \sumNetto & & \sumVat & \sumBrutto\\
+\end{tabularx}
+}
+
+\begin{figure}[ht!]
+	\textbf{Dane do przelewu:}\\
+	\vspace{-2em}
+	\begin{tabularx}{\linewidth}{lX}
+		Konto: & BANK POCZTOWY SA\\
+		& 09 1120 2123 2100 0000 3451 0007\\
+		Do zapłaty: & \sumBrutto \ zł\\
+		Słownie: & \sumTextZl \ zł. \sumTextGr \ gr.\\ \\
+		Wystawił: & Kierownik Biura Sprzedaży
+	\end{tabularx}
+\end{figure}
+
+
+\end{document}
