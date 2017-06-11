@@ -80,7 +80,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #listStatus = str(self.clientStateComboBox.currentText())
         searchLine = str(self.clientSearchLineEdit.text())
 
-        #TO DO: polaczenie z baza danych i wyswietlenie w tabeli
+        #polaczenie z baza danych i wyswietlenie w tabeli
         if searchAccordingTo == "ID Klienta":
             result = self.db.get_clients("klient_id", searchLine)
             self.table_widget_insert(result, self.clientTableView)
@@ -109,22 +109,42 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def clickedMonthReportButton(self):
         dateFrom = self.monthReportStartDateEdit.date().toPyDate()
-        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        dateFromMonth = str(dateFrom.month)
+        dateFromYear = str(dateFrom.year)
         dateTo = self.monthReportEndDateEdit.date().toPyDate()
-        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+        dateToMonth = str(dateTo.month)
+        dateToYear = str(dateTo.year)
 
-        #TO DO: add data to table
+        result = self.db.get_month_report(dateFromMonth, dateFromYear, dateToMonth, dateToYear)
+        self.table_widget_insert(result, self.monthReportTable)
+
 
     def clickedClientShowButton(self):
         dateFrom = self.clientReportStartDateEdit.date().toPyDate()
-        dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
+        dateFromYear = str(dateFrom.year)
+        dateFromMonth = str(dateFrom.month)
         dateTo = self.clientReportEndDateEdit.date().toPyDate()
-        dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
+        dateToMonth = str(dateTo.month)
+        dateToYear = str(dateTo.year)
 
         searchAccordingTo = str(self.clientReportSearchComboBox.currentText())
         searchLine = self.clientReportSearchLineEdit.text()
 
-        #TO DO: get data from database
+        if searchAccordingTo == "ID Klienta":
+            result = self.db.get_client_report("klient_id", searchLine, dateFromYear, dateFromMonth, dateToYear, dateToMonth)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "Imię i nazwisko":
+            result = self.db.get_client_report("Imię i nazwisko", searchLine, dateFromYear, dateFromMonth, dateToYear, dateToMonth)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "Nazwa firmy":
+            result = self.db.get_client_report("nazwa", searchLine, dateFromYear, dateFromMonth, dateToYear, dateToMonth)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "PESEL":
+            result = self.db.get_client_report("pesel", searchLine, dateFromYear, dateFromMonth, dateToYear, dateToMonth)
+            self.table_widget_insert(result, self.clientTableView)
+        elif searchAccordingTo == "NIP":
+            result = self.db.get_client_report("nip", searchLine, dateFromYear, dateFromMonth, dateToYear, dateToMonth)
+            self.table_widget_insert(result, self.clientTableView)
 
     def resizeTableWidget(self):
         tablewidth = self.verticalLayout_1.contentsRect().width()
