@@ -62,6 +62,36 @@ class Database:
             self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def get_month_report(self,data_from_month, data_from_year, data_to_month, data_to_year):
+        query = ("SELECT rok, miesiac, suma FROM Staty_miesiac "
+                 "WHERE rok >= '%s' AND rok <= '%s' OR rok = '%s' AND rok = '%s' AND miesiac >= '%s' AND miesiac <= '%s'"
+                 % (data_from_year, data_to_year, data_from_year, data_to_year, data_from_month, data_to_month))
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
+    def get_client_report(self,selector, search_line, data_from_year, data_from_month, data_to_year, data_to_month):
+        if selector == "Imię i nazwisko" and search_line != '':
+            search_line_imie = ''.join(map(str,search_line.split(" ")[0]))
+            search_line_nazwisko = ''.join(map(str,search_line.split(" ")[1]))
+            query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta"
+                     " WHERE imie=%s  AND nazwisko=%s "
+                     "AND rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s" %
+                     (search_line_imie, search_line_nazwisko, data_from_year, data_to_year,
+                      data_from_year, data_to_year, data_from_month, data_to_month))
+            self.cursor.execute(query)
+        elif search_line == '':
+            query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta "
+                     "WHERE rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s" %
+                     (data_from_year, data_to_year,data_from_year,data_to_year, data_from_month, data_to_month))
+            self.cursor.execute(query)
+        else:
+            query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta "
+                     "WHERE %s=%s "
+                     "AND rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s"
+                     % (selector, search_line, data_from_year, data_to_year, data_from_year, data_to_year,data_from_month, data_to_month))
+            self.cursor.execute(query)
+        return self.cursor.fetchall()
+
     def get_model_id(self, nazwa_modelu):
         query = ("SELECT model_id FROM Model "
                  "WHERE nazwa=%s")
