@@ -98,32 +98,12 @@
                 </property>
                 <item>
                  <property name="text">
-                  <string>ID klienta</string>
+                  <string>ID</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>Imię</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Nazwisko</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Nazwa Firmy</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>PESEL</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>NIP</string>
+                  <string>ID Klienta</string>
                  </property>
                 </item>
                </widget>
@@ -167,7 +147,7 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>zakończone</string>
+                  <string>zakonczone</string>
                  </property>
                 </item>
                 <item>
@@ -187,7 +167,7 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>złożone</string>
+                  <string>zlozone</string>
                  </property>
                 </item>
                </widget>

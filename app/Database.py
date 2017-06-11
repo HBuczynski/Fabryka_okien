@@ -36,8 +36,31 @@ class Database:
             self.cursor.execute(query)
         return self.cursor.fetchall()
 
-    def get_invoices(self):
-        print("TODO")
+    def get_invoices(self, selector, search_line, data_from, data_to, status):
+        print(selector)
+        print(search_line)
+        print(data_from)
+        print(data_to)
+        print(status)
+        if search_line != '' and status != 'wszystko':
+            query = ("SELECT faktura_id, klient_id, adres_faktury, data_dodania, czas_zakonczenia, status, cena_suma FROM Faktura "
+                     "WHERE %s = '%s' AND data_dodania > '%s' AND czas_zakonczenia < '%s' AND status = '%s'" %
+                     (selector, search_line, data_from, data_to, status))
+            self.cursor.execute(query)
+        elif search_line == '' and status == "wszystko":
+            query = ("SELECT faktura_id, klient_id, adres_faktury, data_dodania, czas_zakonczenia, status, cena_suma "
+                     "FROM Faktura")
+            print(query)
+            self.cursor.execute(query)
+        elif status == "wszystko" and search_line != '':
+            query = ("SELECT faktura_id, klient_id, adres_faktury, data_dodania, czas_zakonczenia, status, cena_suma FROM Faktura "
+            "WHERE %s = '%s' AND data_dodania > '%s' AND czas_zakonczenia < '%s'" % (selector, search_line, data_from, data_to))
+            self.cursor.execute(query)
+        elif status != "wszystko" and search_line == '':
+            query=("SELECT faktura_id, klient_id, adres_faktury, data_dodania, czas_zakonczenia, status, cena_suma FROM Faktura " \
+            "WHERE data_dodania > '%s' AND czas_zakonczenia < '%s' AND status = '%s'" % (data_from, data_to, status))
+            self.cursor.execute(query)
+        return self.cursor.fetchall()
 
     def get_model_id(self, nazwa_modelu):
         query = ("SELECT model_id FROM Model "

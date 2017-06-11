@@ -68,19 +68,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         dateTo = self.ordersToDateEdit.date().toPyDate()
         dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
 
-        
-        result = self.db.get_invoices()
-        self.table_widget_insert(result, self.orderTableView)
-        print("Lupa")
+        if searchAccordingTo == "ID":
+            result = self.db.get_invoices("faktura_id", searchLine, dateFrom, dateTo, invoiceStatus)
+            self.table_widget_insert(result, self.orderTableView)
+        elif searchAccordingTo == "ID Klienta":
+            result = self.db.get_invoices("klient_id", searchLine, dateFrom, dateTo, invoiceStatus)
+            self.table_widget_insert(result, self.orderTableView)
 
     def clickedClientSearchButton(self):
         searchAccordingTo = str(self.clientStatusComboBox.currentText())
         #listStatus = str(self.clientStateComboBox.currentText())
         searchLine = str(self.clientSearchLineEdit.text())
-        # dateFrom = self.ordersFromDateEdit.date().toPyDate()
-        # dateFrom = str(dateFrom.day) + "." + str(dateFrom.month) + "." + str(dateFrom.year)
-        # dateTo = self.ordersToDateEdit.date().toPyDate()
-        # dateTo = str(dateTo.day) + "." + str(dateTo.month) + "." + str(dateTo.year)
 
         #TO DO: polaczenie z baza danych i wyswietlenie w tabeli
         if searchAccordingTo == "ID Klienta":
