@@ -2,6 +2,8 @@
 Pliki *.ui "kompiluje" się poleceniem:
     $ pyuic5 -o invoiceDialog.py invoiceDialog.ui
 """
+from PyQt5 import QtCore
+
 from PyQt5.QtWidgets import QDialog
 
 from PyQt5.QtWidgets import *
@@ -12,7 +14,7 @@ from orderPositionDialog import PositionDialog
 
 from PyQt5.QtCore import *
 
-class OrderDialog(QDialog, Ui_invoiceDialog):
+class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
     def __init__(self):
         QDialog.__init__(self)
         # Set up the user interface from Designer.
@@ -30,6 +32,13 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         self.deletePositionButton.clicked.connect(self.clickedDeletePositionButton)
         self.invoiceCancelButton.clicked.connect(self.clickedInvoiceCancelButton)
         self.invoiceOkButton.clicked.connect(self.clickedInvoiceOkButton)
+
+        #Setting connections between signals and slots
+        self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
+
+    def setMode(self, mode):
+        self.mode = mode
+
 
     def loadParametersFromDatabase(self):
         print("sciagamy parametry z bazy")
@@ -67,14 +76,24 @@ class OrderDialog(QDialog, Ui_invoiceDialog):
         self.invoiceEndDateLineEdit.setText("")
         self.invoiceTotalCostLineEdit.setText("")
 
-        self.clientNameLabel = "Imię i Nazwisko"
-        self.clientAddressLabel = "Adres"
-        self.clientCodeLabel = "Numer identyfikacyjny"
+        self.clientNameLabel.setText("Imię i Nazwisko")
+        self.clientAddressLabel.setText("Adres")
+        self.clientCodeLabel.setText("Numer identyfikacyjny")
 
         self.invoiceTable.clearContents()
 
+    @QtCore.pyqtSlot()
     def setClientParameters(self):
-        print("set labels")
+        if self.searchClientDialog.nip == "None":
+            self.clientNameLabel.setText(self.searchClientDialog.imie + " " + self.searchClientDialog.nazwisko)
+            self.clientAddressLabel.setText(self.searchClientDialog.adres)
+            self.clientCodeLabel.setText(self.searchClientDialog.pesel)
+        else:
+            self.clientNameLabel.setText(self.searchClientDialog.nazwaFirmy)
+            self.clientAddressLabel.setText(self.searchClientDialog.adres)
+            self.clientCodeLabel.setText(self.searchClientDialog.nip)
+
+
 
     def getClientsParameters(self):
         print("get parameters")
