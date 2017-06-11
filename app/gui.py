@@ -22,10 +22,13 @@ from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        self.db = Database.Database()
-        QMainWindow.__init__(self)
+        # QMainWindow.__init__(self)
+        super().__init__()
         # Set up the user interface from Designer.
         self.setupUi(self)
+
+        # Connect to the database:
+        self.db = Database.Database()
 
         # Initialize dialogs
         self.dialogOrder = OrderDialog()
@@ -45,6 +48,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Actions for reports
         self.monthReportShowButton.clicked.connect(self.clickedMonthReportButton)
         self.clientReportShowButton.clicked.connect(self.clickedClientShowButton)
+
+        # Actions for offer tab
+        self.offerAddModelButton.clicked.connect(self.clickedOfferAddModelButton)
+        self.offerAddSegmentButton.clicked.connect(self.clickedOfferAddSegmentButton)
+        self.offerAddValueButton.clicked.connect(self.clickedAddValueButton)
+        self.offerAddParamButton.clicked.connect(self.clickedAddParamButton)
+        self.offerDeleteSegmentButton.clicked.connect(self.clickedOfferDeleteSegmentButton)
+        self.offerDeleteParamButton.clicked.connect(self.clickedDeleteParamButton)
+
+    def clickedOfferAddModelButton(self):
+        print("TODO")
+
+    def clickedOfferAddModelButton(self):
+        print("TODO")
+
+    def clickedOfferAddSegmentButton(self):
+        print("TODO")
+
+    def clickedAddValueButton(self):
+        print("TODO")
+
+    def clickedAddParamButton(self):
+        print("TODO")
+
+    def clickedOfferDeleteSegmentButton(self):
+        print("TODO")
+
+    def clickedDeleteParamButton(self):
+        print("TODO")
 
     def clickedOrderAddButton(self):
         self.dialogOrder.mode = "new"
