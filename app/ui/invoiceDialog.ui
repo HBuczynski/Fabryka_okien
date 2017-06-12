@@ -36,7 +36,38 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QComboBox" name="invoiceStatusComboBox"/>
+        <widget class="QComboBox" name="invoiceStatusComboBox">
+         <item>
+          <property name="text">
+           <string>Zwrot</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Anulowane</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>W trakcie realizacji</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Gotowe</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Zakonczone</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Zlozone</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="invoiceAddDateLabel">
