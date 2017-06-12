@@ -15,4 +15,4 @@ class PositionDialog(QDialog, Ui_positionDialog):
         QDialog.__init__(self)
         # Set up the user interface from Designer.
         self.setupUi(self)
-        self.mode = "new"
+
