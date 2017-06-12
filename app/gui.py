@@ -13,7 +13,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import Database
 
-
 from ui.mainwindow import Ui_MainWindow
 from orderDialog import OrderDialog
 from clientDialog import ClientDialog
@@ -24,13 +23,12 @@ from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        # QMainWindow.__init__(self)
         super().__init__()
         # Set up the user interface from Designer.
         self.setupUi(self)
 
         # Connect to the database:
-        self.db = Database.Database()
+        self.db = Database.db
 
         # Initialize dialogs
         self.dialogOrder = OrderDialog()
@@ -125,6 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for p in params:
             param = QTreeWidgetItem()
             param.setText(0, p[0])
+            param.setToolTip(0, p[2])
             param.setData(1, 0, [p, ])
             values = self.db.get_vals(p[1])
             for v in values:
