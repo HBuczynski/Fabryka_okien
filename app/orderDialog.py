@@ -35,18 +35,23 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceCancelButton.clicked.connect(self.clickedInvoiceCancelButton)
         self.invoiceOkButton.clicked.connect(self.clickedInvoiceOkButton)
 
+        self.invoiceStatusComboBox.setEnabled(False)
+
         #Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
 
     def setMode(self, mode):
         self.mode = mode
 
-
     def loadParametersFromDatabase(self, orderList):
+        self.selectClientButton.setDisabled(True)
+        self.invoiceStatusComboBox.setEnabled(True)
+
         self.invoiceNumberLineEdit.setText(orderList[0])
         self.invoiceAddDateLineEdit.setText(orderList[3])
         self.invoiceEndDateLineEdit.setText(orderList[4])
-        self.invoiceStatusComboBox.insertItem(0,orderList[5])
+        index = self.invoiceStatusComboBox.findText(orderList[5])
+        self.invoiceStatusComboBox.setCurrentIndex(index)
         self.invoiceTotalCostLineEdit.setText(orderList[6])
 
     def clickedSelectClientButton(self):
@@ -80,8 +85,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceAddDateLineEdit.setText("")
         self.invoiceEndDateLineEdit.setText("")
         self.invoiceTotalCostLineEdit.setText("")
-        self.invoiceStatusComboBox.clear()
-        self.invoiceTable.clear()
+        self.invoiceTable.clearContents()
 
         self.clientNameLabel.setText("Imię i Nazwisko")
         self.clientAddressLabel.setText("Adres")

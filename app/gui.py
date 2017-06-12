@@ -64,6 +64,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.offerModelTree.clicked.connect(self.clickedOfferModelTreeElement)
         self.offerParamTree.clicked.connect(self.clickedOfferParamTreeElement)
 
+        #Disable column with numbers
+        self.orderTableView.verticalHeader().setVisible(False)
+        self.clientTableView.verticalHeader().setVisible(False)
+
         self.displayModels()
 
     def clickedOfferModelTreeElement(self):
