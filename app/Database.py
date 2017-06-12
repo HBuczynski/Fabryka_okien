@@ -110,7 +110,7 @@ class Database:
         return self.cursor.fetchall()
 
     def get_params(self, segment_id):
-        query = ("SELECT nazwa, parametr_id FROM Parametr_segmentu "
+        query = ("SELECT nazwa, parametr_id, opis FROM Parametr_segmentu "
                  "WHERE segment_id=%s")
         self.cursor.execute(query, (segment_id,))
         return self.cursor.fetchall()
@@ -253,3 +253,6 @@ class Database:
         self.cursor.execute(query)
         result = self.cursor.fetchall()
         return random.choice(result)[0]
+
+# Global database instance
+db = Database()
