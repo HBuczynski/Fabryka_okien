@@ -40,10 +40,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.orderEditButton.clicked.connect(self.clickedOrderEditButton)
         self.orderSearchButton.clicked.connect(self.clickedOrderSearchButton)
 
+        self.displayOrders()
+
         # Actions for clients tab
         self.clientSearchButton.clicked.connect(self.clickedClientSearchButton)
         self.clientAddButton.clicked.connect(self.clickedClientAddButton)
         self.clientEditButton.clicked.connect(self.clickedClientEditButton)
+
+        self.displayClients()
 
         # Actions for reports
         self.monthReportShowButton.clicked.connect(self.clickedMonthReportButton)
@@ -117,6 +121,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 model.addChild(segment)
             self.offerModelTree.addTopLevelItem(model)
 
+    def displayClients(self):
+        clients = self.db.get_clients('','')
+        self.table_widget_insert(clients,self.clientTableView)
+
+    def displayOrders(self):
+        orders = self.db.get_invoices('','','','','wszystko')
+        self.table_widget_insert(orders,self.orderTableView)
+
     def displayParams(self, segment_id):
         self.offerParamTree.clear()
         params = self.db.get_params(segment_id)
@@ -137,7 +149,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.dialogOrder.setMode("new")
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.show()
-        #DONE: print("add order")
 
     def clickedOrderEditButton(self):
         currentRow = self.orderTableView.currentRow()
@@ -153,7 +164,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                          self.orderTableView.item(currentRow, 6).text()]
             self.dialogOrder.loadParametersFromDatabase(orderList)
             self.dialogOrder.show()
-            #DONE: print("Edycja")
+
         else:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)

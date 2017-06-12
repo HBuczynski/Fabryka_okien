@@ -7,35 +7,45 @@ from PyQt5.QtWidgets import *
 
 from ui.clientEditDialog import Ui_clientEditDialog
 from PyQt5.QtCore import *
+import Database
 
 class ClientEditDialog(QDialog, Ui_clientEditDialog):
     def __init__(self):
         super().__init__()
         # Set up the user interface from Designer.
         self.setupUi(self)
-
+        self.db = Database.db
         self.id = None
         self.selector = None
         self.clientEditCancelButton.clicked.connect(self.close)
         self.clientEditOkButton.clicked.connect(self.clicked_client_ok_button)
 
     def clicked_client_ok_button(self):
-        if self.selector == None:
+        if self.selector == "None":
                   name = self.prvNameLineEdit.text()
                   surname = self.prvSurnameLineEdit.text()
                   pesel = self.prvPESELLineEdit.text()
                   address = self.prvAddressLineEdit.text()
-                  db.update_client_person(name, surname, pesel, address, self.id)
-        elif not self.selector == None:
+                  if name == '' or surname == '' or pesel == '' or address == '':
+                        msg = QMessageBox()
+                        msg.setIcon(QMessageBox.Warning)
+                        msg.setText("Uzupełnij wszystkie pola !!")
+                        msg.exec()
+                        return
+                  self.db.update_client_person(name, surname, pesel, address, self.id)
+                  self.db.commit()
+        else:
                   cmp_name = self.cmpNameLineEdit.text()
                   cmp_nip = self.cmpNIPLineEdit.text()
                   cmp_address = self.cmpAddressLineEdit.text()
-                  db.update_client_company(cmp_name, cmp_nip, cmp_address, self.id)
-        else:
-              msg = QMessageBox()
-              msg.setIcon(QMessageBox.Warning)
-              msg.setText("Uzupełnij wszystkie pola !!")
-              msg.exec()
+                  if cmp_name == '' or cmp_nip == '' or cmp_address == '':
+                        msg = QMessageBox()
+                        msg.setIcon(QMessageBox.Warning)
+                        msg.setText("Uzupełnij wszystkie pola !!")
+                        msg.exec()
+                        return
+                  self.db.update_client_company(cmp_name, cmp_nip, cmp_address, self.id)
+                  self.db.commit()
         self.close()
 
     # def check_fields(self):
@@ -47,6 +57,8 @@ class ClientEditDialog(QDialog, Ui_clientEditDialog):
 
     def load_parameters(self, tableWidget):
         rowSelected =tableWidget.currentRow()
+        self.companyWidget.show()
+        self.prvPersonWidget.show()
         if rowSelected != -1:
             self.id = tableWidget.item(rowSelected,0).text()
             self.selector = tableWidget.item(rowSelected,6).text()
@@ -57,5 +69,9 @@ class ClientEditDialog(QDialog, Ui_clientEditDialog):
             self.prvSurnameLineEdit.setText(tableWidget.item(rowSelected, 3).text())
             self.prvPESELLineEdit.setText(tableWidget.item(rowSelected, 5).text())
             self.prvAddressLineEdit.setText(tableWidget.item(rowSelected, 1).text())
+            if self.selector == "None":
+                self.companyWidget.hide()
+            else:
+                self.prvPersonWidget.hide()
             return 0
         return -1

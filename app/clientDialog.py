@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import *
 
 from ui.clientDialog import Ui_clientDialog
 from PyQt5.QtCore import *
+import Database
 
 
 class ClientDialog(QDialog, Ui_clientDialog):
@@ -15,6 +16,7 @@ class ClientDialog(QDialog, Ui_clientDialog):
         QDialog.__init__(self)
         # Set up the user interface from Designer.
         self.setupUi(self)
+        self.db = Database.db
         # Setting up additional options (apart from generated, ex: PushButton  action):
         self.companyWidget.close()
         # Buttons actions
@@ -50,12 +52,14 @@ class ClientDialog(QDialog, Ui_clientDialog):
                 surname = self.prvSurnameLineEdit.text()
                 pesel = self.prvPESELLineEdit.text()
                 address = self.prvAddressLineEdit.text()
-                # db.add_client_person(name, surname, pesel, address)
+                self.db.add_client_person(name, surname, pesel, address)
+                self.db.commit()
             else:
                 cmp_name = self.cmpNameLineEdit.text()
                 cmp_nip = self.cmpNIPLineEdit.text()
                 cmp_address = self.cmpAddressLineEdit.text()
-                # db.add_client_company(cmp_name, cmp_nip, cmp_address)
+                self.db.add_client_company(cmp_name, cmp_nip, cmp_address)
+                self.db.commit()
             self.close()
         else:
             msg = QMessageBox()

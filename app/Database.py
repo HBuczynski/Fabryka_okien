@@ -37,11 +37,6 @@ class Database:
         return self.cursor.fetchall()
 
     def get_invoices(self, selector, search_line, data_from, data_to, status):
-        print(selector)
-        print(search_line)
-        print(data_from)
-        print(data_to)
-        print(status)
         if search_line != '' and status != 'wszystko':
             query = ("SELECT faktura_id, klient_id, adres_faktury, data_dodania, czas_zakonczenia, status, cena_suma FROM Faktura "
                      "WHERE %s = '%s' AND data_dodania > '%s' AND czas_zakonczenia < '%s' AND status = '%s'" %
@@ -93,21 +88,13 @@ class Database:
         return self.cursor.fetchall()
 
     def update_client_person(self, name, surname, pesel, address, id):
-        query = ("SELECT klient_id FROM Klient WHERE klient_id = '%s'" %
-                 (id))
-        self.cursor.execute(query)
-        temp = self.cursor.fetchone()
         query = ("UPDATE Klient SET imie = '%s', nazwisko = '%s', pesel = '%s', adres_faktury = '%s' WHERE klient_id = '%s'" %
-                 (name, surname, pesel, address,id))
+                 (name, surname, pesel, address,id[0]))
         self.cursor.execute(query)
 
-    def update_client_person(self, cmp_name, cmp_nip, cmp_address, id):
-        query = ("SELECT klient_id FROM Klient WHERE klient_id = '%s'" %
-                 (id))
-        self.cursor.execute(query)
-        temp = self.cursor.fetchone()
+    def update_client_company(self, cmp_name, cmp_nip, cmp_address, id):
         query = ("UPDATE Klient SET nazwa = '%s', nip = '%s', adres_faktury = '%s' WHERE klient_id = '%s'" %
-                 (cmp_name, cmp_nip, cmp_address, temp))
+                 (cmp_name, cmp_nip, cmp_address, id[0]))
         self.cursor.execute(query)
 
     def get_model_id(self, nazwa_modelu):
@@ -218,7 +205,7 @@ class Database:
                  "VALUES (%s,%s)")
         self.cursor.execute(query, (rodzaj_szyby, cena_a))
 
-    def add_client_person(self, imie, nazwisko, adres_faktury, pesel):
+    def add_client_person(self, imie, nazwisko, pesel, adres_faktury):
         query = ("INSERT INTO Klient "
                  "(selektor, adres_faktury, imie, nazwisko, pesel) "
                  "VALUES ('Osoba prywatna',%s,%s,%s,%s)")
