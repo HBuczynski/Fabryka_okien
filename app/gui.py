@@ -100,12 +100,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def clickedClientAddButton(self):
         self.dialogClient.clear_parameters()
         self.dialogClient.show()
-        print("add client")
 
     def clickedClientEditButton(self):
-        self.dialogEditClient.load_parameters()
-        self.dialogEditClient.show()
-        print("edit client")
+        status = self.dialogEditClient.load_parameters(self.clientTableView)
+        if status == 0:
+            self.dialogEditClient.show()
+
 
     def clickedMonthReportButton(self):
         dateFrom = self.monthReportStartDateEdit.date().toPyDate()
