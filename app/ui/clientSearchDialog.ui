@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>680</width>
+    <width>924</width>
     <height>273</height>
    </rect>
   </property>
@@ -36,6 +36,16 @@
      </attribute>
      <column>
       <property name="text">
+       <string>ID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Adres faktury</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Imię</string>
       </property>
      </column>
@@ -46,7 +56,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Nazwa firmy</string>
+       <string>NIP</string>
       </property>
      </column>
      <column>
@@ -56,12 +66,7 @@
      </column>
      <column>
       <property name="text">
-       <string>NIP</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Adres</string>
+       <string>Nazwa firmy</string>
       </property>
      </column>
     </widget>

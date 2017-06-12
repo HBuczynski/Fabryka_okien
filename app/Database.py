@@ -98,6 +98,29 @@ class Database:
         self.cursor.execute(query, (nazwa_modelu,))
         return self.cursor.fetchone()[0]
 
+    def get_models(self):
+        query = ("SELECT nazwa, model_id FROM Model")
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
+    def get_segments(self, model_id):
+        query = ("SELECT nazwa, segment_id FROM Segment "
+                 "WHERE model_id=%s")
+        self.cursor.execute(query, (model_id,))
+        return self.cursor.fetchall()
+
+    def get_params(self, segment_id):
+        query = ("SELECT nazwa, parametr_id FROM Parametr_segmentu "
+                 "WHERE segment_id=%s")
+        self.cursor.execute(query, (segment_id,))
+        return self.cursor.fetchall()
+
+    def get_vals(self, parametr_id):
+        query = ("SELECT wartosc, id FROM Wartosc_parametru "
+                 "WHERE parametr_id=%s")
+        self.cursor.execute(query, (parametr_id,))
+        return self.cursor.fetchall()
+
     def get_segment_id(self, nazwa_modelu, nazwa_segmentu):
         query = ("SELECT segment_id FROM Segment "
                  "INNER JOIN Model ON Model.model_id=Segment.model_id "

@@ -21,6 +21,9 @@ class Invoice:
         self.entries_sum_brutto = 0
         self.entries_count = 0
 
+        # Set the invoice generation date as the current one
+        self.setDateGenerated(time.strftime("%d.%m.%Y"))
+
     def __addInvoiceEntryStr(self, name, count, price_netto, vat_percents, price_vat, price_brutto):
         self.entries += "\invoiceline{" + name +\
                         "}{" + count +\
@@ -32,7 +35,7 @@ class Invoice:
 
     def addInvoiceEntry(self, name, count, price_netto):
         p_netto = round(price_netto, 2)
-        p_vat = round(p_netto*0.08, 2)
+        p_vat = round(p_netto*0.23, 2)
         p_brutto = round(p_netto + p_vat, 2)
 
         self.entries_sum_netto += p_netto
@@ -40,7 +43,7 @@ class Invoice:
         self.entries_sum_brutto += p_brutto
         self.entries_count += count
 
-        self.__addInvoiceEntryStr(name, str(count), str(p_netto), "8", str(p_vat), str(p_brutto))
+        self.__addInvoiceEntryStr(name, str(count), ("%.2f" % p_netto), "23", ("%.2f" % p_vat), ("%.2f" % p_brutto))
 
     def setBuyerPerson(self, name, surname, street, city, phone_number, pesel):
         self.data = self.data.replace("LINE1", name + " " + surname)
@@ -74,12 +77,12 @@ class Invoice:
         self.entries_sum_brutto = round(self.entries_sum_brutto, 2)
 
         self.data = self.data.replace("SUMCOUNTS", str(self.entries_count))
-        self.data = self.data.replace("SUMNETTO", str(self.entries_sum_netto).replace(".", ","))
-        self.data = self.data.replace("SUMVAT", str(self.entries_sum_vat).replace(".", ","))
-        self.data = self.data.replace("SUMBRUTTO", str(self.entries_sum_brutto).replace(".", ","))
+        self.data = self.data.replace("SUMNETTO", ("%.2f" % self.entries_sum_netto).replace(".", ","))
+        self.data = self.data.replace("SUMVAT", ("%.2f" % self.entries_sum_vat).replace(".", ","))
+        self.data = self.data.replace("SUMBRUTTO", ("%.2f" % self.entries_sum_brutto).replace(".", ","))
 
         self.data = self.data.replace("SUMTEXTZL", self.numberToText(floor(self.entries_sum_brutto)))
-        textgr = self.__numToStr(floor((self.entries_sum_brutto - int(self.entries_sum_brutto))*100.0))
+        textgr = self.__numToStr(round((self.entries_sum_brutto - int(self.entries_sum_brutto))*100.0))
         if textgr == '':
             textgr = "zero"
         self.data = self.data.replace("SUMTEXTGR", textgr)
@@ -138,10 +141,31 @@ class Invoice:
 
         return output.strip()
 
-    def generate(self):
-        # Set the invoice generation date as the current one
-        self.setDateGenerated(time.strftime("%d.%m.%Y"))
+    def addDelivery(self, price_netto):
+        price_netto = round(price_netto, 2)
+        self.data = self.data.replace("DELIVERYNETTO", ("%.2f" % price_netto).replace(".", ","))
+        price_vat = round(price_netto * 0.08, 2)
+        price_brutto = round(price_netto + price_vat, 2)
+        self.data = self.data.replace("DELIVERYVAT", ("%.2f" % price_vat).replace(".", ","))
+        self.data = self.data.replace("DELIVERYBRUTTO", ("%.2f" % price_brutto).replace(".", ","))
+        self.data = self.data.replace("DELIVERY", "1")
+        self.entries_sum_brutto += price_brutto
+        self.entries_sum_netto += price_netto
+        self.entries_sum_vat += price_vat
 
+    def addAssembly(self, price_netto):
+        price_netto = round(price_netto, 2)
+        self.data = self.data.replace("ASSEMBLYNETTO", ("%.2f" % price_netto).replace(".", ","))
+        price_vat = round(price_netto * 0.08, 2)
+        price_brutto = round(price_netto + price_vat, 2)
+        self.data = self.data.replace("ASSEMBLYVAT", ("%.2f" % price_vat).replace(".", ","))
+        self.data = self.data.replace("ASSEMBLYBRUTTO", ("%.2f" % price_brutto).replace(".", ","))
+        self.data = self.data.replace("ASSEMBLY", "1")
+        self.entries_sum_brutto += price_brutto
+        self.entries_sum_netto += price_netto
+        self.entries_sum_vat += price_vat
+
+    def generate(self):
         # Set the invoice total sums
         self.setSums()
 
@@ -155,9 +179,11 @@ class Invoice:
         # Generate the output file
         for i in range(10):
             print("PDFLaTeX running...")
-            out, err = subprocess.Popen(["pdflatex -synctex=1 -interaction=nonstopmode invoice_template.tex"], stdout=subprocess.PIPE, shell=True).communicate()
-            if not b"Rerun" in out:
+            out, err = subprocess.Popen("pdflatex -synctex=1 -interaction=nonstopmode invoice_template.tex", stdout=subprocess.PIPE, shell=True).communicate()
+            if b"Rerun" not in out:
                 break
+
+        # Cleanup
         os.rename("invoice_template.pdf", self.output_file)
         os.remove("invoice_data.tex")
         os.remove("invoice_template.aux")
@@ -169,7 +195,6 @@ class Invoice:
 
 
 if __name__ == "__main__":
-    random.seed()
     inv = Invoice()
     inv.setID("FV/2017/06/123456")
     inv.setDateSold("09.07.2017")
@@ -180,6 +205,8 @@ if __name__ == "__main__":
     inv.addInvoiceEntry("Segment 2", 2, 13.00)
     inv.addInvoiceEntry("Segment 3", 1, 11.5123123123)
     inv.addInvoiceEntry("Segment 4", 4, 121.12445)
-    inv.addInvoiceEntry("Segment 5", 10, random.random()*1000000.0)
+    inv.addInvoiceEntry("Segment 5", 10, 130.0)
+    inv.addDelivery(100.0)
+    inv.addAssembly(200.0)
     inv.generate()
     inv.open()

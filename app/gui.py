@@ -8,6 +8,8 @@ from reportlab.pdfbase._fontdata_widths_symbol import widths
 
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import Database
 
@@ -22,10 +24,13 @@ from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        self.db = Database.Database()
-        QMainWindow.__init__(self)
+        # QMainWindow.__init__(self)
+        super().__init__()
         # Set up the user interface from Designer.
         self.setupUi(self)
+
+        # Connect to the database:
+        self.db = Database.Database()
 
         # Initialize dialogs
         self.dialogOrder = OrderDialog()
@@ -46,14 +51,97 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.monthReportShowButton.clicked.connect(self.clickedMonthReportButton)
         self.clientReportShowButton.clicked.connect(self.clickedClientShowButton)
 
+        # Actions for offer tab
+        self.offerAddModelButton.clicked.connect(self.clickedOfferAddModelButton)
+        self.offerAddSegmentButton.clicked.connect(self.clickedOfferAddSegmentButton)
+        self.offerAddValueButton.clicked.connect(self.clickedAddValueButton)
+        self.offerAddParamButton.clicked.connect(self.clickedAddParamButton)
+        self.offerDeleteSegmentButton.clicked.connect(self.clickedOfferDeleteSegmentButton)
+        self.offerDeleteParamButton.clicked.connect(self.clickedDeleteParamButton)
+
+        self.offerModelTree.clicked.connect(self.clickedOfferModelTreeElement)
+        self.offerParamTree.clicked.connect(self.clickedOfferParamTreeElement)
+
+        self.displayModels()
+
+    def clickedOfferModelTreeElement(self):
+        data = self.offerModelTree.currentItem().data(1, 0)
+        if len(data) == 1:
+            # model clicked
+            print("Model clicked: " + data[0][0])
+        else:
+            # segment clicked
+            print("Segment clicked: " + data[0][0] + " -> " + data[1][0])
+            # Update params tree
+            self.displayParams(data[1][1])
+
+    def clickedOfferParamTreeElement(self):
+        data = self.offerParamTree.currentItem().data(1, 0)
+        if len(data) == 1:
+            # param clicked
+            print("Param clicked: " + data[0][0])
+        else:
+            # value clicked
+            print("Value clicked: " + data[0][0] + " -> " + data[1][0])
+
+    def clickedOfferAddModelButton(self):
+        print("TODO")
+
+    def clickedOfferAddModelButton(self):
+        print("TODO")
+
+    def clickedOfferAddSegmentButton(self):
+        print("TODO")
+
+    def clickedAddValueButton(self):
+        print("TODO")
+
+    def clickedAddParamButton(self):
+        print("TODO")
+
+    def clickedOfferDeleteSegmentButton(self):
+        print("TODO")
+
+    def clickedDeleteParamButton(self):
+        print("TODO")
+
+    def displayModels(self):
+        models = self.db.get_models()
+        for m in models:
+            model = QTreeWidgetItem()
+            model.setText(0, m[0])
+            model.setData(1, 0, [m,])
+            segments = self.db.get_segments(m[1])
+            for s in segments:
+                segment = QTreeWidgetItem()
+                segment.setText(0, s[0])
+                segment.setData(1, 0, [m, s])
+                model.addChild(segment)
+            self.offerModelTree.addTopLevelItem(model)
+
+    def displayParams(self, segment_id):
+        self.offerParamTree.clear()
+        params = self.db.get_params(segment_id)
+        for p in params:
+            param = QTreeWidgetItem()
+            param.setText(0, p[0])
+            param.setData(1, 0, [p, ])
+            values = self.db.get_vals(p[1])
+            for v in values:
+                value = QTreeWidgetItem()
+                value.setText(0, v[0])
+                value.setData(1, 0, [p, v])
+                param.addChild(value)
+            self.offerParamTree.addTopLevelItem(param)
+
     def clickedOrderAddButton(self):
-        self.dialogOrder.mode = "new"
+        self.dialogOrder.setMode("new")
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.show()
         #DONE: print("add order")
 
     def clickedOrderEditButton(self):
-        self.dialogOrder.mode = "edit"
+        self.dialogOrder.setMode("edit")
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.loadParametersFromDatabase()
         self.dialogOrder.show()
