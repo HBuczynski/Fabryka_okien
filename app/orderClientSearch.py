@@ -21,7 +21,7 @@ class OrderClientSearch(QDialog, Ui_clientSearchDialog, QObject):
         self.setupUi(self)
 
         # Database instance
-        self.db = Database.Database()
+        self.db = Database.db
 
         #Buttons connections
         self.clientSearchOkButton.clicked.connect(self.clickedOkButton)
@@ -30,8 +30,6 @@ class OrderClientSearch(QDialog, Ui_clientSearchDialog, QObject):
 
         #Local variables
         self.rowIsSelected = False
-
-        self.adres =""
 
     def setDataFromDatabase(self):
         result = self.db.get_clients("klient_id", "")

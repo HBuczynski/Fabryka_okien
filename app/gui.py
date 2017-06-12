@@ -13,7 +13,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import Database
 
-
 from ui.mainwindow import Ui_MainWindow
 from orderDialog import OrderDialog
 from clientDialog import ClientDialog
@@ -24,13 +23,12 @@ from PyQt5.QtCore import *
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        # QMainWindow.__init__(self)
         super().__init__()
         # Set up the user interface from Designer.
         self.setupUi(self)
 
         # Connect to the database:
-        self.db = Database.Database()
+        self.db = Database.db
 
         # Initialize dialogs
         self.dialogOrder = OrderDialog()
@@ -125,6 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for p in params:
             param = QTreeWidgetItem()
             param.setText(0, p[0])
+            param.setToolTip(0, p[2])
             param.setData(1, 0, [p, ])
             values = self.db.get_vals(p[1])
             for v in values:
@@ -141,11 +140,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #DONE: print("add order")
 
     def clickedOrderEditButton(self):
-        self.dialogOrder.setMode("edit")
-        self.dialogOrder.cleanObjectsInDialog()
-        self.dialogOrder.loadParametersFromDatabase()
-        self.dialogOrder.show()
-        #DONE: print("Edycja")
+        currentRow = self.orderTableView.currentRow()
+        if  currentRow != -1:
+            self.dialogOrder.setMode("edit")
+            self.dialogOrder.cleanObjectsInDialog()
+            orderList = [self.orderTableView.item(currentRow, 0).text(),
+                         self.orderTableView.item(currentRow, 1).text(),
+                         self.orderTableView.item(currentRow, 2).text(),
+                         self.orderTableView.item(currentRow, 3).text(),
+                         self.orderTableView.item(currentRow, 4).text(),
+                         self.orderTableView.item(currentRow, 5).text(),
+                         self.orderTableView.item(currentRow, 6).text()]
+            self.dialogOrder.loadParametersFromDatabase(orderList)
+            self.dialogOrder.show()
+            #DONE: print("Edycja")
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wybierz rekord!!")
+            msg.exec()
 
     def clickedOrderSearchButton(self):
         searchAccordingTo = str(self.orderSearchComboBox.currentText())

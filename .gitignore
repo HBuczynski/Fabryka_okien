@@ -3,3 +3,4 @@ generator/__pycache__/
 generator/db_settings.py
 app/__pycache__/
 app/ui/__pycache__/
+app/db_settings.py
