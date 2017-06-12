@@ -93,13 +93,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.offerModelTree.addTopLevelItem(item)
 
     def clickedOrderAddButton(self):
-        self.dialogOrder.mode = "new"
+        self.dialogOrder.setMode("new")
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.show()
         #DONE: print("add order")
 
     def clickedOrderEditButton(self):
-        self.dialogOrder.mode = "edit"
+        self.dialogOrder.setMode("edit")
         self.dialogOrder.cleanObjectsInDialog()
         self.dialogOrder.loadParametersFromDatabase()
         self.dialogOrder.show()
