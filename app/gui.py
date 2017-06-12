@@ -59,7 +59,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.offerDeleteSegmentButton.clicked.connect(self.clickedOfferDeleteSegmentButton)
         self.offerDeleteParamButton.clicked.connect(self.clickedDeleteParamButton)
 
+        self.offerModelTree.clicked.connect(self.clickedOfferModelTreeElement)
+        self.offerParamTree.clicked.connect(self.clickedOfferParamTreeElement)
+
         self.displayModels()
+
+    def clickedOfferModelTreeElement(self):
+        data = self.offerModelTree.currentItem().data(1, 0)
+        if len(data) == 1:
+            # model clicked
+            print("Model clicked: " + data[0][0])
+        else:
+            # segment clicked
+            print("Segment clicked: " + data[0][0] + " -> " + data[1][0])
+            # Update params tree
+            self.displayParams(data[1][1])
+
+    def clickedOfferParamTreeElement(self):
+        data = self.offerParamTree.currentItem().data(1, 0)
+        if len(data) == 1:
+            # param clicked
+            print("Param clicked: " + data[0][0])
+        else:
+            # value clicked
+            print("Value clicked: " + data[0][0] + " -> " + data[1][0])
 
     def clickedOfferAddModelButton(self):
         print("TODO")
@@ -83,14 +106,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print("TODO")
 
     def displayModels(self):
-        for i in range(1, 6):
-            item = QTreeWidgetItem()
-            item.setText(0, "Model " + str(i))
-            for j in ["A", "B", "C", "D"]:
-                child = QTreeWidgetItem()
-                child.setText(0, "Segment " + j)
-                item.addChild(child)
-            self.offerModelTree.addTopLevelItem(item)
+        models = self.db.get_models()
+        for m in models:
+            model = QTreeWidgetItem()
+            model.setText(0, m[0])
+            model.setData(1, 0, [m,])
+            segments = self.db.get_segments(m[1])
+            for s in segments:
+                segment = QTreeWidgetItem()
+                segment.setText(0, s[0])
+                segment.setData(1, 0, [m, s])
+                model.addChild(segment)
+            self.offerModelTree.addTopLevelItem(model)
+
+    def displayParams(self, segment_id):
+        self.offerParamTree.clear()
+        params = self.db.get_params(segment_id)
+        for p in params:
+            param = QTreeWidgetItem()
+            param.setText(0, p[0])
+            param.setData(1, 0, [p, ])
+            values = self.db.get_vals(p[1])
+            for v in values:
+                value = QTreeWidgetItem()
+                value.setText(0, v[0])
+                value.setData(1, 0, [p, v])
+                param.addChild(value)
+            self.offerParamTree.addTopLevelItem(param)
 
     def clickedOrderAddButton(self):
         self.dialogOrder.setMode("new")
