@@ -140,10 +140,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #DONE: print("add order")
 
     def clickedOrderEditButton(self):
-        if self.orderTableView.currentRow() != -1:
+        currentRow = self.orderTableView.currentRow()
+        if  currentRow != -1:
             self.dialogOrder.setMode("edit")
             self.dialogOrder.cleanObjectsInDialog()
-            self.dialogOrder.loadParametersFromDatabase()
+            orderList = [self.orderTableView.item(currentRow, 0).text(),
+                         self.orderTableView.item(currentRow, 1).text(),
+                         self.orderTableView.item(currentRow, 2).text(),
+                         self.orderTableView.item(currentRow, 3).text(),
+                         self.orderTableView.item(currentRow, 4).text(),
+                         self.orderTableView.item(currentRow, 5).text(),
+                         self.orderTableView.item(currentRow, 6).text()]
+            self.dialogOrder.loadParametersFromDatabase(orderList)
             self.dialogOrder.show()
             #DONE: print("Edycja")
         else:
