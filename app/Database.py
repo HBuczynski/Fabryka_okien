@@ -92,6 +92,24 @@ class Database:
             self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def update_client_person(self, name, surname, pesel, address, id):
+        query = ("SELECT klient_id FROM Klient WHERE klient_id = '%s'" %
+                 (id))
+        self.cursor.execute(query)
+        temp = self.cursor.fetchone()
+        query = ("UPDATE Klient SET imie = '%s', nazwisko = '%s', pesel = '%s', adres_faktury = '%s' WHERE klient_id = '%s'" %
+                 (name, surname, pesel, address,id))
+        self.cursor.execute(query)
+
+    def update_client_person(self, cmp_name, cmp_nip, cmp_address, id):
+        query = ("SELECT klient_id FROM Klient WHERE klient_id = '%s'" %
+                 (id))
+        self.cursor.execute(query)
+        temp = self.cursor.fetchone()
+        query = ("UPDATE Klient SET nazwa = '%s', nip = '%s', adres_faktury = '%s' WHERE klient_id = '%s'" %
+                 (cmp_name, cmp_nip, cmp_address, temp))
+        self.cursor.execute(query)
+
     def get_model_id(self, nazwa_modelu):
         query = ("SELECT model_id FROM Model "
                  "WHERE nazwa=%s")
