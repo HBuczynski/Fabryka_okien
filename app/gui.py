@@ -8,6 +8,8 @@ from reportlab.pdfbase._fontdata_widths_symbol import widths
 
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import Database
 
@@ -57,6 +59,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.offerDeleteSegmentButton.clicked.connect(self.clickedOfferDeleteSegmentButton)
         self.offerDeleteParamButton.clicked.connect(self.clickedDeleteParamButton)
 
+        self.displayModels()
+
     def clickedOfferAddModelButton(self):
         print("TODO")
 
@@ -77,6 +81,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def clickedDeleteParamButton(self):
         print("TODO")
+
+    def displayModels(self):
+        for i in range(1, 6):
+            item = QTreeWidgetItem()
+            item.setText(0, "Model " + str(i))
+            for j in ["A", "B", "C", "D"]:
+                child = QTreeWidgetItem()
+                child.setText(0, "Segment " + j)
+                item.addChild(child)
+            self.offerModelTree.addTopLevelItem(item)
 
     def clickedOrderAddButton(self):
         self.dialogOrder.mode = "new"
