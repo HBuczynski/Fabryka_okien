@@ -31,8 +31,6 @@ class OrderClientSearch(QDialog, Ui_clientSearchDialog, QObject):
         #Local variables
         self.rowIsSelected = False
 
-        self.adres =""
-
     def setDataFromDatabase(self):
         result = self.db.get_clients("klient_id", "")
         self.table_widget_insert(result, self.clientSearchTable)

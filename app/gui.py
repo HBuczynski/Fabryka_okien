@@ -141,11 +141,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #DONE: print("add order")
 
     def clickedOrderEditButton(self):
-        self.dialogOrder.setMode("edit")
-        self.dialogOrder.cleanObjectsInDialog()
-        self.dialogOrder.loadParametersFromDatabase()
-        self.dialogOrder.show()
-        #DONE: print("Edycja")
+        if self.orderTableView.currentRow() != -1:
+            self.dialogOrder.setMode("edit")
+            self.dialogOrder.cleanObjectsInDialog()
+            self.dialogOrder.loadParametersFromDatabase()
+            self.dialogOrder.show()
+            #DONE: print("Edycja")
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wybierz rekord!!")
+            msg.exec()
 
     def clickedOrderSearchButton(self):
         searchAccordingTo = str(self.orderSearchComboBox.currentText())
