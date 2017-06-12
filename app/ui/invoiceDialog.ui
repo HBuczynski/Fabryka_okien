@@ -39,7 +39,7 @@
         <widget class="QComboBox" name="invoiceStatusComboBox">
          <item>
           <property name="text">
-           <string>Zwrot</string>
+           <string>Zlozone</string>
           </property>
          </item>
          <item>
@@ -59,12 +59,12 @@
          </item>
          <item>
           <property name="text">
-           <string>Zakonczone</string>
+           <string>Zrealizowane</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Zlozone</string>
+           <string>Zwrot</string>
           </property>
          </item>
         </widget>

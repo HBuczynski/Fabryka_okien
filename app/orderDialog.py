@@ -35,6 +35,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceCancelButton.clicked.connect(self.clickedInvoiceCancelButton)
         self.invoiceOkButton.clicked.connect(self.clickedInvoiceOkButton)
 
+        self.invoiceStatusComboBox.setEnabled(False)
+
         #Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
 
@@ -43,6 +45,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
     def loadParametersFromDatabase(self, orderList):
         self.selectClientButton.setDisabled(True)
+        self.invoiceStatusComboBox.setEnabled(True)
+
         self.invoiceNumberLineEdit.setText(orderList[0])
         self.invoiceAddDateLineEdit.setText(orderList[3])
         self.invoiceEndDateLineEdit.setText(orderList[4])
