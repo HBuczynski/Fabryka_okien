@@ -35,13 +35,13 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceCancelButton.clicked.connect(self.clickedInvoiceCancelButton)
         self.invoiceOkButton.clicked.connect(self.clickedInvoiceOkButton)
 
-        self.invoiceStatusComboBox.setEnabled(False)
-
         #Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
 
     def setMode(self, mode):
         self.mode = mode
+        if mode == "new":
+            self.invoiceStatusComboBox.setEnabled(False)
 
     def loadParametersFromDatabase(self, orderList):
         self.selectClientButton.setDisabled(True)
@@ -55,8 +55,9 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceTotalCostLineEdit.setText(orderList[6])
 
         client = self.db.get_clients("klient_id", orderList[1])
-        if client[0][4] == 'None':
-            self.clientNameLabel.setText(client[0][2] + client[0][3])
+        if str(client[0][4]) == "None":
+            name = str(client[0][2] + " " + client[0][3])
+            self.clientNameLabel.setText(name)
             self.clientAddressLabel.setText(client[0][1])
             self.clientCodeLabel.setText(client[0][5])
         else:
