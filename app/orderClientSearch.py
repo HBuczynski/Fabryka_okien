@@ -21,7 +21,7 @@ class OrderClientSearch(QDialog, Ui_clientSearchDialog, QObject):
         self.setupUi(self)
 
         # Database instance
-        self.db = Database.Database()
+        self.db = Database.db
 
         #Buttons connections
         self.clientSearchOkButton.clicked.connect(self.clickedOkButton)
