@@ -54,6 +54,16 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceStatusComboBox.setCurrentIndex(index)
         self.invoiceTotalCostLineEdit.setText(orderList[6])
 
+        client = self.db.get_clients("klient_id", orderList[1])
+        if client[0][4] == 'None':
+            self.clientNameLabel.setText(client[0][2] + client[0][3])
+            self.clientAddressLabel.setText(client[0][1])
+            self.clientCodeLabel.setText(client[0][5])
+        else:
+            self.clientNameLabel.setText(client[0][6])
+            self.clientAddressLabel.setText(client[0][1])
+            self.clientCodeLabel.setText(client[0][4])
+
     def clickedSelectClientButton(self):
         self.searchClientDialog.setDataFromDatabase()
         self.searchClientDialog.show()
