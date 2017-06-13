@@ -169,12 +169,11 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
             i=i+1
 
     def clickedGenerateButton(self):
-        # dialog = QFileDialog()
-        # filename = dialog.getSaveFileName(self, "Wybierz plik do zapisu", "faktura", ".pdf")[0]
-        # if filename[-4:] != ".pdf":
-        #     filename += ".pdf"
-        # print(filename)
-        filename = "/home/luktor99/Pulpit/faktura.pdf"
+        dialog = QFileDialog()
+        filename = dialog.getSaveFileName(self, "Wybierz plik do zapisu", "faktura", ".pdf")[0]
+        if filename[-4:] != ".pdf":
+            filename += ".pdf"
+
         inv = Invoice(filename)
 
         faktura_id = self.invoiceNumberLineEdit.text()
@@ -189,10 +188,10 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
         # entries = QTableWidget()
         for i in range(self.invoiceTable.rowCount()):
-            segment = self.invoiceTable.item(i, 1).text()
-            model = self.invoiceTable.item(i, 2).text()
-            ilosc = int(self.invoiceTable.item(i, 3).text())
-            cena = float(self.invoiceTable.item(i, 5).text())
+            segment = self.invoiceTable.item(i, 0).text()
+            model = self.invoiceTable.item(i, 1).text()
+            ilosc = int(self.invoiceTable.item(i, 2).text())
+            cena = float(self.invoiceTable.item(i, 4).text())
             inv.addInvoiceEntry(segment + " ( " + model + " ) ", ilosc, cena*ilosc)
 
         delivery = self.db.check_delivery(faktura_id)
