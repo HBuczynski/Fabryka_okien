@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'invoiceDialog.ui'
+# Form implementation generated from reading ui file 'ui/invoiceDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.8.2
 #
@@ -94,6 +94,9 @@ class Ui_invoiceDialog(object):
         self.invoiceTableButtonsLayout.addWidget(self.deletePositionButton)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.invoiceTableButtonsLayout.addItem(spacerItem1)
+        self.pushButtonGenerate = QtWidgets.QPushButton(invoiceDialog)
+        self.pushButtonGenerate.setObjectName("pushButtonGenerate")
+        self.invoiceTableButtonsLayout.addWidget(self.pushButtonGenerate)
         self.verticalLayout_2.addLayout(self.invoiceTableButtonsLayout)
         self.invoiceTable = QtWidgets.QTableWidget(invoiceDialog)
         self.invoiceTable.setObjectName("invoiceTable")
@@ -113,7 +116,7 @@ class Ui_invoiceDialog(object):
         self.invoiceTable.setHorizontalHeaderItem(5, item)
         self.invoiceTable.horizontalHeader().setStretchLastSection(True)
         self.invoiceTable.verticalHeader().setSortIndicatorShown(True)
-        self.invoiceTable.verticalHeader().setStretchLastSection(True)
+        self.invoiceTable.verticalHeader().setStretchLastSection(False)
         self.verticalLayout_2.addWidget(self.invoiceTable)
         self.invoiceDialogButtonsLayout = QtWidgets.QHBoxLayout()
         self.invoiceDialogButtonsLayout.setObjectName("invoiceDialogButtonsLayout")
@@ -152,6 +155,7 @@ class Ui_invoiceDialog(object):
         self.newPositionButton.setText(_translate("invoiceDialog", "Nowa pozycja"))
         self.editPositionButton.setText(_translate("invoiceDialog", "Edytuj"))
         self.deletePositionButton.setText(_translate("invoiceDialog", "Usuń"))
+        self.pushButtonGenerate.setText(_translate("invoiceDialog", "Generuj PDF"))
         self.invoiceTable.setSortingEnabled(True)
         item = self.invoiceTable.horizontalHeaderItem(0)
         item.setText(_translate("invoiceDialog", "ID"))

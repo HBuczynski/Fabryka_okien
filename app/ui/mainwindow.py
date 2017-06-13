@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1223, 605)
+        MainWindow.resize(1299, 814)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -354,7 +354,7 @@ class Ui_MainWindow(object):
         self.clientReportTable.horizontalHeader().setStretchLastSection(True)
         self.clientReportTable.verticalHeader().setCascadingSectionResizes(True)
         self.clientReportTable.verticalHeader().setSortIndicatorShown(True)
-        self.clientReportTable.verticalHeader().setStretchLastSection(True)
+        self.clientReportTable.verticalHeader().setStretchLastSection(False)
         self.clientReportLayout.addWidget(self.clientReportTable)
         self.gridLayout_5.addLayout(self.clientReportLayout, 0, 1, 1, 1)
         self.montReportLayout = QtWidgets.QVBoxLayout()
@@ -404,7 +404,7 @@ class Ui_MainWindow(object):
         self.monthReportTable.verticalHeader().setCascadingSectionResizes(True)
         self.monthReportTable.verticalHeader().setDefaultSectionSize(40)
         self.monthReportTable.verticalHeader().setSortIndicatorShown(True)
-        self.monthReportTable.verticalHeader().setStretchLastSection(True)
+        self.monthReportTable.verticalHeader().setStretchLastSection(False)
         self.montReportLayout.addWidget(self.monthReportTable)
         self.gridLayout_5.addLayout(self.montReportLayout, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tabRaporty, "")
@@ -416,7 +416,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -427,7 +427,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Wyszukiwanie:"))
         self.orderSearchComboBox.setItemText(0, _translate("MainWindow", "ID"))
         self.orderSearchComboBox.setItemText(1, _translate("MainWindow", "ID Klienta"))
-        self.orderSearchButton.setText(_translate("MainWindow", "LUPA"))
+        self.orderSearchButton.setText(_translate("MainWindow", "Szukaj"))
         self.label.setText(_translate("MainWindow", "Pokaż:"))
         self.orderStateComboBox.setItemText(0, _translate("MainWindow", "wszystko"))
         self.orderStateComboBox.setItemText(1, _translate("MainWindow", "zakonczone"))

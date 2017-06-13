@@ -3,12 +3,13 @@ import subprocess
 import time
 from math import floor
 import random
+import datetime
 
 
 class Invoice:
     def __init__(self, output_file='output.pdf'):
         # Load the data template
-        with open('invoice_data_template.tex', 'r') as file:
+        with open('invoice/invoice_data_template.tex', 'r') as file:
             self.data = file.read()
 
         # Store the output file path
@@ -23,6 +24,7 @@ class Invoice:
 
         # Set the invoice generation date as the current one
         self.setDateGenerated(time.strftime("%d.%m.%Y"))
+        self.setDatePayment((datetime.datetime.now() + datetime.timedelta(days=31)).strftime("%d.%m.%Y"))
 
     def __addInvoiceEntryStr(self, name, count, price_netto, vat_percents, price_vat, price_brutto):
         self.entries += "\invoiceline{" + name +\
@@ -49,15 +51,19 @@ class Invoice:
         self.data = self.data.replace("LINE1", name + " " + surname)
         self.data = self.data.replace("LINE2", street)
         self.data = self.data.replace("LINE3", city)
-        self.data = self.data.replace("LINE4", "tel: " + phone_number)
-        self.data = self.data.replace("LINE5", "PESEL: " + pesel)
+        # self.data = self.data.replace("LINE4", "tel: " + phone_number)
+        # self.data = self.data.replace("LINE5", "PESEL: " + pesel)
+        self.data = self.data.replace("LINE4", "")
+        self.data = self.data.replace("LINE5", "")
+
 
     def setBuyerCompany(self, name, street, city, phone_number, nip):
         self.data = self.data.replace("LINE1", name)
         self.data = self.data.replace("LINE2", street)
         self.data = self.data.replace("LINE3", city)
-        self.data = self.data.replace("LINE4", "tel: " + phone_number)
-        self.data = self.data.replace("LINE5", "NIP: " + nip)
+        # self.data = self.data.replace("LINE4", "tel: " + phone_number)
+        self.data = self.data.replace("LINE4", "NIP: " + nip)
+        self.data = self.data.replace("LINE5", "")
 
     def setID(self, id):
         self.data = self.data.replace("INVOICENUMBER", id)
@@ -173,22 +179,22 @@ class Invoice:
         self.data = self.data.replace("INVOICELINES", self.entries.replace(".", ","))
 
         # Prepare the data file
-        with open('invoice_data.tex', 'w') as file:
+        with open('invoice/invoice_data.tex', 'w') as file:
             file.write(self.data)
 
         # Generate the output file
         for i in range(10):
             print("PDFLaTeX running...")
-            out, err = subprocess.Popen("pdflatex -synctex=1 -interaction=nonstopmode invoice_template.tex", stdout=subprocess.PIPE, shell=True).communicate()
+            out, err = subprocess.Popen("cd invoice && pdflatex -synctex=1 -interaction=nonstopmode invoice_template.tex", stdout=subprocess.PIPE, shell=True).communicate()
             if b"Rerun" not in out:
                 break
 
         # Cleanup
-        os.rename("invoice_template.pdf", self.output_file)
-        os.remove("invoice_data.tex")
-        os.remove("invoice_template.aux")
-        os.remove("invoice_template.log")
-        os.remove("invoice_template.synctex.gz")
+        os.rename("invoice/invoice_template.pdf", self.output_file)
+        os.remove("invoice/invoice_data.tex")
+        os.remove("invoice/invoice_template.aux")
+        os.remove("invoice/invoice_template.log")
+        os.remove("invoice/invoice_template.synctex.gz")
 
     def open(self):
         os.system("xdg-open " + self.output_file)

@@ -197,6 +197,13 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonGenerate">
+       <property name="text">
+        <string>Generuj PDF</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -211,7 +218,7 @@
       <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderStretchLastSection">
-      <bool>true</bool>
+      <bool>false</bool>
      </attribute>
      <column>
       <property name="text">

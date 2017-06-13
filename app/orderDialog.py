@@ -11,6 +11,8 @@ from orderClientSearch import OrderClientSearch
 from orderPositionDialog import PositionDialog
 from PyQt5.QtCore import *
 
+from invoice.Invoice import Invoice
+import string
 
 class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
     def __init__(self):
@@ -34,6 +36,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.deletePositionButton.clicked.connect(self.clickedDeletePositionButton)
         self.invoiceCancelButton.clicked.connect(self.clickedInvoiceCancelButton)
         self.invoiceOkButton.clicked.connect(self.clickedInvoiceOkButton)
+        self.pushButtonGenerate.clicked.connect(self.clickedGenerateButton)
 
         # Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
@@ -145,3 +148,41 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
             self.invoiceTable.setItem(i, 4, QTableWidgetItem(str(positions[i][6])))
             self.invoiceTable.setItem(i, 5, QTableWidgetItem(str(positions[i][2])))
             i=i+1
+
+    def clickedGenerateButton(self):
+        # dialog = QFileDialog()
+        # filename = dialog.getSaveFileName(self, "Wybierz plik do zapisu", "faktura", ".pdf")[0]
+        # if filename[-4:] != ".pdf":
+        #     filename += ".pdf"
+        # print(filename)
+        filename = "/home/luktor99/Pulpit/faktura.pdf"
+        inv = Invoice(filename)
+
+        faktura_id = self.invoiceNumberLineEdit.text()
+        date = self.invoiceAddDateLineEdit.text().split('-')
+        inv.setID("FV/"+date[0]+"/"+date[1]+"/"+faktura_id)
+        inv.setDateSold(date[2] + "." + date[1] + "." + date[0])
+        if self.db.is_client_company(faktura_id):
+            inv.setBuyerCompany(self.clientNameLabel.text(), self.clientAddressLabel.text(), "02-678 Warszawa",
+                            "REMOVE ME", self.clientCodeLabel.text())
+        else:
+            inv.setBuyerPerson(self.clientNameLabel.text(), "", self.clientAddressLabel.text(), "02-678 Warszawa", "", "")
+
+        # entries = QTableWidget()
+        for i in range(self.invoiceTable.rowCount()):
+            segment = self.invoiceTable.item(i, 1).text()
+            model = self.invoiceTable.item(i, 2).text()
+            ilosc = int(self.invoiceTable.item(i, 3).text())
+            cena = float(self.invoiceTable.item(i, 5).text())
+            inv.addInvoiceEntry(segment + " ( " + model + " ) ", ilosc, cena*ilosc)
+
+        delivery = self.db.check_delivery(faktura_id)
+        if delivery is not None:
+            inv.addDelivery(float(delivery[0]))
+
+        assembly = self.db.check_assembly(faktura_id)
+        if assembly is not None:
+            inv.addAssembly(float(assembly[0]))
+
+        inv.generate()
+        inv.open()

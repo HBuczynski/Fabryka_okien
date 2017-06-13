@@ -300,5 +300,24 @@ class Database:
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def is_client_company(self, faktura_id):
+        query = ("SELECT k.selektor FROM Klient AS k "
+                 "INNER JOIN Faktura AS f ON k.klient_id = f.klient_id "
+                 "WHERE f.faktura_id = %s")
+        self.cursor.execute(query, ((faktura_id,)))
+        return self.cursor.fetchone()[0] == "Firma"
+
+    def check_delivery(self, faktura_id):
+        query = ("SELECT cena_dostawy FROM Dostawa "
+                 "WHERE faktura_id=%s")
+        self.cursor.execute(query, (faktura_id,))
+        return self.cursor.fetchone()
+
+    def check_assembly(self, faktura_id):
+        query = ("SELECT cena_montazu FROM Montaz "
+                 "WHERE faktura_id=%s")
+        self.cursor.execute(query, (faktura_id,))
+        return self.cursor.fetchone()
+
 # Global database instance
 db = Database()
