@@ -33,6 +33,15 @@ class PositionDialog(QDialog, Ui_positionDialog, QObject):
         self.positionDialogOkButton.clicked.connect(self.clickedOkButton)
         self.positionDialogCancelButton.clicked.connect(self.clickedCancelButton)
 
+        #Initial variables
+        self.model_name = " "
+        self.segment_name = " "
+        self.ilosc = " "
+        self.wymiar_x = " "
+        self.wymiar_y = " "
+        self.status = " "
+        self.szyba = " "
+
     def setMode(self, mode):
         self.mode = mode
 
@@ -94,8 +103,9 @@ class PositionDialog(QDialog, Ui_positionDialog, QObject):
         self.szyba = self.segmentPaneComboBox.currentText()
 
     def clickedOkButton(self):
-            self.setData.emit()
-            self.close()
+        self.getData()
+        self.setData.emit()
+        self.close()
 
     def clickedCancelButton(self):
         self.modelSelectComboBox.clear()
