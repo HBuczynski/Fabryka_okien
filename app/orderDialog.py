@@ -11,8 +11,12 @@ from orderClientSearch import OrderClientSearch
 from orderPositionDialog import PositionDialog
 from PyQt5.QtCore import *
 
+<<<<<<< HEAD
 from invoice.Invoice import Invoice
 import string
+=======
+import datetime
+>>>>>>> 481c2084250a1c3236a1809e3722b6f0efbf8f2a
 
 class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
     def __init__(self):
@@ -40,14 +44,17 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
         # Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
+        self.positionDialog.setData.connect(self.setNewPosition)
 
-        self.invoiceTable.verticalHeader().setVisible(False)
+
+
 
     def setMode(self, mode):
         self.mode = mode
         if mode == "new":
             self.invoiceStatusComboBox.setEnabled(False)
             self.selectClientButton.setDisabled(False)
+            self.invoiceNumberLineEdit.setDisabled(True)
 
     def loadParametersFromDatabase(self, orderList):
         self.selectClientButton.setDisabled(True)
@@ -77,11 +84,13 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.searchClientDialog.show()
 
     def clickedNewPositionButton(self):
-        self.positionDialog.mode = "new"
+        self.positionDialog.setMode("new")
+        self.positionDialog.setDataFromDatabase()
         self.positionDialog.show()
 
     def clickedEditPositionButton(self):
-        self.positionDialog.mode = "edit"
+        self.positionDialog.setMode("edit")
+        self.positionDialog.setDataFromDatabase()
         self.positionDialog.show()
 
     def clickedDeletePositionButton(self):
@@ -120,6 +129,20 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
             self.clientAddressLabel.setText(self.searchClientDialog.adres)
             self.clientCodeLabel.setText(self.searchClientDialog.nip)
 
+        self.db.add_bill(self.invoiceAddDateLineEdit, self.searchClientDialog.id, self.invoiceEndDateLineEdit, self.invoiceStatusComboBox.currentText())
+        self.currentInvoiceID = self.db.get_bill_id(self.invoiceAddDateLineEdit, self.searchClientDialog.id, self.invoiceEndDateLineEdit, self.invoiceStatusComboBox.currentText())
+
+    @QtCore.pyqtSlot()
+    def setNewPosition(self):
+        count = self.invoiceTable.rowCount()
+        self.invoiceTable.insertRow(count)
+        self.invoiceTable.setItem(count, 0, QTableWidgetItem(str(self.positionDialog.segment_name)))
+        self.invoiceTable.setItem(count, 1, QTableWidgetItem(str(self.positionDialog.model_name)))
+        self.invoiceTable.setItem(count, 2, QTableWidgetItem(str(self.positionDialog.ilosc)))
+        self.invoiceTable.setItem(count, 3, QTableWidgetItem(str(self.positionDialog.status)))
+        # self.invoiceTable.setItem(count, 5, QTableWidgetItem(str(self.positionDialog.)))
+        print("TO do lolo")
+
 
     def getDataFromLabels(self):
         self.invoiceId = self.invoiceNumberLineEdit.text()
@@ -141,12 +164,11 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         while i < pc:
             segment_name = self.db.get_segment_name_and_modelid(positions[i][1])
             model_name = self.db.get_model_name(segment_name[0][1])
-            self.invoiceTable.setItem(i, 0, QTableWidgetItem(str(positions[i][0])))
-            self.invoiceTable.setItem(i, 1, QTableWidgetItem(str(segment_name[0][0])))
-            self.invoiceTable.setItem(i, 2, QTableWidgetItem(str(model_name)))
-            self.invoiceTable.setItem(i, 3, QTableWidgetItem(str(positions[i][5])))
-            self.invoiceTable.setItem(i, 4, QTableWidgetItem(str(positions[i][6])))
-            self.invoiceTable.setItem(i, 5, QTableWidgetItem(str(positions[i][2])))
+            self.invoiceTable.setItem(i, 0, QTableWidgetItem(str(segment_name[0][0])))
+            self.invoiceTable.setItem(i, 1, QTableWidgetItem(str(model_name)))
+            self.invoiceTable.setItem(i, 2, QTableWidgetItem(str(positions[i][5])))
+            self.invoiceTable.setItem(i, 3, QTableWidgetItem(str(positions[i][6])))
+            self.invoiceTable.setItem(i, 4, QTableWidgetItem(str(positions[i][2])))
             i=i+1
 
     def clickedGenerateButton(self):

@@ -73,17 +73,20 @@ class Database:
                      "AND rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s" %
                      (search_line_imie, search_line_nazwisko, data_from_year, data_to_year,
                       data_from_year, data_to_year, data_from_month, data_to_month))
+            print(query)
             self.cursor.execute(query)
         elif search_line == '':
             query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta "
                      "WHERE rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s" %
                      (data_from_year, data_to_year,data_from_year,data_to_year, data_from_month, data_to_month))
+            print(query)
             self.cursor.execute(query)
         else:
             query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta "
                      "WHERE %s=%s "
                      "AND rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s"
                      % (selector, search_line, data_from_year, data_to_year, data_from_year, data_to_year,data_from_month, data_to_month))
+            print(query)
             self.cursor.execute(query)
         return self.cursor.fetchall()
 
@@ -300,6 +303,7 @@ class Database:
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+<<<<<<< HEAD
     def is_client_company(self, faktura_id):
         query = ("SELECT k.selektor FROM Klient AS k "
                  "INNER JOIN Faktura AS f ON k.klient_id = f.klient_id "
@@ -319,5 +323,11 @@ class Database:
         self.cursor.execute(query, (faktura_id,))
         return self.cursor.fetchone()
 
+=======
+    def get_rodzaj_szyby(self):
+        query = "SELECT rodzaj FROM Szyba"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+>>>>>>> 481c2084250a1c3236a1809e3722b6f0efbf8f2a
 # Global database instance
 db = Database()
