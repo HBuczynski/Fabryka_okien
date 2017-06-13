@@ -255,20 +255,21 @@ class Database:
         return random.choice(result)[0]
 
     def get_positions_from_invoice(self, faktura_id):
-        query = ("SELECT pozycja_id, segment_id, model_id, cena_jednostkowa, wymiar_x, wymiar_y, ilosc, status FROM Pozycja "
-                 "WHERE faktura_id=%s")
-        self.cursor.execute(query, (faktura_id,))
+        query = ("SELECT pozycja_id, segment_id, cena_jednostkowa, wymiar_x, wymiar_y, ilosc, status FROM Pozycja WHERE faktura_id={FAKTURA}".format(FAKTURA=faktura_id))
+        print(query)
+        self.cursor.execute(query)
         return self.cursor.fetchall()
 
     def get_model_name(self, model_id):
-        query = "SELECT nazwa FROM Model WHERE model_id=%s"
-        self.cursor.execute(query, (model_id,))
+        query = ("SELECT nazwa FROM Model WHERE model_id={ID}".format(ID=model_id))
+        self.cursor.execute(query)
         return self.cursor.fetchone()[0]
 
-    def get_model_name(self, model_id, segment_id):
-        query = "SELECT nazwa FROM Segment WHERE model_id=%s AND segment_id=%s"
-        self.cursor.execute(query, (model_id, segment_id))
-        return self.cursor.fetchone()[0]
+    def get_segment_name_and_modelid(self, segment_id):
+        query = ("SELECT nazwa, model_id FROM Segment WHERE segment_id={SEGMENT}".format(SEGMENT=segment_id))
+        print(query)
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 
 # Global database instance
 db = Database()

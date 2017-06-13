@@ -38,6 +38,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         # Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
 
+        self.invoiceTable.verticalHeader().setVisible(False)
+
     def setMode(self, mode):
         self.mode = mode
 
@@ -114,14 +116,30 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
     def table_insert_positions(self, invoice_id):
         positions = self.db.get_positions_from_invoice(invoice_id)
-        for position in positions:
-            self.invoiceTable.insertRow()
-            count = self.invoiceTable.rowCount()
-            model_name = self.db.get_model_name(position.model_id)
-            segment_name = self.db.get_segment_name(position.model_id, position.segment_id)
-            self.invoiceTable.setItem(count, 0, QTableWidgetItem(str(position.pozycja_id)))
-            self.invoiceTable.setItem(count, 1, QTableWidgetItem(str(segment_name)))
-            self.invoiceTable.setItem(count, 2, QTableWidgetItem(str(model_name)))
-            self.invoiceTable.setItem(count, 3, QTableWidgetItem(str(position.ilosc)))
-            self.invoiceTable.setItem(count, 4, QTableWidgetItem(str(position.status)))
-            self.invoiceTable.setItem(count, 5, QTableWidgetItem(str(position.cena_jednostkowa)))
+        print(positions)
+        pc = len(positions)
+        print(pc)
+        i=0
+        self.invoiceTable.setRowCount(pc)
+        while i < pc:
+            segment_name = self.db.get_segment_name_and_modelid(positions[i][1])
+            model_name = self.db.get_model_name(segment_name[0][1])
+            self.invoiceTable.setItem(i, 0, QTableWidgetItem(str(positions[i][0])))
+            self.invoiceTable.setItem(i, 1, QTableWidgetItem(str(segment_name[0][0])))
+            self.invoiceTable.setItem(i, 2, QTableWidgetItem(str(model_name)))
+            self.invoiceTable.setItem(i, 3, QTableWidgetItem(str(positions[i][5])))
+            self.invoiceTable.setItem(i, 4, QTableWidgetItem(str(positions[i][6])))
+            self.invoiceTable.setItem(i, 5, QTableWidgetItem(str(positions[i][2])))
+            i=i+1
+
+        # for position in positions:
+        #     self.invoiceTable.insertRow()
+        #     count = self.invoiceTable.rowCount()
+        #     model_name = self.db.get_model_name(position[0][2])
+        #     segment_name = self.db.get_segment_name(position[0][2], position[0][2])
+        #     self.invoiceTable.setItem(count, 0, QTableWidgetItem(str(position[0][0])))
+        #     self.invoiceTable.setItem(count, 1, QTableWidgetItem(str(segment_name)))
+        #     self.invoiceTable.setItem(count, 2, QTableWidgetItem(str(model_name)))
+        #     self.invoiceTable.setItem(count, 3, QTableWidgetItem(str(position.ilosc)))
+        #     self.invoiceTable.setItem(count, 4, QTableWidgetItem(str(position.status)))
+        #     self.invoiceTable.setItem(count, 5, QTableWidgetItem(str(position.cena_jednostkowa)))
