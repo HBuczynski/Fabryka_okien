@@ -39,7 +39,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.dialogOrder = OrderDialog()
         self.dialogClient = ClientDialog()
         self.dialogEditClient = ClientEditDialog()
-
+        #Enabling sorting:
+        self.clientTableView.setSortingEnabled(True)
+        self.orderTableView.setSortingEnabled(True)
         # Actions for orders:
         self.orderAddButton.clicked.connect(self.clickedOrderAddButton)
         self.orderEditButton.clicked.connect(self.clickedOrderEditButton)
