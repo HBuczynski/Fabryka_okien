@@ -300,5 +300,9 @@ class Database:
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
+    def get_rodzaj_szyby(self):
+        query = "SELECT rodzaj FROM Szyba"
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
 # Global database instance
 db = Database()

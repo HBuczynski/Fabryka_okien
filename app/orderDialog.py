@@ -37,6 +37,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
         # Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
+        self.positionDialog.setData.connect(self.setNewPosition)
 
         self.invoiceTable.verticalHeader().setVisible(False)
 
@@ -45,6 +46,8 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         if mode == "new":
             self.invoiceStatusComboBox.setEnabled(False)
             self.selectClientButton.setDisabled(False)
+            self.invoiceNumberLineEdit.setDisabled(True)
+
 
     def loadParametersFromDatabase(self, orderList):
         self.selectClientButton.setDisabled(True)
@@ -74,11 +77,13 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.searchClientDialog.show()
 
     def clickedNewPositionButton(self):
-        self.positionDialog.mode = "new"
+        self.positionDialog.setMode("new")
+        self.positionDialog.setDataFromDatabase()
         self.positionDialog.show()
 
     def clickedEditPositionButton(self):
-        self.positionDialog.mode = "edit"
+        self.positionDialog.setMode("edit")
+        self.positionDialog.setDataFromDatabase()
         self.positionDialog.show()
 
     def clickedDeletePositionButton(self):
@@ -116,6 +121,13 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
             self.clientNameLabel.setText(self.searchClientDialog.nazwaFirmy)
             self.clientAddressLabel.setText(self.searchClientDialog.adres)
             self.clientCodeLabel.setText(self.searchClientDialog.nip)
+
+    @QtCore.pyqtSlot()
+    def setNewPosition(self):
+        # count = self.invoiceTable.rowCount()
+        # self.invoiceTable.insertRow(count)
+        # self.invoiceTable.setItem(count, 0, QTableWidgetItem(str(self.positionDialog.)))
+        print("TO do lolo")
 
 
     def getDataFromLabels(self):
