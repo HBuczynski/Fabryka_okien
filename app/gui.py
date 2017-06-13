@@ -17,6 +17,12 @@ from ui.mainwindow import Ui_MainWindow
 from orderDialog import OrderDialog
 from clientDialog import ClientDialog
 from dialogEditClient import ClientEditDialog
+from ui.offerAddModelDialog import Ui_Dialog as offerAddModelDialog
+from ui.offerAddSegmentDialog import Ui_Dialog as offerAddSegmentDialog
+from ui.offerAddParamDialog import Ui_Dialog as offerAddParamDialog
+from ui.offerAddValueDialog import Ui_Dialog as offerAddValueDialog
+
+import mysql.connector.errors
 
 
 from PyQt5.QtCore import *
@@ -67,6 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if len(data) == 1:
             # model clicked
             print("Model clicked: " + data[0][0])
+            self.offerParamTree.clear()
         else:
             # segment clicked
             print("Segment clicked: " + data[0][0] + " -> " + data[1][0])
@@ -83,39 +90,229 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("Value clicked: " + data[0][0] + " -> " + data[1][0])
 
     def clickedOfferAddModelButton(self):
-        print("TODO")
-
-    def clickedOfferAddModelButton(self):
-        print("TODO")
+        dialog = QDialog(self)
+        dialog_items = offerAddModelDialog()
+        dialog_items.setupUi(dialog)
+        dialog.accepted.connect(lambda: self.addModel(dialog_items.lineEdit.text()))
+        dialog.show()
 
     def clickedOfferAddSegmentButton(self):
-        print("TODO")
+        if self.getSelectedModelID() is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Proszę najpierw wybrać model.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
+        dialog = QDialog(self)
+        dialog_items = offerAddSegmentDialog()
+        dialog_items.setupUi(dialog)
+        dialog.accepted.connect(lambda: self.addSegment(dialog_items.lineEdit.text(),
+                                                        float(dialog_items.lineEditB.text()),
+                                                        float(dialog_items.lineEditC.text()),
+                                                        float(dialog_items.lineEditD.text())))
+        dialog.show()
+
+    def addModel(self, nazwa):
+        self.db.add_model(nazwa)
+        self.db.commit()
+        self.displayModels()
+
+    def addSegment(self, nazwa, cena_b, cena_c, cena_d):
+        model_id = self.getSelectedModelID()
+        self.db.add_segment_by_id(model_id, nazwa, cena_b, cena_c, cena_d)
+        self.db.commit()
+        self.displayModels()
+
+    def delModel(self, model_id):
+        self.db.del_model(model_id)
+        self.db.commit()
+        self.displayModels()
+
+    def delSegment(self, segment_id):
+        self.db.del_segment(segment_id)
+        self.db.commit()
+        self.displayModels()
+
+    def getSelectedModelID(self):
+        item = self.offerModelTree.currentItem()
+        if item is None:
+            return None
+        data = item.data(1, 0)
+        return data[0][1]
+
+    def getSelectedSegmentID(self):
+        item = self.offerModelTree.currentItem()
+        if item is None:
+            return None
+        data = item.data(1, 0)
+        if len(data) != 2:
+            # No segment selected
+            return None
+
+        return data[1][1]
+
+    def getSelectedParamID(self):
+        item = self.offerParamTree.currentItem()
+        if item is None:
+            return None
+        data = item.data(1, 0)
+        return data[0][1]
+
+    def addParam(self, segment_id, nazwa, opis):
+        self.db.add_param_by_id(segment_id, nazwa, opis)
+        self.db.commit()
+        self.displayParams(segment_id)
 
     def clickedAddValueButton(self):
-        print("TODO")
+        param_id = self.getSelectedParamID()
+        if param_id is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Proszę wybrać parametr segmentu.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
+        segment_id = self.getSelectedSegmentID()
+        if segment_id is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Proszę wybrać segment.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
+        dialog = QDialog(self)
+        dialog_items = offerAddValueDialog()
+        dialog_items.setupUi(dialog)
+        dialog.accepted.connect(lambda: self.addValue(segment_id,
+                                                      param_id,
+                                                      dialog_items.lineEdit.text()))
+        dialog.show()
+
+    def addValue(self, segment_id, parametr_id, wartosc):
+        self.db.add_param_value_by_id(parametr_id, wartosc)
+        self.db.commit()
+        self.displayParams(segment_id)
 
     def clickedAddParamButton(self):
-        print("TODO")
+        segment_id = self.getSelectedSegmentID()
+        if segment_id is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText( "Proszę najpierw wybrać segment.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
+        dialog = QDialog(self)
+        dialog_items = offerAddParamDialog()
+        dialog_items.setupUi(dialog)
+        dialog.accepted.connect(lambda: self.addParam(segment_id,
+                                                      dialog_items.lineEditName.text(),
+                                                      dialog_items.lineEditDesc.text()))
+        dialog.show()
 
     def clickedOfferDeleteSegmentButton(self):
-        print("TODO")
+        item = self.offerModelTree.currentItem()
+        if item is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Proszę najpierw wybrać model lub segment do usunięcia.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
+        data = item.data(1, 0)
+        if len(data) == 1:
+            # model selected
+            self.delModel(data[0][1])
+        else:
+            # segment selected
+            self.delSegment(data[1][1])
 
     def clickedDeleteParamButton(self):
-        print("TODO")
+        item = self.offerParamTree.currentItem()
+        if item is None:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Proszę najpierw wybrać parametr lub wartość do usunięcia.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            return
+
+        segment_id = self.getSelectedSegmentID()
+        data = item.data(1, 0)
+        if len(data) == 1:
+            # param selected
+            self.delParam(segment_id, data[0][1])
+        else:
+            # value selected
+            self.delValue(segment_id, data[1][1])
+
+    def delParam(self, segment_id, parametr_id):
+        try:
+            self.db.del_param(parametr_id)
+            self.db.commit()
+            self.displayParams(segment_id)
+        except(mysql.connector.errors.IntegrityError):
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Nie można usunąć parametru, ponieważ został użyty w co najmniej jednym zamówieniu.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg.exec_()
+
+    def delValue(self, segment_id, value_id):
+        try:
+            self.db.del_value(value_id)
+            self.db.commit()
+            self.displayParams(segment_id)
+        except(mysql.connector.errors.IntegrityError):
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+
+            msg.setText("Wystąpił błąd!")
+            msg.setInformativeText("Nie można usunąć wartości parametru, ponieważ została użyta w co najmniej jednym zamówieniu.")
+            msg.setWindowTitle("Błąd")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
 
     def displayModels(self):
+        self.offerModelTree.clear()
         models = self.db.get_models()
         for m in models:
             model = QTreeWidgetItem()
             model.setText(0, m[0])
             model.setData(1, 0, [m,])
             segments = self.db.get_segments(m[1])
+            active_segments = 0
             for s in segments:
-                segment = QTreeWidgetItem()
-                segment.setText(0, s[0])
-                segment.setData(1, 0, [m, s])
-                model.addChild(segment)
-            self.offerModelTree.addTopLevelItem(model)
+                if self.db.is_segment_active(s[1]):
+                    active_segments += 1
+                    segment = QTreeWidgetItem()
+                    segment.setText(0, s[0])
+                    segment.setData(1, 0, [m, s])
+                    model.addChild(segment)
+
+            if active_segments != 0:
+                self.offerModelTree.addTopLevelItem(model)
 
     def displayParams(self, segment_id):
         self.offerParamTree.clear()
@@ -211,7 +408,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         result = self.db.get_month_report(dateFromMonth, dateFromYear, dateToMonth, dateToYear)
         self.table_widget_insert(result, self.monthReportTable)
 
-
     def clickedClientShowButton(self):
         dateFrom = self.clientReportStartDateEdit.date().toPyDate()
         dateFromYear = str(dateFrom.year)
@@ -245,7 +441,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print(sum(TABLE_WIDGET_COLUMNS_WIDTH))
         for i, width in enumerate(TABLE_WIDGET_COLUMNS_WIDTH):
             self.tableWidget.setColumnWidth(i, width*tablewidth)
-
 
     #Appending data to tables:
     def table_widget_insert(self,query_result,table_widget):

@@ -167,6 +167,22 @@ class Database:
                  "VALUES (%s)")
         self.cursor.execute(query, (nazwa_modelu,))
 
+    def del_model(self, model_id):
+        query = ("UPDATE Segment SET czy_aktualny = 'Wycofany'"
+                 "WHERE model_id=%s")
+        self.cursor.execute(query, (model_id,))
+
+    def del_segment(self, segment_id):
+        query = ("UPDATE Segment SET czy_aktualny = 'Wycofany'"
+                 "WHERE segment_id=%s")
+        self.cursor.execute(query, (segment_id,))
+
+    def is_segment_active(self, segment_id):
+        query = ("SELECT czy_aktualny FROM Segment "
+                 "WHERE segment_id=%s")
+        self.cursor.execute(query, (segment_id,))
+        return self.cursor.fetchone()[0] == 'Aktualny'
+
     def add_segment_by_id(self, model_id, nazwa_segmentu, cena_b, cena_c, cena_d):
         query = ("INSERT INTO Segment "
                  "(nazwa, cena_b, cena_c, cena_d, model_id) "
@@ -193,6 +209,16 @@ class Database:
 
     def add_param_value(self, nazwa_modelu, nazwa_segmentu, nazwa_parametru, wartosc_parametru):
         self.add_param_value_by_id(self.get_parametr_id(nazwa_modelu, nazwa_segmentu, nazwa_parametru), wartosc_parametru)
+
+    def del_param(self, parametr_id):
+        query = ("DELETE FROM Parametr_segmentu "
+                 "WHERE parametr_id=%s")
+        self.cursor.execute(query, (parametr_id,))
+
+    def del_value(self, value_id):
+        query = ("DELETE FROM Wartosc_parametru "
+                 "WHERE id=%s")
+        self.cursor.execute(query, (value_id,))
 
     def add_windowpane(self, rodzaj_szyby, cena_a):
         query = ("INSERT INTO Szyba "
