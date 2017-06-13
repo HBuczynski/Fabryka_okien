@@ -1,4 +1,4 @@
 USER = "root"
-PASSWORD = "cinek280"
+PASSWORD = "buczek444"
 HOST = "localhost"
-DATABASE = "fabryka"
+DATABASE = "Fabryka"

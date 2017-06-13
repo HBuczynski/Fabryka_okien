@@ -3,9 +3,7 @@ Pliki *.ui "kompiluje" się poleceniem:
     $ pyuic5 -o invoiceDialog.py invoiceDialog.ui
 """
 from PyQt5 import QtCore
-
-from PyQt5.QtWidgets import QDialog
-
+import Database
 from PyQt5.QtWidgets import *
 
 from ui.invoiceDialog import Ui_invoiceDialog
@@ -17,9 +15,13 @@ from PyQt5.QtCore import *
 class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
     def __init__(self):
         QDialog.__init__(self)
+
         # Set up the user interface from Designer.
         self.setupUi(self)
         self.mode = "new"
+
+        #Set database
+        self.db = Database.db
 
         #Setting up additional dialogs
         self.searchClientDialog = OrderClientSearch()
@@ -38,10 +40,30 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
     def setMode(self, mode):
         self.mode = mode
+        if mode == "new":
+            self.invoiceStatusComboBox.setEnabled(False)
 
+    def loadParametersFromDatabase(self, orderList):
+        self.selectClientButton.setDisabled(True)
+        self.invoiceStatusComboBox.setEnabled(True)
 
-    def loadParametersFromDatabase(self):
-        print("sciagamy parametry z bazy")
+        self.invoiceNumberLineEdit.setText(orderList[0])
+        self.invoiceAddDateLineEdit.setText(orderList[3])
+        self.invoiceEndDateLineEdit.setText(orderList[4])
+        index = self.invoiceStatusComboBox.findText(orderList[5])
+        self.invoiceStatusComboBox.setCurrentIndex(index)
+        self.invoiceTotalCostLineEdit.setText(orderList[6])
+
+        client = self.db.get_clients("klient_id", orderList[1])
+        if str(client[0][4]) == "None":
+            name = str(client[0][2] + " " + client[0][3])
+            self.clientNameLabel.setText(name)
+            self.clientAddressLabel.setText(client[0][1])
+            self.clientCodeLabel.setText(client[0][5])
+        else:
+            self.clientNameLabel.setText(client[0][6])
+            self.clientAddressLabel.setText(client[0][1])
+            self.clientCodeLabel.setText(client[0][4])
 
     def clickedSelectClientButton(self):
         self.searchClientDialog.setDataFromDatabase()
@@ -59,7 +81,6 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         print("sciagamy parametry z bazy")
 
     def clickedInvoiceOkButton(self):
-
         if self.getDataFromLabels() :
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
@@ -75,12 +96,11 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceAddDateLineEdit.setText("")
         self.invoiceEndDateLineEdit.setText("")
         self.invoiceTotalCostLineEdit.setText("")
+        self.invoiceTable.clearContents()
 
         self.clientNameLabel.setText("Imię i Nazwisko")
         self.clientAddressLabel.setText("Adres")
         self.clientCodeLabel.setText("Numer identyfikacyjny")
-
-        self.invoiceTable.clearContents()
 
     @QtCore.pyqtSlot()
     def setClientParameters(self):
