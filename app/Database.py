@@ -73,17 +73,20 @@ class Database:
                      "AND rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s" %
                      (search_line_imie, search_line_nazwisko, data_from_year, data_to_year,
                       data_from_year, data_to_year, data_from_month, data_to_month))
+            print(query)
             self.cursor.execute(query)
         elif search_line == '':
             query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta "
                      "WHERE rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s" %
                      (data_from_year, data_to_year,data_from_year,data_to_year, data_from_month, data_to_month))
+            print(query)
             self.cursor.execute(query)
         else:
             query = ("SELECT klient_id, rok, miesiac, suma FROM Staty_klienta "
                      "WHERE %s=%s "
                      "AND rok >= %s AND rok <= %s OR rok = %s AND rok = %s AND miesiac >= %s AND miesiac <= %s"
                      % (selector, search_line, data_from_year, data_to_year, data_from_year, data_to_year,data_from_month, data_to_month))
+            print(query)
             self.cursor.execute(query)
         return self.cursor.fetchall()
 
