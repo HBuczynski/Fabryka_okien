@@ -3,6 +3,7 @@ Pliki *.ui "kompiluje" się poleceniem:
     $ pyuic5 -o positionDialog.py positionDialog.ui
 """
 from PyQt5.QtWidgets import QDialog
+import Database
 
 from PyQt5.QtWidgets import *
 
@@ -16,3 +17,5 @@ class PositionDialog(QDialog, Ui_positionDialog):
         # Set up the user interface from Designer.
         self.setupUi(self)
 
+        # Set database
+        self.db = Database.db

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>553</width>
+    <width>613</width>
     <height>672</height>
    </rect>
   </property>
@@ -201,6 +201,18 @@
    </item>
    <item>
     <widget class="QTableWidget" name="invoiceTable">
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
      <column>
       <property name="text">
        <string>ID</string>
@@ -209,6 +221,11 @@
      <column>
       <property name="text">
        <string>Nazwa Segmentu</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Nazwa Modelu</string>
       </property>
      </column>
      <column>
