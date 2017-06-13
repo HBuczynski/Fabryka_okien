@@ -4,7 +4,6 @@ Pliki *.ui "kompiluje" się poleceniem:
 """
 #from PyQt5.QtWidgets import QMainWindow
 #from generator.main import db
-from reportlab.pdfbase._fontdata_widths_symbol import widths
 
 TABLE_WIDGET_COLUMNS_WIDTH = [0.1, 0.3, 0.1, 0.1, 0.2, 0.2]
 

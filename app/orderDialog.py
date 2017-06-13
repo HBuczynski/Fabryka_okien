@@ -9,8 +9,8 @@ from PyQt5.QtWidgets import *
 from ui.invoiceDialog import Ui_invoiceDialog
 from orderClientSearch import OrderClientSearch
 from orderPositionDialog import PositionDialog
-
 from PyQt5.QtCore import *
+
 
 class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
     def __init__(self):
@@ -20,10 +20,10 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.setupUi(self)
         self.mode = "new"
 
-        #Set database
+        # Set database
         self.db = Database.db
 
-        #Setting up additional dialogs
+        # Setting up additional dialogs
         self.searchClientDialog = OrderClientSearch()
         self.positionDialog = PositionDialog()
 
@@ -35,8 +35,10 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.invoiceCancelButton.clicked.connect(self.clickedInvoiceCancelButton)
         self.invoiceOkButton.clicked.connect(self.clickedInvoiceOkButton)
 
-        #Setting connections between signals and slots
+        # Setting connections between signals and slots
         self.searchClientDialog.rowWasSet.connect(self.setClientParameters)
+
+        self.invoiceTable.verticalHeader().setVisible(False)
 
     def setMode(self, mode):
         self.mode = mode
@@ -53,6 +55,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         index = self.invoiceStatusComboBox.findText(orderList[5])
         self.invoiceStatusComboBox.setCurrentIndex(index)
         self.invoiceTotalCostLineEdit.setText(orderList[6])
+        self.table_insert_positions(orderList[0])
 
         client = self.db.get_clients("klient_id", orderList[1])
         if str(client[0][4]) == "None":
@@ -114,10 +117,6 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
             self.clientCodeLabel.setText(self.searchClientDialog.nip)
 
 
-
-    def getClientsParameters(self):
-        print("get parameters")
-
     def getDataFromLabels(self):
         self.invoiceId = self.invoiceNumberLineEdit.text()
         self.status = self.invoiceStatusComboBox.currentText()
@@ -130,3 +129,32 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         print(fieldsAreEmpty)
         return fieldsAreEmpty
 
+    def table_insert_positions(self, invoice_id):
+        positions = self.db.get_positions_from_invoice(invoice_id)
+        print(positions)
+        pc = len(positions)
+        print(pc)
+        i=0
+        self.invoiceTable.setRowCount(pc)
+        while i < pc:
+            segment_name = self.db.get_segment_name_and_modelid(positions[i][1])
+            model_name = self.db.get_model_name(segment_name[0][1])
+            self.invoiceTable.setItem(i, 0, QTableWidgetItem(str(positions[i][0])))
+            self.invoiceTable.setItem(i, 1, QTableWidgetItem(str(segment_name[0][0])))
+            self.invoiceTable.setItem(i, 2, QTableWidgetItem(str(model_name)))
+            self.invoiceTable.setItem(i, 3, QTableWidgetItem(str(positions[i][5])))
+            self.invoiceTable.setItem(i, 4, QTableWidgetItem(str(positions[i][6])))
+            self.invoiceTable.setItem(i, 5, QTableWidgetItem(str(positions[i][2])))
+            i=i+1
+
+        # for position in positions:
+        #     self.invoiceTable.insertRow()
+        #     count = self.invoiceTable.rowCount()
+        #     model_name = self.db.get_model_name(position[0][2])
+        #     segment_name = self.db.get_segment_name(position[0][2], position[0][2])
+        #     self.invoiceTable.setItem(count, 0, QTableWidgetItem(str(position[0][0])))
+        #     self.invoiceTable.setItem(count, 1, QTableWidgetItem(str(segment_name)))
+        #     self.invoiceTable.setItem(count, 2, QTableWidgetItem(str(model_name)))
+        #     self.invoiceTable.setItem(count, 3, QTableWidgetItem(str(position.ilosc)))
+        #     self.invoiceTable.setItem(count, 4, QTableWidgetItem(str(position.status)))
+        #     self.invoiceTable.setItem(count, 5, QTableWidgetItem(str(position.cena_jednostkowa)))

@@ -5,6 +5,7 @@ from datetime import date, timedelta
 
 # Polaczenie z baza danych
 db = Database.Database()
+
 # Ponowne utworzenie bazy
 db.recreate()
 
