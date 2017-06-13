@@ -287,7 +287,6 @@ class Database:
 
     def get_positions_from_invoice(self, faktura_id):
         query = ("SELECT pozycja_id, segment_id, cena_jednostkowa, wymiar_x, wymiar_y, ilosc, status FROM Pozycja WHERE faktura_id={FAKTURA}".format(FAKTURA=faktura_id))
-        print(query)
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
@@ -298,7 +297,6 @@ class Database:
 
     def get_segment_name_and_modelid(self, segment_id):
         query = ("SELECT nazwa, model_id FROM Segment WHERE segment_id={SEGMENT}".format(SEGMENT=segment_id))
-        print(query)
         self.cursor.execute(query)
         return self.cursor.fetchall()
 

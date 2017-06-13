@@ -44,6 +44,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
         self.mode = mode
         if mode == "new":
             self.invoiceStatusComboBox.setEnabled(False)
+            self.selectClientButton.setDisabled(False)
 
     def loadParametersFromDatabase(self, orderList):
         self.selectClientButton.setDisabled(True)
@@ -131,9 +132,7 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
 
     def table_insert_positions(self, invoice_id):
         positions = self.db.get_positions_from_invoice(invoice_id)
-        print(positions)
         pc = len(positions)
-        print(pc)
         i=0
         self.invoiceTable.setRowCount(pc)
         while i < pc:
@@ -146,15 +145,3 @@ class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
             self.invoiceTable.setItem(i, 4, QTableWidgetItem(str(positions[i][6])))
             self.invoiceTable.setItem(i, 5, QTableWidgetItem(str(positions[i][2])))
             i=i+1
-
-        # for position in positions:
-        #     self.invoiceTable.insertRow()
-        #     count = self.invoiceTable.rowCount()
-        #     model_name = self.db.get_model_name(position[0][2])
-        #     segment_name = self.db.get_segment_name(position[0][2], position[0][2])
-        #     self.invoiceTable.setItem(count, 0, QTableWidgetItem(str(position[0][0])))
-        #     self.invoiceTable.setItem(count, 1, QTableWidgetItem(str(segment_name)))
-        #     self.invoiceTable.setItem(count, 2, QTableWidgetItem(str(model_name)))
-        #     self.invoiceTable.setItem(count, 3, QTableWidgetItem(str(position.ilosc)))
-        #     self.invoiceTable.setItem(count, 4, QTableWidgetItem(str(position.status)))
-        #     self.invoiceTable.setItem(count, 5, QTableWidgetItem(str(position.cena_jednostkowa)))
