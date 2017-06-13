@@ -118,10 +118,12 @@ class Generator:
                 dimX = self.generate_dimension()
                 dimY = self.generate_dimension()
                 count = random.randint(1, 10)
-                status = "Zrealizowane"
+                status = "Zlozone"
                 szyba_id = random.randint(1, self.windowspanes_number)
                 self.db.add_bill_entry(bill_id, segment_id, szyba_id, dimX, dimY, count, status)
                 entry_id = self.db.get_bill_entry_id(bill_id, segment_id, szyba_id, dimX, dimY, count, status)
+                if bill_id <= 50:
+                    self.db.change_entry_status(entry_id, "Zrealizowane")
 
                 params = self.db.get_params_for_segment_id(segment_id)
                 for param_id in params:

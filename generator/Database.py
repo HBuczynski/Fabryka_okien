@@ -31,6 +31,11 @@ class Database:
         self.cursor.execute(query, (nazwa_modelu,))
         return self.cursor.fetchone()[0]
 
+    def change_entry_status(self, pozycja_id, status):
+        query = ("UPDATE Pozycja SET status=%s "
+                 "WHERE pozycja_id=%s")
+        self.cursor.execute(query, (status, pozycja_id))
+
     def get_segment_id(self, nazwa_modelu, nazwa_segmentu):
         query = ("SELECT segment_id FROM Segment "
                  "INNER JOIN Model ON Model.model_id=Segment.model_id "
