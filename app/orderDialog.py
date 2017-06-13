@@ -11,12 +11,9 @@ from orderClientSearch import OrderClientSearch
 from orderPositionDialog import PositionDialog
 from PyQt5.QtCore import *
 
-<<<<<<< HEAD
 from invoice.Invoice import Invoice
 import string
-=======
 import datetime
->>>>>>> 481c2084250a1c3236a1809e3722b6f0efbf8f2a
 
 class OrderDialog(QDialog, Ui_invoiceDialog, QObject):
     def __init__(self):

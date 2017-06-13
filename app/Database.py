@@ -303,7 +303,6 @@ class Database:
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-<<<<<<< HEAD
     def is_client_company(self, faktura_id):
         query = ("SELECT k.selektor FROM Klient AS k "
                  "INNER JOIN Faktura AS f ON k.klient_id = f.klient_id "
@@ -323,11 +322,10 @@ class Database:
         self.cursor.execute(query, (faktura_id,))
         return self.cursor.fetchone()
 
-=======
     def get_rodzaj_szyby(self):
         query = "SELECT rodzaj FROM Szyba"
         self.cursor.execute(query)
         return self.cursor.fetchall()
->>>>>>> 481c2084250a1c3236a1809e3722b6f0efbf8f2a
+
 # Global database instance
 db = Database()
